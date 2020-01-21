@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 export default class RegisterScreen extends React.Component{
     render() {
         return(
-            <ImageBackground source={require('./images/Back.jpg')}>
+            <ImageBackground source={require('../../assets/Back.jpg')}>
             <View>
                 <Text>Hello! User</Text>
             </View>

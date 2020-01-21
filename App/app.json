@@ -1,21 +1,18 @@
 {
+  
   "expo": {
-    "name": "exmulti",
-    "slug": "exmulti",
-    "privacy": "public",
-    "sdkVersion": "33.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "name": "NCRB",
+    "icon": "./assets/logo.png",
     "version": "1.0.0",
+    "slug": "NCRB",
+    "sdkVersion": "33.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "ios": {
+        "bundleIdentifier": "com.codevelopers.NCRB"
+      },
+      "android": {
+        "package": "com.codvelopers.NCRB"
+      }
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -27,4 +24,3 @@
       "supportsTablet": true
     }
   }
-}

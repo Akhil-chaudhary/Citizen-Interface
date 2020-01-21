@@ -14,7 +14,7 @@ export default class Splash extends Component{
                 <View style={styles.titleWrapper}>
                 <Image 
                 style={{width:250,height:250,}}
-                    source={require('./images/logo.jpg')}
+                    source={require('../../assets/logo.png')}
                 />
                 
                     <Text style={styles.title}>

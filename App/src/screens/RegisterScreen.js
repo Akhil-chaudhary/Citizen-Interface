@@ -28,7 +28,7 @@ export default class RegisterScreen extends React.Component{
             <View style={styles.container}>
                <Image 
                 style={{width:180,height:180,}}
-                    source={require('./images/Register.png')}
+                    source={require('../../assets/Register.png')}
                 />
                 <Text style={styles.greeting}>Citizen Register</Text>
                 <View style={styles.errorMessage}>

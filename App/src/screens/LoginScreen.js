@@ -24,7 +24,7 @@ export default class LoginScreen extends React.Component{
             <View style={styles.container}>
                 <Image 
                 style={{width:180,height:180,}}
-                    source={require('./images/User.png')}
+                    source={require('../../assets/User.png')}
                 />
                 <Text style={styles.greeting}>Citizen Login</Text>
                 <View style={styles.errorMessage}>
