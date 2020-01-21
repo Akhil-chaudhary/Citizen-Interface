@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View,Text, StyleSheet,Image } from 'react-native';
+import { View,Text, StyleSheet,Image,ActivityIndicator} from 'react-native';
 import {} from 'react-navigation';
   
 export default class Splash extends Component{
@@ -16,10 +16,11 @@ export default class Splash extends Component{
                 style={{width:250,height:250,}}
                     source={require('./images/logo.jpg')}
                 />
-
+                
                     <Text style={styles.title}>
                         NCRB
                     </Text>
+                    <ActivityIndicator size='large'></ActivityIndicator>
                 </View>
                 <View>
                     <Text style={styles.subtitle}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,StyleSheet} from 'react-native';
+import {View,Text,Image,StyleSheet} from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as firebase from 'firebase';
 
@@ -26,6 +26,10 @@ export default class RegisterScreen extends React.Component{
     render() {
         return(
             <View style={styles.container}>
+               <Image 
+                style={{width:180,height:180,}}
+                    source={require('./images/Register.png')}
+                />
                 <Text style={styles.greeting}>Citizen Register</Text>
                 <View style={styles.errorMessage}>
                 {this.state.errorMessage && <Text style={styles.error}> {this.state.errorMessage} </Text>}
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
     },
     button:{
         marginHorizontal: -30,
-        backgroundColor:"#E9446A",
+        backgroundColor:"#1C8ADB",
         borderRadius:15,
         height:40,
         alignItems: "center",
@@ -136,7 +140,7 @@ const styles = StyleSheet.create({
     },
     signup:{
         fontWeight: "600",
-        color:"#E9446A"
+        color:"#1C8ADB"
     },
     error:{
         color: "#ff0000",

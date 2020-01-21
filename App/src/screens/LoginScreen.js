@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,StyleSheet} from 'react-native';
+import {View,Text,Image,StyleSheet} from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as firebase from 'firebase';
 
@@ -13,8 +13,8 @@ export default class LoginScreen extends React.Component{
 
     handleLogin = () => {
         const {email, password} = this.state
-
         firebase.auth().signInWithEmailAndPassword(email,password).catch(error => this.setState({errorMessage: error.message}))
+        this.props.navigation.navigate("Home")
     }
 
 
@@ -23,7 +23,7 @@ export default class LoginScreen extends React.Component{
         return(
             <View style={styles.container}>
                 <Image 
-                style={{width:250,height:250,}}
+                style={{width:180,height:180,}}
                     source={require('./images/User.png')}
                 />
                 <Text style={styles.greeting}>Citizen Login</Text>
@@ -68,7 +68,7 @@ export default class LoginScreen extends React.Component{
                     onPress={() => this.props.navigation.navigate("Register")}
                     >
                         <Text style={{color: "#414959", fontSize: 15 }}>
-                            New to Social App?<Text style={styles.signup}> Sign Up</Text>
+                            New to NCRB App?<Text style={styles.signup}> Sign Up</Text>
                             </Text>
                     </TouchableOpacity>
 
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     },
     button:{
         marginHorizontal: -30,
-        backgroundColor:"#E9446A",
+        backgroundColor:"#1C8ADB",
         borderRadius:15,
         height:40,
         alignItems: "center",
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     },
     signup:{
         fontWeight: "600",
-        color:"#E9446A"
+        color:"#1C8ADB"
     },
     error:{
         color: "#ff0000",

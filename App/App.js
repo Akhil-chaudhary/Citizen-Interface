@@ -2,16 +2,18 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Splash from './src/screens/Splash';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import * as firebase from 'firebase';
 const navigator = createStackNavigator(
   {
     Splash:Splash,
     Login:LoginScreen,
-    Register:RegisterScreen
+    Register:RegisterScreen,
+    Home:HomeScreen
   },
   {
     initialRouteName: 'Splash',
-    headerMode:null
+    headerMode: 'none'
   }
 );
 const firebaseConfig={
