@@ -3,30 +3,30 @@ import {View,Text,StyleSheet} from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as firebase from 'firebase';
 
-export default class LoginScreen extends React.Component{
+export default class RegisterScreen extends React.Component{
 
     state= {
+        name:"",
         email: "",
         password: "",
         errorMessage: null
     };
 
-    handleLogin = () => {
-        const {email, password} = this.state
-
-        firebase.auth().signInWithEmailAndPassword(email,password).catch(error => this.setState({errorMessage: error.message}))
-    }
+    handleSignUp = () => {
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(userCredentials =>{
+            return userCredentials.user.updateProfile({
+                displayName: this.state.name
+            })
+        })
+        .catch(error => this.setState({errorMessage: error.message}));
+    };
 
 
 
     render() {
         return(
             <View style={styles.container}>
-                <Image 
-                style={{width:250,height:250,}}
-                    source={require('./images/User.png')}
-                />
-                <Text style={styles.greeting}>Citizen Login</Text>
+                <Text style={styles.greeting}>Citizen Register</Text>
                 <View style={styles.errorMessage}>
                 {this.state.errorMessage && <Text style={styles.error}> {this.state.errorMessage} </Text>}
                 </View>
@@ -34,12 +34,22 @@ export default class LoginScreen extends React.Component{
                 <View style={styles.form}>
                     <View >
                         <TextInput 
+                        placeholder='Full Name'
+                        style={styles.input}
+                        autoCapitalize="none" 
+                        onChangeText={name => this.setState({name})}
+                        value={this.state.name}></TextInput>
+                    </View>
+                    
+                    <View style={{marginTop:32}} >
+                        <TextInput 
                         placeholder='Email Address'
                         style={styles.input}
                         autoCapitalize="none" 
                         onChangeText={email => this.setState({email})}
                         value={this.state.email}></TextInput>
                     </View>
+
 
 
                     <View style={{marginTop:32}} >
@@ -57,18 +67,17 @@ export default class LoginScreen extends React.Component{
 
                     <TouchableOpacity 
                     style={styles.button}
-                    onPress={this.handleLogin}
+                    onPress={this.handleSignUp}
                     >
-                        <Text style={{color:"#FFF", fontWeight:"500"}}>Sign In</Text>
+                        <Text style={{color:"#FFF", fontWeight:"500"}}>Sign Up</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity 
-                    rounded
                     style={{alignSelf: "center", marginTop:32}}
-                    onPress={() => this.props.navigation.navigate("Register")}
+                    onPress={() => this.props.navigation.navigate("Login")}
                     >
                         <Text style={{color: "#414959", fontSize: 15 }}>
-                            New to Social App?<Text style={styles.signup}> Sign Up</Text>
+                            Already Registered?<Text style={styles.signup}> Log In</Text>
                             </Text>
                     </TouchableOpacity>
 
@@ -86,11 +95,11 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     greeting: {
-        marginTop:32,
-        fontSize:28,
-        fontWeight:'bold',
-        fontWeight:"400",
-        textAlign: "center"
+      marginTop:32,
+      fontSize:28,
+      fontWeight:'bold',
+      fontWeight:"400",
+      textAlign: "center"
     },
     errorMessage:{
         height:72,
