@@ -11,7 +11,6 @@ export default class HomeScreen extends React.Component{
     render() {            
         return(
             <ImageBackground source={require('../../assets/Back.jpg')} style={{width: '100%', height: '100%'}}>
-                <View style={style.container}>
                   <Header
                     leftComponent={{
                       icon: 'menu',
@@ -22,14 +21,13 @@ export default class HomeScreen extends React.Component{
                     rightComponent={{ icon: 'lock', color: "#1C8ADB", onPress: () => this.props.navigation.navigate("Login") }}
                     backgroundColor='#fff'
                   />
-                </View>
                           
               <View style={styles.container}>
                 <ScrollView>
                   <TouchableOpacity>
-                    <View style={styles.tab} >
+                    <View style={styles.tab_red} >
                       <Text  style={styles.item} >Alert!</Text>
-                      <Image style={styles.img}  source={require('../../assets//1.png')}/>
+                      <Image style={styles.img} source={require('../../assets//1.png')}/>
                     </View>
                     </TouchableOpacity>  
                     <TouchableOpacity>
@@ -79,7 +77,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
     paddingHorizontal: 10,
-    marginTop:-500
   },
   img:{
     position: "absolute",
@@ -94,6 +91,13 @@ const styles = StyleSheet.create({
     marginTop: 14,
     padding: 20,
     backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius:5,
+  },
+  tab_red:{
+    flexDirection:'row',
+    marginTop: 14,
+    padding: 20,
+    backgroundColor: 'rgba(255,0,0,0.65)',
     borderRadius:5,
   },
   item: {

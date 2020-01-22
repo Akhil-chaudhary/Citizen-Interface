@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Image,StyleSheet} from 'react-native';
+import {View,Text,Image,StyleSheet,KeyboardAvoidingView } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as firebase from 'firebase';
 
@@ -19,13 +19,14 @@ export default class RegisterScreen extends React.Component{
             })
         })
         .catch(error => this.setState({errorMessage: error.message}));
+        this.props.navigation.navigate("Home")
     };
 
 
 
     render() {
         return(
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                <Image 
                 style={{width:180,height:180,}}
                     source={require('../../assets/Register.png')}
@@ -87,7 +88,7 @@ export default class RegisterScreen extends React.Component{
 
                 </View>
             
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }

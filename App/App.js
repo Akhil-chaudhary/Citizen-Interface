@@ -1,21 +1,30 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator,createDrawerNavigator,createAppContainer } from 'react-navigation';
 import Splash from './src/screens/Splash';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import Form from './src/screens/Form';
+import AboutScreen from './src/screens/AboutScreen';
 import * as firebase from 'firebase';
 const navigator = createStackNavigator(
   {
     Splash:Splash,
     Login:LoginScreen,
     Register:RegisterScreen,
-    Home:HomeScreen
+    Home:HomeScreen,
+    Form:Form,
+    About:AboutScreen
   },
   {
-    initialRouteName: 'Splash',
+    initialRouteName: 'About',
     headerMode: 'none'
   }
 );
+const HomeNavigator = createDrawerNavigator({
+    Login:LoginScreen,
+    Register:RegisterScreen,
+    Home:HomeScreen,
+});
 const firebaseConfig={
   apiKey: "AIzaSyB5mHPt2DrHm2IbuQXWBPV4sJw30VGlbIA",
   authDomain: "fir-1-d9120.firebaseapp.com",
@@ -27,4 +36,4 @@ if (!firebase.apps.length){
   firebase.initializeApp (firebaseConfig);
 } 
 
-export default createAppContainer(navigator);
+export default createAppContainer(navigator,HomeNavigator);

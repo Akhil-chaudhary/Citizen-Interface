@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Image,StyleSheet} from 'react-native';
+import {View,Text,Image,StyleSheet,KeyboardAvoidingView} from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as firebase from 'firebase';
 
@@ -21,7 +21,7 @@ export default class LoginScreen extends React.Component{
 
     render() {
         return(
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <Image 
                 style={{width:180,height:180,}}
                     source={require('../../assets/User.png')}
@@ -74,7 +74,7 @@ export default class LoginScreen extends React.Component{
 
                 </View>
             
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }
