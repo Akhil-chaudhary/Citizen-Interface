@@ -21,7 +21,7 @@ const navigator = createStackNavigator(
     About: AboutScreen
   },
   {
-    initialRouteName: "About",
+    initialRouteName: "Splash",
     headerMode: "none"
   }
 );
