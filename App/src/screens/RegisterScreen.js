@@ -22,9 +22,9 @@ export default class RegisterScreen extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(userCredentials => {
-        this.props.navigation.navigate("Home")
+        this.props.navigation.navigate("Home");
         return userCredentials.user.updateProfile({
-          displayName: this.state.name,
+          displayName: this.state.name
         });
       })
       .catch(error => this.setState({ errorMessage: error.message }));

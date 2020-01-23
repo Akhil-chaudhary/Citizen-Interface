@@ -22,9 +22,9 @@ export default class LoginScreen extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
-        this.props.navigation.navigate("Home")
+        this.props.navigation.navigate("Home");
         return userCredentials.user.updateProfile({
-          displayName: this.state.name,
+          displayName: this.state.name
         });
       })
       .catch(error => this.setState({ errorMessage: error.message }));

@@ -3,7 +3,7 @@
   "expo": {
     "name": "NCRB",
     "icon": "./assets/logo.png",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "slug": "NCRB",
     "sdkVersion": "33.0.0",
     "orientation": "portrait",
