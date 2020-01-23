@@ -6,9 +6,15 @@ import {
   Text,
   ScrollView,
   TextInput,
-  KeyboardAvoidingView
+  Dimensions,
+  KeyboardAvoidingView,
+  ImageBackground,
+  ImageBackgroundComponent
 } from "react-native";
 import { Header } from "react-native-elements";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Body } from "native-base";
+const screenWidth = Math.round(Dimensions.get("window").width);
 
 export default class Form extends Component {
   constructor(props) {
@@ -38,126 +44,151 @@ export default class Form extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+      <ImageBackground
+        source={require("../../assets/background.jpg")}
+        style={{ width: "100%", height: "100%" }}
+      >
         <Header
           leftComponent={{
-            icon: "menu",
-            color: "#1C8ADB",
-            onPress: () => alert("Menu")
+            icon: "home",
+            color: "#fff",
+            onPress: () => this.props.navigation.navigate("Home")
           }}
           centerComponent={{
-            text: "Form",
+            text: "FORM",
             style: {
-              color: "#1C8ADB",
+              color: "#fff",
               fontWeight: "bold",
               fontSize: 22,
               letterSpacing: 3
             }
           }}
           rightComponent={{
-            icon: "lock",
-            color: "#1C8ADB",
-            onPress: () => this.props.navigation.navigate("Login")
+            icon: "close",
+            color: "#fff",
+            onPress: () => this.props.navigation.navigate("Home")
           }}
-          backgroundColor="#fff"
+          backgroundColor="#1C8ADB"
         />
-        <ScrollView>
-          <View>
-            <Text style={styles.text}> Name</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Name"
-              onChangeText={this.handleChange}
-              value={this.state.value}
-            />
-          </View>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior="padding"
+          enabled
+        >
+          <ScrollView>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Full Name</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Full Name"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
 
-          <View>
-            <Text style={styles.text}>Father's Name</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Father_Name"
-              onChangeText={this.handleChange}
-              value={this.state.value}
-            />
-          </View>
-          <View style={styles.text}>
-            <Text style={styles.text}>Address</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Address"
-              onChangeText={this.handleChange}
-              value={this.state.value}
-            />
-          </View>
-          <View>
-            <Text style={styles.text}>Mobile'Number</Text>
-            <TextInput
-              numeric
-              style={styles.input}
-              placeholder="Mobile"
-              onChangeText={this.handleChange}
-              value={this.state.value}
-            />
-          </View>
-          <View style={{ flex: 1, marginLeft: 5 }}>
-            <Text style={styles.text}>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              onChangeText={this.handleChange}
-              value={this.state.value}
-            />
-          </View>
-          <View style={{ flex: 1, marginLeft: 5 }}>
-            <Text style={styles.text}>Lost Item</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="LostItem"
-              onChangeText={this.handleChange}
-              value={this.state.value}
-            />
-          </View>
-
-          <Text style={styles.text}>Place of Lost</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Place of lost"
-            onChangeText={this.handleChange}
-            value={this.state.value}
-          />
-
-          <View>
-            <Text style={styles.text}>Date of Lost </Text>
-            <View style={styles.split}>
-              <View style={{ flex: 1, marginRight: 5 }}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Month"
-                  onChangeText={this.handleChange}
-                  value={this.state.value}
-                />
-              </View>
-              <View style={{ flex: 1, marginLeft: 5 }}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Day"
-                  onChangeText={this.handleChange}
-                  value={this.state.value}
-                />
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Father's Name</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Father`s Name"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Address</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Address"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Mobile Number</Text>
+              <TextInput
+                numeric
+                style={styles.input}
+                placeholder="Mobile Number"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Email</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Lost Item</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Lost Item"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Place of Lost</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Place of lost"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Date of Lost </Text>
+              <View style={styles.split}>
+                <View style={{ flex: 1, marginRight: 7 }}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Day"
+                    placeholderTextColor="#000"
+                    onChangeText={this.handleChange}
+                    value={this.state.value}
+                  />
+                </View>
+                <View style={{ flex: 1, marginLeft: 7 }}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Month"
+                    placeholderTextColor="#000"
+                    onChangeText={this.handleChange}
+                    value={this.state.value}
+                  />
+                </View>
               </View>
             </View>
-          </View>
 
-          <View style={styles.button}>
-            <Button
-              title="Submit Form"
-              value="ubmit"
-              onPress={this.handleSubmit}
-            />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+            <View style={{ paddingBottom: 100 }}>
+              <TouchableOpacity
+                style={styles.button}
+                title="Submit Form"
+                value="Submit"
+                onPress={this.handleSubmit}
+              >
+                <Text
+                  style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
+                >
+                  Submit
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </ImageBackground>
     );
   }
 }
@@ -165,15 +196,9 @@ export default class Form extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
     padding: 8,
     paddingTop: 50
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "black",
-    padding: 10,
-    marginBottom: 15,
-    alignSelf: "stretch"
   },
   split: {
     flexDirection: "row"
@@ -185,12 +210,34 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   text: {
-    color: "#41cdf4",
+    color: "#1C8ADB",
+    fontWeight: "bold",
     fontSize: 22
   },
-  button: {
+  form: {
     flex: 1,
-    justifyContent: "flex-end",
+    marginBottom: 60,
+    marginHorizontal: 30
+  },
+  input: {
+    borderBottomColor: "#1C8ADB",
+    borderBottomWidth: 2,
+    height: 40,
+    fontSize: 20,
+    color: "black",
     marginBottom: 20
+  },
+
+  entrybox: {
+    flex: 1,
+    marginHorizontal: 10
+  },
+  button: {
+    backgroundColor: "#1C8ADB",
+    borderRadius: 40,
+    height: 50,
+    marginHorizontal: "10%",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });

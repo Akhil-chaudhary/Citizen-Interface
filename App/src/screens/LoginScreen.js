@@ -4,7 +4,8 @@ import {
   Text,
   Image,
   StyleSheet,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ImageBackground
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
@@ -32,55 +33,66 @@ export default class LoginScreen extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <Image
-          style={{ width: 180, height: 180 }}
-          source={require("../../assets/User.png")}
-        />
-        <Text style={styles.greeting}>Citizen Login</Text>
-        <View style={styles.errorBox}>
-          {this.state.errorMessage && (
-            <Text style={styles.error}> {this.state.errorMessage} </Text>
-          )}
-        </View>
-
-        <View style={styles.form}>
-          <View>
-            <TextInput
-              placeholder="Email Address"
-              style={styles.input}
-              autoCapitalize="none"
-              onChangeText={email => this.setState({ email })}
-              value={this.state.email}
-            ></TextInput>
+      <ImageBackground
+        source={require("../../assets/background.jpg")}
+        style={{ width: "100%", height: "100%" }}
+      >
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior="padding"
+          enabled
+        >
+          <Image
+            style={{ width: 180, height: 180 }}
+            source={require("../../assets/User.png")}
+          />
+          <Text style={styles.greeting}>Citizen Login</Text>
+          <View style={styles.errorBox}>
+            {this.state.errorMessage && (
+              <Text style={styles.error}> {this.state.errorMessage} </Text>
+            )}
           </View>
 
-          <View style={{ marginTop: 32 }}>
-            <TextInput
-              placeholder="Password"
-              style={styles.input}
-              autoCapitalize="none"
-              secureTextEntry
-              onChangeText={password => this.setState({ password })}
-              value={this.state.password}
-            ></TextInput>
+          <View style={styles.form}>
+            <View>
+              <TextInput
+                placeholder="Email Address"
+                placeholderTextColor="#000"
+                style={styles.input}
+                autoCapitalize="none"
+                onChangeText={email => this.setState({ email })}
+                value={this.state.email}
+              ></TextInput>
+            </View>
+
+            <View style={{ marginTop: 32 }}>
+              <TextInput
+                placeholder="Password"
+                placeholderTextColor="#000"
+                style={styles.input}
+                autoCapitalize="none"
+                secureTextEntry
+                onChangeText={password => this.setState({ password })}
+                value={this.state.password}
+              ></TextInput>
+            </View>
+
+            <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
+              <Text style={{ color: "#FFF", fontWeight: "500" }}>Sign In</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              rounded
+              style={{ alignSelf: "center", marginTop: 32 }}
+              onPress={() => this.props.navigation.navigate("Register")}
+            >
+              <Text style={{ color: "#414959", fontSize: 15 }}>
+                New to NCRB App?<Text style={styles.signup}> Sign Up</Text>
+              </Text>
+            </TouchableOpacity>
           </View>
-
-          <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
-            <Text style={{ color: "#FFF", fontWeight: "500" }}>Sign In</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            rounded
-            style={{ alignSelf: "center", marginTop: 32 }}
-            onPress={() => this.props.navigation.navigate("Register")}
-          >
-            <Text style={{ color: "#414959", fontSize: 15 }}>
-              New to NCRB App?<Text style={styles.signup}> Sign Up</Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </ImageBackground>
     );
   }
 }
