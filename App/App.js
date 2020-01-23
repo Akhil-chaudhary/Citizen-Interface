@@ -1,4 +1,4 @@
-import { createStackNavigator,createDrawerNavigator,createAppContainer } from 'react-navigation';
+import { createStackNavigator,createDrawerNavigator, DrawerItems,createAppContainer } from 'react-navigation';
 import Splash from './src/screens/Splash';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
@@ -16,15 +16,11 @@ const navigator = createStackNavigator(
     About:AboutScreen
   },
   {
-    initialRouteName: 'About',
+    initialRouteName: 'Splash',
     headerMode: 'none'
   }
 );
-const HomeNavigator = createDrawerNavigator({
-    Login:LoginScreen,
-    Register:RegisterScreen,
-    Home:HomeScreen,
-});
+
 const firebaseConfig={
   apiKey: "AIzaSyB5mHPt2DrHm2IbuQXWBPV4sJw30VGlbIA",
   authDomain: "fir-1-d9120.firebaseapp.com",
@@ -36,4 +32,4 @@ if (!firebase.apps.length){
   firebase.initializeApp (firebaseConfig);
 } 
 
-export default createAppContainer(navigator,HomeNavigator);
+export default createAppContainer(navigator);

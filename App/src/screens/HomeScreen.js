@@ -1,28 +1,45 @@
-import React,{useState} from 'react';
-import {View,Text,Image,StyleSheet, Button,ImageBackground,ScrollView,rgba} from 'react-native';
-import {Header} from 'react-native-elements';
-import { Constants } from 'expo';
-import PropTypes from 'prop-types';
+import React,{Component} from 'react';
+import {View,Text,Image,StyleSheet, Button,SafeAreaView,ImageBackground,ScrollView} from 'react-native';
 import '@expo/vector-icons';
-import { TextInput, TouchableOpacity, FlatList } from 'react-native-gesture-handler';
-import { Right, Row } from 'native-base';
-export default class HomeScreen extends React.Component{
-  
+import { TextInput, TouchableOpacity, FlatList, LongPressGestureHandler } from 'react-native-gesture-handler';
+import * as firebase from "firebase";
+//import { Header,Right,Center,Left,Icon } from "native-base";
+import {Header} from 'react-native-elements';
+/*import HeaderBar from './HeaderBar';
+import Drawer from './Drawer';
+import { DrawerItems } from 'react-navigation';*/
+export default class HomeScreen extends Component{
+  state ={
+    email:"",
+    displayname: "",
+}
+componentDidMount(){
+    const {email, displayname} = firebase.auth().currentUser;
+    this.setState({email, displayname});
+}
+signOutUser = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {this.props.navigation.navigate("Login")});
+}
     render() {            
         return(
             <ImageBackground source={require('../../assets/Back.jpg')} style={{width: '100%', height: '100%'}}>
-                  <Header
+                  
+              
+              <Header
                     leftComponent={{
                       icon: 'menu',
                       color: "#1C8ADB",
                       onPress: () => alert('Menu'),
                     }}
                     centerComponent={{ text: 'MENU', style: { color: "#1C8ADB",fontWeight:'bold',fontSize:22,letterSpacing:3 } }}
-                    rightComponent={{ icon: 'lock', color: "#1C8ADB", onPress: () => this.props.navigation.navigate("Login") }}
+                    rightComponent={{ icon: 'lock', color: "#1C8ADB", onPress: this.signOutUser}}
                     backgroundColor='#fff'
                   />
-                          
-              <View style={styles.container}>
+                  
+                  <View style={styles.container}>
                 <ScrollView>
                   <TouchableOpacity>
                     <View style={styles.tab_red} >
@@ -30,7 +47,7 @@ export default class HomeScreen extends React.Component{
                       <Image style={styles.img} source={require('../../assets//1.png')}/>
                     </View>
                     </TouchableOpacity>  
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Form")}>
                     <View  style={styles.tab}>
                       <Text style={styles.item}>Applications</Text>
                       <Image  style={styles.img}  source={require('../../assets//2.png')}/>
@@ -66,11 +83,6 @@ export default class HomeScreen extends React.Component{
         )
     }
 }
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 const styles = StyleSheet.create({
   container: {

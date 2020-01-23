@@ -1,6 +1,6 @@
 import {View,Text,Image,StyleSheet, Button,ImageBackground,ScrollView,rgba} from 'react-native';
-import React from 'react';
-export default class AboutScreen extends React.Component{
+import React,{Component} from 'react';
+export default class AboutScreen extends Component{
   
     render() {            
         return(
