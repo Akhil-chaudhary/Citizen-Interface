@@ -26,9 +26,13 @@ export default class Splash extends Component {
             />
 
             <Text style={styles.title}>NCRB</Text>
-            <ActivityIndicator size="large" color="#1C8ADB" />
           </View>
-          <View>
+
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image
+              style={{ width: 80, height: 80 }}
+              source={require("../../assets/load.gif")}
+            />
             <Text style={styles.subtitle}>Citizen Interface</Text>
           </View>
         </View>
@@ -44,8 +48,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   title: {
-    paddingTop: 20,
-    paddingBottom: 50,
     textAlign: "center",
     color: "black",
     fontSize: 35,
