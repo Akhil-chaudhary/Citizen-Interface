@@ -11,25 +11,26 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 
 export default class RegisterScreen extends Component {
-  state = {
-    name: "",
-    email: "",
-    password: "",
-    errorMessage: null
-  };
 
-  handleSignUp = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(userCredentials => {
-        this.props.navigation.navigate("Home");
+  state= {
+    name:"",
+    email: "",
+    adhar:"",
+    number:"",
+    password: "",
+    errorMessage: null,
+};
+
+handleSignUp = () => {
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(userCredentials =>{
         return userCredentials.user.updateProfile({
-          displayName: this.state.name
-        });
-      })
-      .catch(error => this.setState({ errorMessage: error.message }));
-  };
+            displayName: this.state.name
+        })
+    })
+    .catch(error => this.setState({errorMessage: error.message}));
+};
+
+
 
   render() {
     return (

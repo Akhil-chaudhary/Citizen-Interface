@@ -8,9 +8,12 @@ import {
   ImageBackground
 } from "react-native";
 
+import * as firebase from "firebase";
 export default class Splash extends Component {
-  componentWillMount() {
-    setTimeout(() => this.props.navigation.navigate("Login"), 1200);
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.props.navigation.navigate(user ? "App" : "Auth");
+    });
   }
   render() {
     return (

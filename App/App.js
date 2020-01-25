@@ -1,5 +1,6 @@
 import {
   createStackNavigator,
+  createSwitchNavigator,
   createDrawerNavigator,
   DrawerItems,
   createAppContainer
@@ -16,18 +17,30 @@ import LostFIR from "./src/screens/LostFIR";
 import Noc from "./src/screens/Noc";
 
 import * as firebase from "firebase";
-const navigator = createStackNavigator(
+const AppStack = createStackNavigator({
+  Home: HomeScreen,
+  // Form: Form,
+  // Clearance: Clearance,
+  // FIR: FIR,
+  // Lost: LostFIR,
+  // Noc: Noc,
+  // About: AboutScreen
+},
+{
+  headerMode: "none"
+})
+const AuthStack = createStackNavigator({
+  Login: LoginScreen,
+  Register: RegisterScreen
+},
+{
+  headerMode: "none"
+})
+const navigator = createSwitchNavigator(
   {
     Splash: Splash,
-    Login: LoginScreen,
-    Register: RegisterScreen,
-    Home: HomeScreen,
-    Form: Form,
-    Clearance: Clearance,
-    FIR: FIR,
-    Lost: LostFIR,
-    Noc: Noc,
-    About: AboutScreen
+    App: AppStack,
+    Auth: AuthStack
   },
   {
     initialRouteName: "Splash",

@@ -19,6 +19,7 @@ import {
 import * as firebase from "firebase";
 //import { Header,Right,Center,Left,Icon } from "native-base";
 import { Header } from "react-native-elements";
+import { Drawer } from "react-native-paper";
 /*import HeaderBar from './HeaderBar';
 import Drawer from './Drawer';
 import { DrawerItems } from 'react-navigation';*/
