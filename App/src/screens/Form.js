@@ -64,10 +64,10 @@ export default class Form extends Component {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Lost")}
+              onPress={() => this.props.navigation.navigate("Tenant")}
             >
               <View style={styles.tab}>
-                <Text style={styles.item}>Applications</Text>
+                <Text style={styles.item}>Tenant Verification</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity>

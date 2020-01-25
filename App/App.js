@@ -5,6 +5,7 @@ import {
   DrawerItems,
   createAppContainer
 } from "react-navigation";
+import { Platform, Dimensions } from "react-native";
 import Splash from "./src/screens/Splash";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
@@ -15,16 +16,34 @@ import AboutScreen from "./src/screens/AboutScreen";
 import FIR from "./src/screens/FIR";
 import LostFIR from "./src/screens/LostFIR";
 import Noc from "./src/screens/Noc";
-
+import Tenant from "./src/screens/Tenant";
 import * as firebase from "firebase";
-const AppStack = createStackNavigator({
+const width = Dimensions.get("window").width;
+const DrawerConfig = {
+  drawerWidth: width * 0.83
+};
+const Drawer = createDrawerNavigator({
   Home: HomeScreen,
-  // Form: Form,
-  // Clearance: Clearance,
-  // FIR: FIR,
-  // Lost: LostFIR,
-  // Noc: Noc,
-  // About: AboutScreen
+  Form: Form,
+  FIR: FIR,
+  Noc: Noc,
+  About: AboutScreen
+},
+{
+  headerMode: "none"
+},
+DrawerConfig
+)
+const AppStack = createStackNavigator({
+  Drawer:Drawer,
+  Home: HomeScreen,
+  Form: Form,
+  Clearance: Clearance,
+  Tenant:Tenant,
+  FIR: FIR,
+  Lost: LostFIR,
+  Noc: Noc,
+  About: AboutScreen
 },
 {
   headerMode: "none"

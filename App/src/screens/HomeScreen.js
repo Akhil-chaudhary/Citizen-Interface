@@ -71,15 +71,12 @@ export default class HomeScreen extends Component {
 
         <View style={styles.container}>
           <ScrollView>
-            <TouchableOpacity>
-              <View style={styles.tab_red}>
-                <Text style={styles.item}>Alert!</Text>
-                <Image
-                  style={styles.img}
-                  source={require("../../assets//1.png")}
-                />
-              </View>
-            </TouchableOpacity>
+            <View style={styles.titleWrapper}>
+              <Image
+                style={{ width: 150, height: 150 }}
+                source={require("../../assets/logo.png")}
+              />
+            </View>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Form")}
             >
@@ -110,15 +107,6 @@ export default class HomeScreen extends Component {
                 <Image
                   style={styles.img}
                   source={require("../../assets//4.png")}
-                />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.tab}>
-                <Text style={styles.item}>Appointment Scheduling</Text>
-                <Image
-                  style={styles.img}
-                  source={require("../../assets//6.png")}
                 />
               </View>
             </TouchableOpacity>
@@ -169,5 +157,11 @@ const styles = StyleSheet.create({
   item: {
     alignItems: "center",
     fontSize: 20
+  },
+  titleWrapper: {
+    backgroundColor: "transparent",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
