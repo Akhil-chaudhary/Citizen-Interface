@@ -23,22 +23,6 @@ import { Header } from "react-native-elements";
 import Drawer from './Drawer';
 import { DrawerItems } from 'react-navigation';*/
 export default class FIR extends Component {
-  state = {
-    email: "",
-    displayname: ""
-  };
-  componentDidMount() {
-    const { email, displayname } = firebase.auth().currentUser;
-    this.setState({ email, displayname });
-  }
-  signOutUser = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        this.props.navigation.navigate("Login");
-      });
-  };
   render() {
     return (
       <ImageBackground
@@ -52,7 +36,7 @@ export default class FIR extends Component {
             onPress: () => alert("Menu")
           }}
           centerComponent={{
-            text: "MENU",
+            text: "E-FIR",
             style: {
               color: "#1C8ADB",
               fontWeight: "bold",
@@ -61,33 +45,25 @@ export default class FIR extends Component {
             }
           }}
           rightComponent={{
-            icon: "lock",
+            icon: "close",
             color: "#1C8ADB",
-            onPress: this.signOutUser
+            onPress: () => this.props.navigation.navigate("Home")
           }}
           backgroundColor="#fff"
         />
 
         <View style={styles.container}>
           <ScrollView>
-            <TouchableOpacity>
-              <View style={styles.tab}>
-                <Text style={styles.item}>Lost </Text>
-                <Image
-                  style={styles.img}
-                  source={require("../../assets//1.png")}
-                />
-              </View>
-            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Lost")}
             >
               <View style={styles.tab}>
+                <Text style={styles.item}>Theft E FIR</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.tab}>
                 <Text style={styles.item}>Applications</Text>
-                <Image
-                  style={styles.img}
-                  source={require("../../assets//2.png")}
-                />
               </View>
             </TouchableOpacity>
             <TouchableOpacity>
@@ -98,30 +74,8 @@ export default class FIR extends Component {
             <TouchableOpacity>
               <View style={styles.tab}>
                 <Text style={styles.item}>NOC Request</Text>
-                <Image
-                  style={styles.img}
-                  source={require("../../assets//4.png")}
-                />
-              </View>
-             </TouchableOpacity>
-            {/*<TouchableOpacity>
-              <View style={styles.tab}>
-                <Text style={styles.item}>Appointment Scheduling</Text>
-                <Image
-                  style={styles.img}
-                  source={require("../../assets//6.png")}
-                />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.tab}>
-                <Text style={styles.item}>Recent Activities</Text>
-                <Image
-                  style={styles.img}
-                  source={require("../../assets//6.png")}
-                />
-              </View>
-            </TouchableOpacity> */}
           </ScrollView>
         </View>
       </ImageBackground>

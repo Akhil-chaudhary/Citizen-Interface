@@ -90,7 +90,9 @@ export default class HomeScreen extends Component {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("FIR")}
+            >
               <View style={styles.tab}>
                 <Text style={styles.item}>Online FIR</Text>
                 <Image
@@ -99,7 +101,9 @@ export default class HomeScreen extends Component {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Noc")}
+            >
               <View style={styles.tab}>
                 <Text style={styles.item}>NOC Request</Text>
                 <Image

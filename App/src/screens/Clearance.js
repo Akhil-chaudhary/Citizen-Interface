@@ -12,10 +12,10 @@ import {
   ImageBackgroundComponent
 } from "react-native";
 import { Header } from "react-native-elements";
-
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Dropdown } from "react-native-material-dropdown";
 
-export default class LostFIR extends Component {
+export default class Clearance extends Component {
   constructor(props) {
     super(props);
 
@@ -24,10 +24,12 @@ export default class LostFIR extends Component {
       fname: "",
       email: "",
       address: "",
-      lDate: "",
-      litem: "",
+      details: "",
+      adhar: "",
       mobile: "",
-      plost: ""
+      station: "",
+      district: "",
+      gender: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,6 +44,18 @@ export default class LostFIR extends Component {
   }
 
   render() {
+    let data = [
+      {
+        value: "Female"
+      },
+      {
+        value: "Male"
+      },
+      {
+        value: "Other"
+      }
+    ];
+
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
@@ -54,7 +68,7 @@ export default class LostFIR extends Component {
             onPress: () => this.props.navigation.navigate("Home")
           }}
           centerComponent={{
-            text: "Lost E FIR",
+            text: "Clearance Certificate",
             style: {
               color: "#fff",
               fontWeight: "bold",
@@ -65,7 +79,7 @@ export default class LostFIR extends Component {
           rightComponent={{
             icon: "close",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("FIR")
+            onPress: () => this.props.navigation.navigate("Form")
           }}
           backgroundColor="#1C8ADB"
         />
@@ -128,25 +142,52 @@ export default class LostFIR extends Component {
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Lost Item</Text>
+              <Text style={styles.text}>Residing Period</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Lost Item"
+                placeholder="Details"
                 placeholderTextColor="#000"
                 onChangeText={this.handleChange}
                 value={this.state.value}
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Place of Lost</Text>
+              <Text style={styles.text}>Police Station</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Place of lost"
+                placeholder="Police Station"
                 placeholderTextColor="#000"
                 onChangeText={this.handleChange}
                 value={this.state.value}
               />
             </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Aadhar Number</Text>
+              <TextInput
+                style={styles.input}
+                numeric
+                placeholder="Number"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>District</Text>
+              <TextInput
+                style={styles.input}
+                numeric
+                placeholder="District"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Gender</Text>
+              <Dropdown style={styles.drop} baseColor="#1C8ADB" data={data} />
+            </View>
+
             <View style={styles.entrybox}>
               <Text style={styles.text}>Date of Lost </Text>
               <View style={styles.split}>
@@ -223,9 +264,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     height: 40,
     fontSize: 20,
-    color: "black",
+    color: "black"
   },
-
+  drop: {
+    fontSize: 20
+  },
   entrybox: {
     flex: 1,
     marginHorizontal: 10,

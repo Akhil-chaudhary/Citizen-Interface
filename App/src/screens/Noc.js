@@ -12,10 +12,11 @@ import {
   ImageBackgroundComponent
 } from "react-native";
 import { Header } from "react-native-elements";
-
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { CheckBox } from "native-base";
+import { Dropdown } from "react-native-material-dropdown";
 
-export default class LostFIR extends Component {
+export default class Noc extends Component {
   constructor(props) {
     super(props);
 
@@ -24,10 +25,7 @@ export default class LostFIR extends Component {
       fname: "",
       email: "",
       address: "",
-      lDate: "",
-      litem: "",
-      mobile: "",
-      plost: ""
+      mobile: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,8 +38,60 @@ export default class LostFIR extends Component {
     alert("Save the Form  !");
     event.preventDefault();
   }
+  state = {
+    yes: true,
+    no: false
+  };
+  onePressed() {
+    alert("yes");
+  }
+  twoPressed() {
+    alert("no");
+  }
 
   render() {
+    let data = [
+      {
+        value: "Female"
+      },
+      {
+        value: "Male"
+      },
+      {
+        value: "Other"
+      }
+    ];
+
+    let data2 = [
+      {
+        value: "Individual"
+      },
+      {
+        value: "Jointily"
+      },
+      {
+        value: "Other"
+      }
+    ];
+
+    let data3 = [
+      {
+        value: "Government"
+      },
+      {
+        value: "Public Sector Undertaking"
+      },
+      {
+        value: "Firm"
+      },
+      {
+        value: "Private Sector Undertaking"
+      },
+      {
+        value: "Other"
+      }
+    ];
+
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
@@ -54,7 +104,7 @@ export default class LostFIR extends Component {
             onPress: () => this.props.navigation.navigate("Home")
           }}
           centerComponent={{
-            text: "Lost E FIR",
+            text: "NOC",
             style: {
               color: "#fff",
               fontWeight: "bold",
@@ -65,7 +115,7 @@ export default class LostFIR extends Component {
           rightComponent={{
             icon: "close",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("FIR")
+            onPress: () => this.props.navigation.navigate("Home")
           }}
           backgroundColor="#1C8ADB"
         />
@@ -127,48 +177,62 @@ export default class LostFIR extends Component {
                 value={this.state.value}
               />
             </View>
+
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Lost Item</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Lost Item"
-                placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+              <Text style={styles.text}>Whether the Property is Owned by</Text>
+              <Dropdown
+                style={styles.drop}
+                baseColor="#1C8ADB"
+                label="Select a Value"
+                data={data3}
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Place of Lost</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Place of lost"
-                placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+              <Text style={styles.text}>Whether the Property is Owned by</Text>
+
+              <Dropdown
+                style={styles.drop}
+                baseColor="#1C8ADB"
+                label="Select a Value"
+                data={data2}
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Date of Lost </Text>
+              <Text style={styles.text}>Gender</Text>
+              <Dropdown style={styles.drop} baseColor="#1C8ADB" data={data} />
+            </View>
+
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>
+                The Applicant is other than the Owner ?{" "}
+              </Text>
               <View style={styles.split}>
                 <View style={{ flex: 1, marginRight: 7 }}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Day"
-                    placeholderTextColor="#000"
-                    onChangeText={this.handleChange}
-                    value={this.state.value}
+                  <Text>Yes</Text>
+                  <CheckBox
+                    checked={this.state.yes}
+                    onPress={() => this.onePressed()}
                   />
                 </View>
                 <View style={{ flex: 1, marginLeft: 7 }}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Month"
-                    placeholderTextColor="#000"
-                    onChangeText={this.handleChange}
-                    value={this.state.value}
+                  <Text>No</Text>
+                  <CheckBox
+                    checked={this.state.no}
+                    onPress={() => this.twoPressed()}
                   />
                 </View>
               </View>
+            </View>
+
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Upload document</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="document"
+                placeholderTextColor="#000"
+                onChangeText={this.handleChange}
+                value={this.state.value}
+              />
             </View>
 
             <View style={{ paddingBottom: 100 }}>
@@ -223,9 +287,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     height: 40,
     fontSize: 20,
-    color: "black",
+    color: "black"
   },
-
+  drop: {
+    fontSize: 20
+  },
   entrybox: {
     flex: 1,
     marginHorizontal: 10,
