@@ -48,10 +48,10 @@ export default class Tenant extends Component {
         style={{ width: "100%", height: "100%" }}
       >
         <Header
-          leftComponent={{
-            icon: "home",
+           leftComponent={{
+            icon: "menu",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("Home")
+            onPress:()=>this.props.navigation.openDrawer()
           }}
           centerComponent={{
             text: "Tenant",

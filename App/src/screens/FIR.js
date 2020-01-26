@@ -33,7 +33,7 @@ export default class FIR extends Component {
           leftComponent={{
             icon: "menu",
             color: "#1C8ADB",
-            onPress: () => alert("Menu")
+            onPress:()=>this.props.navigation.openDrawer()
           }}
           centerComponent={{
             text: "E-FIR",

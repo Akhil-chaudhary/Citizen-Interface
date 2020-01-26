@@ -27,7 +27,7 @@ const DrawerConfig = {
 const CustomDrawerComponent=(props)=>(
   <SafeAreaView style={{flex:1,top:40}}>
     <View style={{height:150,backgroundColor:'white',alignItems:'center',justifyContent:'center'}}>
-      <Image source={require('./assets/logo.png')} style={{height:120,width:120,borderRadius:60}}/>
+      <Image source={require('./assets/logo.png')} style={{height:120,width:120,}}/>
     </View>
     <ScrollView>
       <DrawerItems {...props}/>
@@ -38,7 +38,7 @@ const Drawer = createDrawerNavigator({
   Home: HomeScreen,
   Form: Form,
   FIR: FIR,
-  Noc: Noc,
+  NOC: Noc,
   About: AboutScreen
 },
 {
