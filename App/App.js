@@ -5,7 +5,8 @@ import {
   DrawerItems,
   createAppContainer
 } from "react-navigation";
-import { Platform, Dimensions } from "react-native";
+import React from 'react';
+import { Platform, Dimensions, SafeAreaView,View,Image } from "react-native";
 import Splash from "./src/screens/Splash";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
@@ -18,10 +19,21 @@ import LostFIR from "./src/screens/LostFIR";
 import Noc from "./src/screens/Noc";
 import Tenant from "./src/screens/Tenant";
 import * as firebase from "firebase";
+import { ScrollView } from "react-native-gesture-handler";
 const width = Dimensions.get("window").width;
 const DrawerConfig = {
   drawerWidth: width * 0.83
 };
+const CustomDrawerComponent=(props)=>(
+  <SafeAreaView style={{flex:1,top:40}}>
+    <View style={{height:150,backgroundColor:'white',alignItems:'center',justifyContent:'center'}}>
+      <Image source={require('./assets/logo.png')} style={{height:120,width:120,borderRadius:60}}/>
+    </View>
+    <ScrollView>
+      <DrawerItems {...props}/>
+    </ScrollView>
+  </SafeAreaView>
+)
 const Drawer = createDrawerNavigator({
   Home: HomeScreen,
   Form: Form,
@@ -30,6 +42,7 @@ const Drawer = createDrawerNavigator({
   About: AboutScreen
 },
 {
+  contentComponent:CustomDrawerComponent,
   headerMode: "none"
 },
 DrawerConfig

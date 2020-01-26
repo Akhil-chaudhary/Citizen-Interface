@@ -50,7 +50,7 @@ export default class HomeScreen extends Component {
           leftComponent={{
             icon: "menu",
             color: "#1C8ADB",
-            onPress: () => alert("Menu")
+            onPress:()=>this.props.navigation.openDrawer()
           }}
           centerComponent={{
             text: "MENU",

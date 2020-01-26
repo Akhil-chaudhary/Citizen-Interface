@@ -21,7 +21,7 @@ export default class AboutScreen extends Component {
           centerComponent={{
             text: "ABOUT",
             style: {
-              color: "#1C8ADB",
+              color: "#fff",
               fontWeight: "bold",
               fontSize: 22,
               letterSpacing: 3
@@ -29,10 +29,10 @@ export default class AboutScreen extends Component {
           }}
           rightComponent={{
             icon: "close",
-            color: "#1C8ADB",
+            color: "#fff",
             onPress: () => this.props.navigation.navigate("Home")
           }}
-          backgroundColor="#fff"
+          backgroundColor="#1C8ADB"
         />
         <View style={styles.wrapper}>
           <Image
@@ -42,7 +42,7 @@ export default class AboutScreen extends Component {
         </View>
 
         <ScrollView style={{ top: "10%", marginHorizontal: "4%" }}>
-          <Text style={{ fontSize: 20 }}>
+          <Text style={{ fontSize: 20,paddingBottom:100 }}>
             NCRB shall empower Indian Police with Information Technology and
             Criminal Intelligence to enable them to effectively enforce the law
             and improve public service delivery.{"\n"}
