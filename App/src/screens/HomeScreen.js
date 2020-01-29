@@ -16,6 +16,7 @@ import {
   FlatList,
   LongPressGestureHandler
 } from "react-native-gesture-handler";
+import AwesomeButton from "react-native-really-awesome-button";
 import * as firebase from "firebase";
 //import { Header,Right,Center,Left,Icon } from "native-base";
 import { Header } from "react-native-elements";
@@ -50,7 +51,7 @@ export default class HomeScreen extends Component {
           leftComponent={{
             icon: "menu",
             color: "#1C8ADB",
-            onPress:()=>this.props.navigation.openDrawer()
+            onPress: () => this.props.navigation.openDrawer()
           }}
           centerComponent={{
             text: "MENU",
@@ -62,7 +63,7 @@ export default class HomeScreen extends Component {
             }
           }}
           rightComponent={{
-            icon: "lock",
+            icon: "exit-to-app",
             color: "#1C8ADB",
             onPress: this.signOutUser
           }}
@@ -120,6 +121,11 @@ export default class HomeScreen extends Component {
               </View>
             </TouchableOpacity>
           </ScrollView>
+          <View>
+          <AwesomeButton style={styles.sos}>
+            <Text>SOS</Text>
+          </AwesomeButton>
+          </View>
         </View>
       </ImageBackground>
     );

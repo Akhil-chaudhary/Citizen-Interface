@@ -9,49 +9,95 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   ImageBackground,
-  ImageBackgroundComponent
+  ImageBackgroundComponent,
+  Alert
 } from "react-native";
 import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { Dropdown } from "react-native-material-dropdown";
+import * as ImagePicker from 'expo-image-picker';
+import DatePicker from "react-native-datepicker";
+import * as firebase from "firebase";
+import { Title } from "native-base";
+var photo
 export default class Tenant extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: "",
-      fname: "",
-      email: "",
-      address: "",
-      mobile: ""
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange(event) {
-    this.setState({ value: event.target });
-  }
-
-  handleSubmit(event) {
-    alert("Save the Form  !");
-    event.preventDefault();
-  }
   state = {
-    yes: true,
-    no: false
+    Name: "",
+    Address: "",
+    Mobile: "",
+    Rental: "",
+    Rental_type: "",
+    Tenant_name: "",
+    DOB: "",
+    Tenant_mob: "",
+    Tenant_permanant_add: "",
+    Reference1: "",
+    Mobile1: "",
+    Reference2: "",
+    Mobile2: "",
+    PAN: "",
+    Voting_card: "",
+    image:'',
+    errorMessage: null
+  };
+
+  handleSubmit = () => {
+    this.state.image=photo
+    firebase
+      .database()
+      .ref("/Tenant")
+      .push(this.state)
+  };
+  chooseImage = async () => {
+    //let result=await ImagePicker.launchCameraAsync();
+    let result = await ImagePicker.launchImageLibraryAsync();
+    
+    // this.setState({ image:blob.data.name })
+    if (!result.cancelled) {
+      this.uploadImage(result.uri,this.state.Name)
+        .then(() => {
+          Alert.alert("Success");
+        })
+        .catch(error => {
+          Alert.alert(error);
+        });
+    }
+  };
+  uploadImage = async (uri,imageName) => {
+    const response = await fetch(uri);
+    blob = await response.blob();
+    var ref = firebase
+      .storage()
+      .ref()
+      .child("Tenant/" + imageName);
+      // firebase
+      // .database()
+      // .ref("Tenant/")
+      // .push({image:blob.data.name});  
+      photo=blob.data.name
+    return ref.put(blob);
+    
   };
 
   render() {
+    let data = [
+      {
+        value: "Residential"
+      },
+      {
+        value: "Commercial"
+      }
+    ];
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
         style={{ width: "100%", height: "100%" }}
       >
         <Header
-           leftComponent={{
-            icon: "menu",
+          leftComponent={{
+            icon: "home",
             color: "#fff",
-            onPress:()=>this.props.navigation.openDrawer()
+            onPress: () => this.props.navigation.navigate("Home")
           }}
           centerComponent={{
             text: "Tenant",
@@ -63,9 +109,13 @@ export default class Tenant extends Component {
             }
           }}
           rightComponent={{
-            icon: "close",
+            icon: "help",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("Form")
+            onPress: () =>
+              Alert.alert(
+                "Help",
+                "Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example."
+              )
           }}
           backgroundColor="#1C8ADB"
         />
@@ -79,10 +129,10 @@ export default class Tenant extends Component {
               <Text style={styles.text}>House Owner Name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Full Name"
+                placeholder="Full name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Name => this.setState({ Name })}
+                value={this.state.Name}
               />
             </View>
             <View style={styles.entrybox}>
@@ -91,75 +141,95 @@ export default class Tenant extends Component {
                 style={styles.input}
                 placeholder="Address"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Address => this.setState({ Address })}
+                value={this.state.Address}
               />
             </View>
 
             <View style={styles.entrybox}>
               <Text style={styles.text}>Current Number</Text>
               <TextInput
-                numeric
                 style={styles.input}
-                placeholder="Number"
+                numeric
+                placeholder="Mobile"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Mobile => this.setState({ Mobile })}
+                value={this.state.Mobile}
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}> Rental PropertyAddress</Text>
+              <Text style={styles.text}> Rental Property Address</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Address"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Rental => this.setState({ Rental })}
+                value={this.state.Rental}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>
                 {" "}
-                Property For Rental Residentai/Commerical
+                Property For Rental Residentail/Commerical
               </Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Address"
-                placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Rental_type => this.setState({ Rental_type })}
+                value={this.state.Rental_type}
+                baseColor="#1C8ADB"
+                data={data}
               />
             </View>
-            <Text style={styles.text}> Tenant information</Text>
+            <Text style={styles.text}>Tenant information</Text>
 
             <View style={styles.entrybox}>
-              <Text style={styles.text}> Tenant Name</Text>
+              <Text style={styles.text}>Tenant Name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Full Name"
+                placeholder="Full name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Tenant_name => this.setState({ Tenant_name })}
+                value={this.state.Tenant_name}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Date Of Birth</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="dd/mm/yy"
-                placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+              <DatePicker
+                style={{ width: 200, backgroundColor: "#1C8ADB" }}
+                date={this.state.DOB}
+                mode="date"
+                placeholder="Select Date"
+                placeholderTextColor="black"
+                format="YYYY-MM-DD"
+                minDate="2016-05-01"
+                maxDate="2019-06-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                }}
+                onDateChange={DOB => {
+                  this.setState({ DOB });
+                }}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}> Contact number</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Number"
+                numeric
+                placeholder="Mobile"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Tenant_mob => this.setState({ Tenant_mob })}
+                value={this.state.Tenant_mob}
               />
             </View>
             <View style={styles.entrybox}>
@@ -168,10 +238,9 @@ export default class Tenant extends Component {
               </Text>
               <TextInput
                 style={styles.input}
-                placeholder="Address"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Tenant => this.setState({ Tenant })}
+                value={this.state.Tenant}
               />
             </View>
             <View style={styles.entrybox}>
@@ -180,29 +249,31 @@ export default class Tenant extends Component {
                 style={styles.input}
                 placeholder="Address"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Tenant_permanant_add =>
+                  this.setState({ Tenant_permanant_add })
+                }
+                value={this.state.Tenant_permanant_add}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Reference Of Person-1 Name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Reference Name"
+                placeholder="Full name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Reference1 => this.setState({ Reference1 })}
+                value={this.state.Reference1}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Contact Number </Text>
               <TextInput
-                numeric
                 style={styles.input}
-                placeholder="Refernce Contact Number"
+                numeric
+                placeholder="Mobile"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Mobile1 => this.setState({ Mobile1 })}
+                value={this.state.Mobile1}
               />
             </View>
 
@@ -210,84 +281,72 @@ export default class Tenant extends Component {
               <Text style={styles.text}>Reference Of Person-2 Name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Reference Name"
+                placeholder="Full name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Reference2 => this.setState({ Reference2 })}
+                value={this.state.Reference2}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Contact Number </Text>
               <TextInput
+                style={styles.input}
                 numeric
-                style={styles.input}
-                placeholder="Refernce Contact Number"
+                placeholder="Mobile"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Mobile2 => this.setState({ Mobile2 })}
+                value={this.state.Mobile2}
               />
             </View>
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>Rental Property Given By Whom </Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Owner Name"
-                placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
-              />
-            </View>
-
-            <Text>Tenant Permenant Address </Text>
 
             <View style={styles.entrybox}>
               <Text style={styles.text}>PAN Card Number </Text>
               <TextInput
                 style={styles.input}
-                placeholder="PAN Card"
+                placeholder="PAN"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={PAN => this.setState({ PAN })}
+                value={this.state.PAN}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Voting Card</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Voting Card "
+                placeholder="Voting Card"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Voting_card => this.setState({ Voting_card })}
+                value={this.state.Voting_card}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Photo Owner</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Owner"
-                placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
-              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this.chooseImage}
+              >
+                <Text>Upload</Text>
+              </TouchableOpacity>
             </View>
+            {/*
             <View style={styles.entrybox}>
               <Text style={styles.text}>Photo Property Consultant </Text>
               <TextInput
                 style={styles.input}
-                placeholder="consultant"
+                placeholder="Full name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={name => this.setState({ name })}
+                value={this.state.name}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Photo Tenant</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Tenant"
+                placeholder="Full name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={name => this.setState({ name })}
+                value={this.state.name}
               />
             </View>
             <Text style={styles.text}>Note:</Text>
@@ -308,19 +367,17 @@ export default class Tenant extends Component {
                   Upload
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             <View style={{ paddingBottom: 50 }}>
               <TouchableOpacity
                 style={styles.button}
-                title="continue Form"
-                value="continue"
                 onPress={this.handleSubmit}
               >
                 <Text
                   style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
                 >
-                  Continue
+                  Submit
                 </Text>
               </TouchableOpacity>
             </View>

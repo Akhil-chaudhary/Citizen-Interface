@@ -6,7 +6,7 @@ import {
   createAppContainer
 } from "react-navigation";
 import React from 'react';
-import { Platform, Dimensions, SafeAreaView,View,Image } from "react-native";
+import { Platform, Dimensions, SafeAreaView,View,Image,Button,StyleSheet } from "react-native";
 import Splash from "./src/screens/Splash";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
@@ -18,12 +18,14 @@ import FIR from "./src/screens/FIR";
 import LostFIR from "./src/screens/LostFIR";
 import Noc from "./src/screens/Noc";
 import Tenant from "./src/screens/Tenant";
+import MapScreen from './src/screens/MapScreen';
 import * as firebase from "firebase";
 import { ScrollView } from "react-native-gesture-handler";
 const width = Dimensions.get("window").width;
 const DrawerConfig = {
   drawerWidth: width * 0.83
 };
+
 const CustomDrawerComponent=(props)=>(
   <SafeAreaView style={{flex:1,top:40}}>
     <View style={{height:150,backgroundColor:'white',alignItems:'center',justifyContent:'center'}}>
@@ -31,6 +33,11 @@ const CustomDrawerComponent=(props)=>(
     </View>
     <ScrollView>
       <DrawerItems {...props}/>
+      <Button
+      style={styles.button}
+      title='LOGOUT'
+      onPress={this.signOutUser}
+      />
     </ScrollView>
   </SafeAreaView>
 )
@@ -39,6 +46,7 @@ const Drawer = createDrawerNavigator({
   Form: Form,
   FIR: FIR,
   NOC: Noc,
+  Map:MapScreen,
   About: AboutScreen
 },
 {
@@ -81,14 +89,26 @@ const navigator = createSwitchNavigator(
 );
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB5mHPt2DrHm2IbuQXWBPV4sJw30VGlbIA",
-  authDomain: "fir-1-d9120.firebaseapp.com",
-  databaseURL: "https://fir-1-d9120.firebaseio.com",
-  projectId: "fir-1-d9120",
-  storageBucket: "fir-1-d9120.appspot.com"
+  apiKey: "AIzaSyBcfe9PHF8GqZHUxg999QKYmK9CqP8bugU",
+  authDomain: "sih-a9d77.firebaseapp.com",
+  databaseURL: "https://sih-a9d77.firebaseio.com",
+  projectId: "sih-a9d77",
+  storageBucket: "sih-a9d77.appspot.com",
+  messagingSenderId: "457769232417",
+  appId: "1:457769232417:web:b55d8c709b802ace551b60"
 };
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
 export default createAppContainer(navigator);
+const styles = StyleSheet.create({
+button: {
+  backgroundColor: "#1C8ADB",
+  borderRadius: 40,
+  height: 50,
+  marginHorizontal: "10%",
+  alignItems: "center",
+  justifyContent: "center"
+}
+});
