@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, Component, useState } from "react";
 import {
   Button,
   View,
@@ -17,14 +17,16 @@ import {
 import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Dropdown } from "react-native-material-dropdown";
-import MapScreen from "./MapScreen";
-import MapView, {
-  Marker,
-  AnimatedRegion,
-  Polyline,
-  PROVIDER_GOOGLE
-} from "react-native-maps";
-import haversine from "haversine";
+import { requestPermissionAsync } from "expo-location";
+// import MapScreen from "./MapScreen.js";
+// import MapView, {
+//   Marker,
+//   AnimatedRegion,
+//   Polyline,
+//   PROVIDER_GOOGLE
+// } from "react-native-maps";
+// import haversine from "haversine";
+import Map from "./MapScreen";
 import * as firebase from "firebase";
 // var  firebaseConfig2 = {
 //   apiKey: "AIzaSyB5mHPt2DrHm2IbuQXWBPV4sJw30VGlbIA",
@@ -39,8 +41,9 @@ import * as firebase from "firebase";
 // if (!firebase.apps.length) {
 //   firebase.initializeApp(firebaseConfig);
 // }
+let States=[];
+let station = [];
 export default class Clearance extends Component {
-
   state = {
     Name: "",
     Father_name: "",
@@ -49,21 +52,49 @@ export default class Clearance extends Component {
     Email: "",
     Residing: "",
     Station: "",
+    State: "",
     Aadhar: "",
     District: "",
-    Gender:'',
-    errorMessage: null,
+    Gender: "",
+    errorMessage: null
   };
-  state2={
-    
-    Name: "",
-    Father_name: "",
-  }
   handleSubmit = () => {
-    firebase.database().ref('/Clearance').push(this.state)
-    .then(this.props.navigation.navigate("Form"))
+    firebase
+      .database()
+      .ref("/Clearance")
+      .push(this.state)
+      .then(this.props.navigation.navigate("Form"));
   };
+  componentWillMount() {
+    this.fetchDataStates();
+   
+ }
+ fetchDataStates = async () => {
+     
+  var fireBaseResponse = firebase.database().ref().child('States/');
+  fireBaseResponse.once('value').then(snapshot => {
+      snapshot.forEach(child => {
+          var temp = child.key;
+          States.push({value:temp},);
+          return false;
+ });
+ console.log(States);
+ });
+}
+ fetchDataStation = async () => {
+     var fireBaseResponse = firebase.database().ref('States/').child(this.state.State);
+     fireBaseResponse.once('value').then(snapshot => {
+         snapshot.forEach(item => {
+             var temp = item.val();
+             station.push({value:temp},);
+             return false;
+    });
+    console.log(station);
+    });
+ }
+
   render() {
+    this.fetchDataStation();
     let data = [
       {
         value: "Female"
@@ -102,16 +133,45 @@ export default class Clearance extends Component {
             onPress: () => this.props.navigation.navigate("Form")
           }}
           backgroundColor="#1C8ADB"
-        />{/* <View style={styles.map}>
-               <MapScreen /> 
-            </View> */}
+        />
+        <View>
+          <Map />
+        </View>
         <KeyboardAvoidingView
           style={styles.container}
           behavior="padding"
           enabled
         >
           <ScrollView>
-            
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>State</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={State => this.setState({ State })}
+                value={this.state.State}
+                baseColor="#1C8ADB"
+                data={States}
+              />
+              {/* </View><View style={styles.entrybox}>
+              <Text style={styles.text}>District</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Gender => this.setState({ Gender })}
+                value={this.state.Gender}
+                baseColor="#1C8ADB"
+                data={data}
+              /> */}
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Police Station</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Station => this.setState({ Station })}
+                value={this.state.Station}
+                baseColor="#1C8ADB"
+                data={station}
+              />
+            </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Full name</Text>
               <TextInput
@@ -153,7 +213,7 @@ export default class Clearance extends Component {
                 value={this.state.Mobile}
               />
             </View>
-            
+
             <View style={styles.entrybox}>
               <Text style={styles.text}>Email</Text>
               <TextInput
@@ -164,7 +224,7 @@ export default class Clearance extends Component {
                 value={this.state.Email}
               />
             </View>
-            
+
             <View style={styles.entrybox}>
               <Text style={styles.text}>Residing Period</Text>
               <TextInput
@@ -173,16 +233,6 @@ export default class Clearance extends Component {
                 placeholderTextColor="#000"
                 onChangeText={Residing => this.setState({ Residing })}
                 value={this.state.Residing}
-              />
-            </View>
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>Police Station</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Police Station"
-                placeholderTextColor="#000"
-                onChangeText={Station => this.setState({ Station })}
-                value={this.state.Station}
               />
             </View>
             <View style={styles.entrybox}>
@@ -208,10 +258,13 @@ export default class Clearance extends Component {
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Gender</Text>
-              <Dropdown style={styles.drop}
-              onChangeText={Gender => this.setState({ Gender })}
-              value={this.state.Gender}
-               baseColor="#1C8ADB" data={data} />
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Gender => this.setState({ Gender })}
+                value={this.state.Gender}
+                baseColor="#1C8ADB"
+                data={data}
+              />
             </View>
             <View style={{ paddingBottom: 100 }}>
               <TouchableOpacity
@@ -248,11 +301,11 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 12
   },
-  map: {
-    padding: 100,
-    justifyContent: "flex-end",
-    alignItems: "center"
-  },
+  // map: {
+  //   padding: 100,
+  //   justifyContent: "flex-end",
+  //   alignItems: "center"
+  // },
   text: {
     color: "#1C8ADB",
     fontWeight: "bold",

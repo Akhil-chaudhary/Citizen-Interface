@@ -88,14 +88,14 @@ const navigator = createSwitchNavigator(
   }
 );
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBcfe9PHF8GqZHUxg999QKYmK9CqP8bugU",
-  authDomain: "sih-a9d77.firebaseapp.com",
-  databaseURL: "https://sih-a9d77.firebaseio.com",
-  projectId: "sih-a9d77",
-  storageBucket: "sih-a9d77.appspot.com",
-  messagingSenderId: "457769232417",
-  appId: "1:457769232417:web:b55d8c709b802ace551b60"
+var firebaseConfig = {
+  apiKey: "AIzaSyAf79sr9bJjAHtQpJyQa7DVVNZvjwZ1zgQ",
+  authDomain: "sih2020-42ea1.firebaseapp.com",
+  databaseURL: "https://sih2020-42ea1.firebaseio.com",
+  projectId: "sih2020-42ea1",
+  storageBucket: "sih2020-42ea1.appspot.com",
+  messagingSenderId: "43086957866",
+  appId: "1:43086957866:web:87d03b215fb73387816253"
 };
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
