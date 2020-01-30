@@ -41,7 +41,8 @@ import * as firebase from "firebase";
 // if (!firebase.apps.length) {
 //   firebase.initializeApp(firebaseConfig);
 // }
-let States=[];
+let States = [];
+let District = [];
 let station = [];
 export default class Clearance extends Component {
   state = {
@@ -67,34 +68,53 @@ export default class Clearance extends Component {
   };
   componentWillMount() {
     this.fetchDataStates();
-   
- }
- fetchDataStates = async () => {
-     
-  var fireBaseResponse = firebase.database().ref().child('States/');
-  fireBaseResponse.once('value').then(snapshot => {
+  }
+  fetchDataStates = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref()
+      .child("States/");
+    fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
-          var temp = child.key;
-          States.push({value:temp},);
-          return false;
- });
- console.log(States);
- });
-}
- fetchDataStation = async () => {
-     var fireBaseResponse = firebase.database().ref('States/').child(this.state.State);
-     fireBaseResponse.once('value').then(snapshot => {
-         snapshot.forEach(item => {
-             var temp = item.val();
-             station.push({value:temp},);
-             return false;
+        var temp = child.key;
+        States.push({ value: temp });
+        return false;
+      });
+      console.log(States);
     });
-    console.log(station);
+  };
+  fetchDataDistrict = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("States/")
+      .child(this.state.State);
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.key;
+        District.push({ value: temp });
+        return false;
+      });
+      console.log(District);
     });
- }
+  };
+  fetchDataStation = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("States/"+this.state.State+'/')
+      .child(this.state.District);
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(item => {
+        var temp = item.val();
+        station.push({ value: temp });
+        return false;
+      });
+      console.log(station);
+    });
+  };
 
   render() {
     this.fetchDataStation();
+    this.fetchDataDistrict();
     let data = [
       {
         value: "Female"
@@ -152,15 +172,16 @@ export default class Clearance extends Component {
                 baseColor="#1C8ADB"
                 data={States}
               />
-              {/* </View><View style={styles.entrybox}>
+              </View>
+              <View style={styles.entrybox}>
               <Text style={styles.text}>District</Text>
               <Dropdown
                 style={styles.drop}
-                onChangeText={Gender => this.setState({ Gender })}
-                value={this.state.Gender}
+                onChangeText={District => this.setState({ District })}
+                value={this.state.District}
                 baseColor="#1C8ADB"
-                data={data}
-              /> */}
+                data={District}
+              />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Police Station</Text>
@@ -244,16 +265,6 @@ export default class Clearance extends Component {
                 placeholderTextColor="#000"
                 onChangeText={Aadhar => this.setState({ Aadhar })}
                 value={this.state.Aadhar}
-              />
-            </View>
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>District</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="District"
-                placeholderTextColor="#000"
-                onChangeText={District => this.setState({ District })}
-                value={this.state.District}
               />
             </View>
             <View style={styles.entrybox}>
