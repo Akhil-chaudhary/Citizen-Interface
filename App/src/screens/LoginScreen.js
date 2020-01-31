@@ -11,18 +11,20 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 
 export default class LoginScreen extends Component {
-
-  state= {
+  state = {
     email: "",
     password: "",
     errorMessage: null
-};
+  };
 
-handleLogin = () => {
-    const {email, password} = this.state
-    firebase.auth().signInWithEmailAndPassword(email,password).catch(error => this.setState({errorMessage: error.message}))
-
-}
+  handleLogin = () => {
+    this.state.email=this.state.email.trim();
+    const { email, password } = this.state;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(error => this.setState({ errorMessage: error.message }));
+  };
 
   render() {
     return (
@@ -50,6 +52,7 @@ handleLogin = () => {
             <View>
               <TextInput
                 placeholder="Email Address"
+                autoCompleteType="email"
                 placeholderTextColor="#000"
                 style={styles.input}
                 autoCapitalize="none"
@@ -61,6 +64,7 @@ handleLogin = () => {
             <View style={{ marginTop: 32 }}>
               <TextInput
                 placeholder="Password"
+                autoCompleteType="password"
                 placeholderTextColor="#000"
                 style={styles.input}
                 autoCapitalize="none"

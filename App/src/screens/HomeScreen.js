@@ -18,12 +18,7 @@ import {
 } from "react-native-gesture-handler";
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 import * as firebase from "firebase";
-//import { Header,Right,Center,Left,Icon } from "native-base";
 import { Header } from "react-native-elements";
-import { Drawer } from "react-native-paper";
-/*import HeaderBar from './HeaderBar';
-import Drawer from './Drawer';
-import { DrawerItems } from 'react-navigation';*/
 export default class HomeScreen extends Component {
   state = {
     email: "",
@@ -38,7 +33,9 @@ export default class HomeScreen extends Component {
       .auth()
       .signOut()
       .then(() => {
-        this.props.navigation.navigate("Login");
+        firebase.auth().onAuthStateChanged(user => {
+          this.props.navigation.navigate(user ? "App" : "Auth");
+        });
       });
   };
   render() {
@@ -123,7 +120,7 @@ export default class HomeScreen extends Component {
           </ScrollView>
           <View style={styles.sos}>
           <AwesomeButtonRick backgroundColor='red' backgroundDarker='#ac0000'>
-            <Text style={{fontWeight:'800',color:'white'}}>   SOS   </Text>
+            <Text style={{fontWeight:'800',color:'white',padding:10}}>   SOS   </Text>
           </AwesomeButtonRick>
           </View>
         </View>
