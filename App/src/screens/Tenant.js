@@ -15,13 +15,18 @@ import {
 import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Dropdown } from "react-native-material-dropdown";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import DatePicker from "react-native-datepicker";
 import * as firebase from "firebase";
-import { Title } from "native-base";
-var photo
+var photo;
+// var type='Owner';
+
+let States = [];
+let District = [];
+let station = [];
 export default class Tenant extends Component {
   state = {
+    imgtype: "",
     Name: "",
     Address: "",
     Mobile: "",
@@ -37,24 +42,121 @@ export default class Tenant extends Component {
     Mobile2: "",
     PAN: "",
     Voting_card: "",
-    image:'',
+    image: "",
+    Station: "",
+    State: "",
+    District: "",
     errorMessage: null
   };
 
   handleSubmit = () => {
-    this.state.image=photo
+    this.state.image = photo;
     firebase
       .database()
       .ref("/Tenant")
       .push(this.state)
+      .then(this.props.navigation.navigate("Form"));
   };
+  // fetchDataUser = async () =>{
+  //   var fireBaseResponse = firebase
+  //     .database()
+  //     .ref("Citizen Users/")
+  //     .child();
+  //   fireBaseResponse.once("value").then(snapshot =>{
+  //     snapshot.forEach(child =>{
+  //       var temp = child.val();
+  //       var title= child.key();
+  //       User.push({title: temp });
+  //       return false;
+  //     });
+  //     console.log(User);
+  //   });
+  // };
+  ///-----------------------Location Fetch-----------------------
+  // componentDidMount() {
+  //   this._getLocationAsync();
+  // }
+  // _getLocationAsync = async () =>{
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  //   if (status !== "granted") {
+  //     this.setState({
+  //       locationResult: "Permission to access location was denied",
+  //     });
+  //   }
+
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   global.latitude=location.coords.latitude;
+  //   global.longitude=location.coords.longitude;
+  //   console.log(global.longitude,global.latitude);
+  // };
+  //-------------------------------Location taken--------------------------
+  componentWillMount() {
+    this.fetchDataStates();
+  }
+  fetchDataStates = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref()
+      .child("Stations/");
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.key;
+        States.push({ value: temp });
+        return false;
+      });
+      // console.log(States);
+    });
+  };
+  fetchDataDistrict = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Stations/")
+      .child(this.state.State);
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.key;
+        District.push({ value: temp });
+        return false;
+      });
+      // console.log(District);
+    });
+  };
+  fetchDataStation = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Stations/" + this.state.State + "/")
+      .child(this.state.District);
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(item => {
+        var temp = item.key;
+        station.push({ value: temp });
+        return false;
+      });
+      // console.log(station);
+    });
+  };
+  // _getLocationAsync = async () =>{
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  //   if (status !== "granted") {
+  //     this.setState({
+  //       locationResult: "Permission to access location was denied"
+  //     });
+  //   }
+
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   this.setState({
+  //     latitude: location.coords.latitude,
+  //     longitude: location.coords.longitude
+  //   });
+  // };
+
   chooseImage = async () => {
     //let result=await ImagePicker.launchCameraAsync();
     let result = await ImagePicker.launchImageLibraryAsync();
-    
+
     // this.setState({ image:blob.data.name })
     if (!result.cancelled) {
-      this.uploadImage(result.uri,this.state.Name)
+      this.uploadImage(result.uri, this.state.PAN + "/")
         .then(() => {
           Alert.alert("Success");
         })
@@ -63,23 +165,26 @@ export default class Tenant extends Component {
         });
     }
   };
-  uploadImage = async (uri,imageName) => {
+  uploadImage = async (uri, imageName) => {
     const response = await fetch(uri);
     blob = await response.blob();
     var ref = firebase
       .storage()
-      .ref()
-      .child("Tenant/" + imageName);
-      // firebase
-      // .database()
-      // .ref("Tenant/")
-      // .push({image:blob.data.name});  
-      photo=blob.data.name
+      .ref("Tenant/")
+      .child(imageName);
+    // firebase
+    // .database()
+    // .ref("Tenant/")
+    // .push({image:blob.data.name});
+    photo = blob.data.name;
     return ref.put(blob);
-    
   };
 
   render() {
+    // this.fetchDataUser();
+    // this._getLocationAsync();
+    this.fetchDataStation();
+    this.fetchDataDistrict();
     let data = [
       {
         value: "Residential"
@@ -95,9 +200,9 @@ export default class Tenant extends Component {
       >
         <Header
           leftComponent={{
-            icon: "home",
+            icon: "arrow-back",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("Home")
+            onPress: () => this.props.navigation.navigate("Form")
           }}
           centerComponent={{
             text: "Tenant",
@@ -125,6 +230,36 @@ export default class Tenant extends Component {
           enabled
         >
           <ScrollView>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>State</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={State => this.setState({ State })}
+                value={this.state.State}
+                baseColor="#1C8ADB"
+                data={States}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>District</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={District => this.setState({ District })}
+                value={this.state.District}
+                baseColor="#1C8ADB"
+                data={District}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Police Station</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Station => this.setState({ Station })}
+                value={this.state.Station}
+                baseColor="#1C8ADB"
+                data={station}
+              />
+            </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>House Owner Name</Text>
               <TextInput
@@ -158,7 +293,7 @@ export default class Tenant extends Component {
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}> Rental Property Address</Text>
+              <Text style={styles.text}>Rental Property Address</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Address"
@@ -222,7 +357,7 @@ export default class Tenant extends Component {
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}> Contact number</Text>
+              <Text style={styles.text}>Contact number</Text>
               <TextInput
                 style={styles.input}
                 numeric
@@ -255,8 +390,9 @@ export default class Tenant extends Component {
                 value={this.state.Tenant_permanant_add}
               />
             </View>
+            <Text style={styles.text}>Reference Of Person-1</Text>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Reference Of Person-1 Name</Text>
+              <Text style={styles.text}>Name</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Full name"
@@ -277,8 +413,9 @@ export default class Tenant extends Component {
               />
             </View>
 
+            <Text style={styles.text}>Reference Of Person-2</Text>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Reference Of Person-2 Name</Text>
+              <Text style={styles.text}>Name</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Full name"
@@ -325,51 +462,47 @@ export default class Tenant extends Component {
                 style={styles.button}
                 onPress={this.chooseImage}
               >
-                <Text>Upload</Text>
-              </TouchableOpacity>
-            </View>
-            {/*
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>Photo Property Consultant </Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Full name"
-                placeholderTextColor="#000"
-                onChangeText={name => this.setState({ name })}
-                value={this.state.name}
-              />
-            </View>
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>Photo Tenant</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Full name"
-                placeholderTextColor="#000"
-                onChangeText={name => this.setState({ name })}
-                value={this.state.name}
-              />
-            </View>
-            <Text style={styles.text}>Note:</Text>
-            <View>
-              <Text>File Should of 5mb.</Text>
-              <Text>File should bepng,jpg.</Text>
-            </View>
-            <View style={{ paddingBottom: 50 }}>
-              <TouchableOpacity
-                style={styles.button1}
-                title="Upload Photo"
-                value="Upload"
-                onPress={this.handleupload}
-              >
                 <Text
-                  style={{ color: "#FFF", fontWeight: "200", fontSize: 12 }}
+                  style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
                 >
                   Upload
                 </Text>
               </TouchableOpacity>
-            </View> */}
+            </View>
 
-            <View style={{ paddingBottom: 50 }}>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Photo Property Consultant </Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this.chooseImage}
+              >
+                <Text
+                  style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
+                >
+                  Upload
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Photo Tenant</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this.chooseImage}
+              >
+                <Text
+                  style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
+                >
+                  Upload
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.text}>Note:</Text>
+            <View>
+              <Text>File Should of 5mb.</Text>
+              <Text>File should be in .jpg or .png format.</Text>
+            </View>
+
+            <View style={{ paddingBottom: 50, paddingTop: 20 }}>
               <TouchableOpacity
                 style={styles.button}
                 onPress={this.handleSubmit}

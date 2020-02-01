@@ -27,7 +27,9 @@ import FIR from "./src/screens/FIR";
 import LostFIR from "./src/screens/LostFIR";
 import Noc from "./src/screens/Noc";
 import Tenant from "./src/screens/Tenant";
-import MapScreen from "./src/screens/MapScreen";
+
+// import MapScreen from './ScannerScreen';
+import MapScreen from "./src/screens/ScannerScreen";
 import * as firebase from "firebase";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 const width = Dimensions.get("window").width;

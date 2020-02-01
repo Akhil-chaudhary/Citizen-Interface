@@ -1,6 +1,5 @@
 import React, { useEffect, Component, useState } from "react";
 import {
-  Button,
   View,
   StyleSheet,
   Text,
@@ -12,57 +11,44 @@ import {
   ImageBackgroundComponent,
   Platform,
   PermissionsAndroid,
-  AlertIOS
+  Alert
 } from "react-native";
 import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Dropdown } from "react-native-material-dropdown";
-// import { requestPermissionAsync } from "expo-location";
-// import * as Location from "expo-location";
-// import * as Permissions from "expo-permissions";
-// import MapScreen from "./MapScreen.js";
-// import MapView, {
-//   Marker,
-//   AnimatedRegion,
-//   Polyline,
-//   PROVIDER_GOOGLE
-// } from "react-native-maps";
-// import haversine from "haversine";
-import Map from "./MapScreen";
+import DatePicker from "react-native-datepicker";
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
 import * as firebase from "firebase";
-// var  firebaseConfig2 = {
-//   apiKey: "AIzaSyB5mHPt2DrHm2IbuQXWBPV4sJw30VGlbIA",
-//   authDomain: "fir-1-d9120.firebaseapp.com",
-//   databaseURL: "https://fir-1-d9120.firebaseio.com",
-//   projectId: "fir-1-d9120",
-//   storageBucket: "fir-1-d9120.appspot.com",
-//   messagingSenderId: "402680960829",
-//   appId: "1:402680960829:web:7b4076d6302c25c12bd754",
-//   measurementId: "G-C7HBLLE92Y"
-// };
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// }
 let States = [];
 let District = [];
 let station = [];
+let User = [];
 export default class Clearance extends Component {
-  
-
   state = {
     Name: "",
     Father_name: "",
     Address: "",
     Mobile: "",
     Email: "",
-    Residing: "",
+    Residing_from: "",
+    Residing_till: "",
     Station: "",
     State: "",
     Aadhar: "",
     District: "",
     Gender: "",
+    longitude: "",
+    latitude: "",
+    //User
+    // User_Name: "",
+    // User_Aadhar: "",
+    // User_Email: "",
+    // User_Number: "",
+    // User_Token: "",
     errorMessage: null
   };
+
   handleSubmit = () => {
     firebase
       .database()
@@ -70,23 +56,37 @@ export default class Clearance extends Component {
       .push(this.state)
       .then(this.props.navigation.navigate("Form"));
   };
-  ///-----------------------Location Fetch-----------------------
-  // componentDidMount() {
-  //   this._getLocationAsync();
-  // }
-  // _getLocationAsync = async () => {
-  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
-  //   if (status !== "granted") {
-  //     this.setState({
-  //       locationResult: "Permission to access location was denied",
+  // fetchDataUser = async () =>{
+  //   var fireBaseResponse = firebase
+  //     .database()
+  //     .ref("Citizen Users/")
+  //     .child();
+  //   fireBaseResponse.once("value").then(snapshot =>{
+  //     snapshot.forEach(child =>{
+  //       var temp = child.val();
+  //       var title= child.key();
+  //       User.push({title: temp });
+  //       return false;
   //     });
-  //   }
-
-  //   let location = await Location.getCurrentPositionAsync({});
-  //   global.latitude=location.coords.latitude;
-  //   global.longitude=location.coords.longitude;
-  //   console.log(global.longitude,global.latitude);
+  //     console.log(User);
+  //   });
   // };
+  ///-----------------------Location Fetch-----------------------
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== "granted") {
+      this.setState({
+        locationResult: "Permission to access location was denied"
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    });
+  };
   //-------------------------------Location taken--------------------------
   componentWillMount() {
     this.fetchDataStates();
@@ -95,7 +95,7 @@ export default class Clearance extends Component {
     var fireBaseResponse = firebase
       .database()
       .ref()
-      .child("States/");
+      .child("Stations/");
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
         var temp = child.key;
@@ -108,7 +108,7 @@ export default class Clearance extends Component {
   fetchDataDistrict = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("States/")
+      .ref("Stations/")
       .child(this.state.State);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
@@ -122,11 +122,11 @@ export default class Clearance extends Component {
   fetchDataStation = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("States/" + this.state.State + "/")
+      .ref("Stations/" + this.state.State + "/")
       .child(this.state.District);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(item => {
-        var temp = item.val();
+        var temp = item.key;
         station.push({ value: temp });
         return false;
       });
@@ -135,8 +135,12 @@ export default class Clearance extends Component {
   };
 
   render() {
-    this.fetchDataStation();
+    // this.fetchDataUser();
+
     this.fetchDataDistrict();
+    this.fetchDataStation();
+    // this._getLocationAsync();
+
     let data = [
       {
         value: "Female"
@@ -148,7 +152,7 @@ export default class Clearance extends Component {
         value: "Other"
       }
     ];
-
+    console.log(firebase.auth().currentUser.email);
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
@@ -156,9 +160,9 @@ export default class Clearance extends Component {
       >
         <Header
           leftComponent={{
-            icon: "home",
+            icon: "arrow-back",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("Home")
+            onPress: () => this.props.navigation.navigate("Form")
           }}
           centerComponent={{
             text: "Clearance Certificate",
@@ -170,15 +174,16 @@ export default class Clearance extends Component {
             }
           }}
           rightComponent={{
-            icon: "close",
+            icon: "help",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("Form")
+            onPress: () =>
+              Alert.alert(
+                "Help",
+                "Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example."
+              )
           }}
           backgroundColor="#1C8ADB"
         />
-        <View>
-          <Map />
-        </View>
         <KeyboardAvoidingView
           style={styles.container}
           behavior="padding"
@@ -267,15 +272,62 @@ export default class Clearance extends Component {
                 value={this.state.Email}
               />
             </View>
-
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Residing Period</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Details"
-                placeholderTextColor="#000"
-                onChangeText={Residing => this.setState({ Residing })}
-                value={this.state.Residing}
+              <Text style={styles.text}>Residing from</Text>
+              <DatePicker
+                style={{ width: 200, backgroundColor: "#1C8ADB" }}
+                date={this.state.Residing_from}
+                mode="date"
+                placeholder="Select Date"
+                placeholderTextColor="black"
+                format="YYYY-MM-DD"
+                minDate="2016-05-01"
+                maxDate="2019-06-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                }}
+                onDateChange={Residing_from => {
+                  this.setState({ Residing_from });
+                }}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Residing till</Text>
+              <DatePicker
+                style={{ width: 200, backgroundColor: "#1C8ADB" }}
+                date={this.state.Residing_till}
+                mode="date"
+                placeholder="Select Date"
+                placeholderTextColor="black"
+                format="YYYY-MM-DD"
+                minDate="2016-05-01"
+                maxDate="2019-06-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                }}
+                onDateChange={Residing_till => {
+                  this.setState({ Residing_till });
+                }}
               />
             </View>
             <View style={styles.entrybox}>

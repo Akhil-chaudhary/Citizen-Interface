@@ -16,6 +16,7 @@ import {
   FlatList,
   LongPressGestureHandler
 } from "react-native-gesture-handler";
+import DatePicker from "react-native-datepicker";
 import * as firebase from "firebase";
 //import { Header,Right,Center,Left,Icon } from "native-base";
 import { Header } from "react-native-elements";
@@ -58,7 +59,7 @@ export default class FIR extends Component {
               onPress={() => this.props.navigation.navigate("Lost")}
             >
               <View style={styles.tab}>
-                <Text style={styles.item}>Theft E FIR</Text>
+                <Text style={styles.item}>Theft E-FIR</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity>

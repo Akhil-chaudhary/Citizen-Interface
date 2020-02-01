@@ -9,45 +9,133 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   ImageBackground,
-  ImageBackgroundComponent
+  ImageBackgroundComponent,
+  Alert
 } from "react-native";
 import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { CheckBox } from "native-base";
 import { Dropdown } from "react-native-material-dropdown";
 
+let States = [];
+let District = [];
+let station = [];
 export default class Noc extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: "",
-      fname: "",
-      email: "",
-      address: "",
-      mobile: ""
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange(event) {
-    this.setState({ value: event.target });
-  }
-
-  handleSubmit(event) {
-    alert("Save the Form  !");
-    event.preventDefault();
-  }
   state = {
-    yes: true,
-    no: false
+    Name: "",
+    Father_name: "",
+    Address: "",
+    Mobile: "",
+    Email: "",
+    Station: "",
+    State: "",
+    Aadhar: "",
+    District: "",
+    Gender: "",
+    Owned1: "",
+    Owned: "",
+    Other: ""
   };
-  onePressed() {
-    alert("yes");
+
+  handleSubmit = () => {
+    this.state.image = photo;
+    firebase
+      .database()
+      .ref("/Tenant")
+      .push(this.state)
+      .then(this.props.navigation.navigate("Form"));
+  };
+  // fetchDataUser = async () =>{
+  //   var fireBaseResponse = firebase
+  //     .database()
+  //     .ref("Citizen Users/")
+  //     .child();
+  //   fireBaseResponse.once("value").then(snapshot =>{
+  //     snapshot.forEach(child =>{
+  //       var temp = child.val();
+  //       var title= child.key();
+  //       User.push({title: temp });
+  //       return false;
+  //     });
+  //     console.log(User);
+  //   });
+  // };
+  ///-----------------------Location Fetch-----------------------
+  // componentDidMount() {
+  //   this._getLocationAsync();
+  // }
+  // _getLocationAsync = async () =>{
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  //   if (status !== "granted") {
+  //     this.setState({
+  //       locationResult: "Permission to access location was denied",
+  //     });
+  //   }
+
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   global.latitude=location.coords.latitude;
+  //   global.longitude=location.coords.longitude;
+  //   console.log(global.longitude,global.latitude);
+  // };
+  //-------------------------------Location taken--------------------------
+  componentWillMount() {
+    this.fetchDataStates();
   }
-  twoPressed() {
-    alert("no");
-  }
+  fetchDataStates = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref()
+      .child("Stations/");
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.key;
+        States.push({ value: temp });
+        return false;
+      });
+      // console.log(States);
+    });
+  };
+  fetchDataDistrict = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Stations/")
+      .child(this.state.State);
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.key;
+        District.push({ value: temp });
+        return false;
+      });
+      // console.log(District);
+    });
+  };
+  fetchDataStation = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Stations/" + this.state.State + "/")
+      .child(this.state.District);
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(item => {
+        var temp = item.key;
+        station.push({ value: temp });
+        return false;
+      });
+      // console.log(station);
+    });
+  };
+  // _getLocationAsync = async () =>{
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  //   if (status !== "granted") {
+  //     this.setState({
+  //       locationResult: "Permission to access location was denied"
+  //     });
+  //   }
+
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   this.setState({
+  //     latitude: location.coords.latitude,
+  //     longitude: location.coords.longitude
+  //   });
+  // };
 
   render() {
     let data = [
@@ -92,6 +180,14 @@ export default class Noc extends Component {
       }
     ];
 
+    let data4 = [
+      {
+        value: "Yes"
+      },
+      {
+        value: "No"
+      }
+    ];
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
@@ -99,7 +195,7 @@ export default class Noc extends Component {
       >
         <Header
           leftComponent={{
-            icon: "home",
+            icon: "arrow-back",
             color: "#fff",
             onPress: () => this.props.navigation.navigate("Home")
           }}
@@ -113,9 +209,13 @@ export default class Noc extends Component {
             }
           }}
           rightComponent={{
-            icon: "close",
+            icon: "help",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("Home")
+            onPress: () =>
+              Alert.alert(
+                "Help",
+                "Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example."
+              )
           }}
           backgroundColor="#1C8ADB"
         />
@@ -126,24 +226,54 @@ export default class Noc extends Component {
         >
           <ScrollView>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Full Name</Text>
+              <Text style={styles.text}>State</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={State => this.setState({ State })}
+                value={this.state.State}
+                baseColor="#1C8ADB"
+                data={States}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>District</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={District => this.setState({ District })}
+                value={this.state.District}
+                baseColor="#1C8ADB"
+                data={District}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Police Station</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Station => this.setState({ Station })}
+                value={this.state.Station}
+                baseColor="#1C8ADB"
+                data={station}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Full name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Full Name"
+                placeholder="Full name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Name => this.setState({ Name })}
+                value={this.state.Name}
               />
             </View>
 
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Father's Name</Text>
+              <Text style={styles.text}>Father's name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Father`s Name"
+                placeholder="Father`s name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Father_name => this.setState({ Father_name })}
+                value={this.state.Father_name}
               />
             </View>
             <View style={styles.entrybox}>
@@ -152,8 +282,8 @@ export default class Noc extends Component {
                 style={styles.input}
                 placeholder="Address"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Address => this.setState({ Address })}
+                value={this.state.Address}
               />
             </View>
             <View style={styles.entrybox}>
@@ -163,18 +293,19 @@ export default class Noc extends Component {
                 style={styles.input}
                 placeholder="Mobile Number"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Mobile => this.setState({ Mobile })}
+                value={this.state.Mobile}
               />
             </View>
+
             <View style={styles.entrybox}>
               <Text style={styles.text}>Email</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Email"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Email => this.setState({ Email })}
+                value={this.state.Email}
               />
             </View>
 
@@ -182,8 +313,9 @@ export default class Noc extends Component {
               <Text style={styles.text}>Whether the Property is Owned by</Text>
               <Dropdown
                 style={styles.drop}
+                onChangeText={Owned => this.setState({ Owned })}
+                value={this.state.Owned}
                 baseColor="#1C8ADB"
-                label="Select a Value"
                 data={data3}
               />
             </View>
@@ -192,39 +324,36 @@ export default class Noc extends Component {
 
               <Dropdown
                 style={styles.drop}
+                onChangeText={Owned1 => this.setState({ Owned1 })}
+                value={this.state.Owned1}
                 baseColor="#1C8ADB"
-                label="Select a Value"
                 data={data2}
               />
             </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>Gender</Text>
-              <Dropdown style={styles.drop} baseColor="#1C8ADB" data={data} />
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Gender => this.setState({ Gender })}
+                value={this.state.Gender}
+                baseColor="#1C8ADB"
+                data={data}
+              />
             </View>
-
             <View style={styles.entrybox}>
               <Text style={styles.text}>
                 The Applicant is other than the Owner ?{" "}
               </Text>
-              <View style={styles.split}>
-                <View style={{ flex: 1, marginRight: 7 }}>
-                  <Text>Yes</Text>
-                  <CheckBox
-                    checked={this.state.yes}
-                    onPress={() => this.onePressed()}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 7 }}>
-                  <Text>No</Text>
-                  <CheckBox
-                    checked={this.state.no}
-                    onPress={() => this.twoPressed()}
-                  />
-                </View>
-              </View>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Other => this.setState({ Other })}
+                value={this.state.Other}
+                baseColor="#1C8ADB"
+                data={data4}
+              />
             </View>
 
-            <View style={styles.entrybox}>
+            {/* <View style={styles.entrybox}>
               <Text style={styles.text}>Upload document</Text>
               <TextInput
                 style={styles.input}
@@ -233,13 +362,11 @@ export default class Noc extends Component {
                 onChangeText={this.handleChange}
                 value={this.state.value}
               />
-            </View>
+            </View>*/}
 
             <View style={{ paddingBottom: 100 }}>
               <TouchableOpacity
                 style={styles.button}
-                title="Submit Form"
-                value="Submit"
                 onPress={this.handleSubmit}
               >
                 <Text

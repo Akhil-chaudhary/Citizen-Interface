@@ -16,7 +16,7 @@ import {
   FlatList,
   LongPressGestureHandler
 } from "react-native-gesture-handler";
-import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
+import AwesomeButton from "react-native-really-awesome-button";
 import * as firebase from "firebase";
 import { Header } from "react-native-elements";
 export default class HomeScreen extends Component {
@@ -119,9 +119,12 @@ export default class HomeScreen extends Component {
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.sos}>
-          <AwesomeButtonRick backgroundColor='red' backgroundDarker='#ac0000'>
-            <Text style={{fontWeight:'800',color:'white',padding:10}}>   SOS   </Text>
-          </AwesomeButtonRick>
+          <AwesomeButton backgroundColor='red' backgroundDarker='#ac0000'>
+          <Image
+            style={{height: 60,width: 60,padding:10}}
+                  source={require("../../assets/SOS.png")}
+                />
+          </AwesomeButton>
           </View>
         </View>
       </ImageBackground>

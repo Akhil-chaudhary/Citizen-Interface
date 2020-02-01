@@ -9,39 +9,120 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   ImageBackground,
-  ImageBackgroundComponent
+  Alert
 } from "react-native";
 import { Header } from "react-native-elements";
-
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { Dropdown } from "react-native-material-dropdown";
+import DatePicker from "react-native-datepicker";
+import * as firebase from "firebase";
+let States = [];
+let District = [];
+let station = [];
 export default class LostFIR extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    Name: "",
+    Father_name: "",
+    Address: "",
+    Mobile: "",
+    Email: "",
+    Date: "",
+    Item: "",
+    Place: ""
+  };
 
-    this.state = {
-      name: "",
-      fname: "",
-      email: "",
-      address: "",
-      lDate: "",
-      litem: "",
-      mobile: "",
-      plost: ""
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange(event) {
-    this.setState({ value: event.target });
-  }
+  handleSubmit = () => {
+    firebase
+      .database()
+      .ref("/Lost E-FIR")
+      .push(this.state)
+      .then(this.props.navigation.navigate("Form"));
+  };
+  // fetchDataUser = async () =>{
+  //   var fireBaseResponse = firebase
+  //     .database()
+  //     .ref("Citizen Users/")
+  //     .child();
+  //   fireBaseResponse.once("value").then(snapshot =>{
+  //     snapshot.forEach(child =>{
+  //       var temp = child.val();
+  //       var title= child.key();
+  //       User.push({title: temp });
+  //       return false;
+  //     });
+  //     console.log(User);
+  //   });
+  // };
+  ///-----------------------Location Fetch-----------------------
 
-  handleSubmit(event) {
-    alert("Save the Form  !");
-    event.preventDefault();
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== "granted") {
+      this.setState({
+        locationResult: "Permission to access location was denied"
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    });
+  };
+  //-------------------------------Location taken--------------------------
+  componentWillMount() {
+    this.fetchDataStates();
   }
+  fetchDataStates = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref()
+      .child("Stations/");
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.key;
+        States.push({ value: temp });
+        return false;
+      });
+      // console.log(States);
+    });
+  };
+  fetchDataDistrict = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Stations/")
+      .child(this.state.State);
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.key;
+        District.push({ value: temp });
+        return false;
+      });
+      // console.log(District);
+    });
+  };
+  fetchDataStation = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Stations/" + this.state.State + "/")
+      .child(this.state.District);
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(item => {
+        var temp = item.key;
+        station.push({ value: temp });
+        return false;
+      });
+      // console.log(station);
+    });
+  };
 
   render() {
+    // this.fetchDataUser();
+
+    this.fetchDataDistrict();
+    this.fetchDataStation();
+    // this._getLocationAsync();
+
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
@@ -49,12 +130,12 @@ export default class LostFIR extends Component {
       >
         <Header
           leftComponent={{
-            icon: "home",
+            icon: "arrow-back",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("Home")
+            onPress: () => this.props.navigation.navigate("FIR")
           }}
           centerComponent={{
-            text: "Lost E FIR",
+            text: "Lost E-FIR",
             style: {
               color: "#fff",
               fontWeight: "bold",
@@ -63,9 +144,13 @@ export default class LostFIR extends Component {
             }
           }}
           rightComponent={{
-            icon: "close",
+            icon: "help",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("FIR")
+            onPress: () =>
+              Alert.alert(
+                "Help",
+                "Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example.Teri help karega ye text The core of React Native is worked on full-time by Facebooks React Native team. But there are far more people in the community who make key contributions and fix things. If the issue you are facing is code related, you should consider checking the open issues in the main repository. If you cannot find an existing issue, please use the Bug Report template to create an issue with a minimal example."
+              )
           }}
           backgroundColor="#1C8ADB"
         />
@@ -76,24 +161,53 @@ export default class LostFIR extends Component {
         >
           <ScrollView>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Full Name</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Full Name"
-                placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+              <Text style={styles.text}>State</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={State => this.setState({ State })}
+                value={this.state.State}
+                baseColor="#1C8ADB"
+                data={States}
               />
             </View>
-
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Father's Name</Text>
+              <Text style={styles.text}>District</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={District => this.setState({ District })}
+                value={this.state.District}
+                baseColor="#1C8ADB"
+                data={District}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Police Station</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Station => this.setState({ Station })}
+                value={this.state.Station}
+                baseColor="#1C8ADB"
+                data={station}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Full name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Father`s Name"
+                placeholder="Full name"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Name => this.setState({ Name })}
+                value={this.state.Name}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Father's name</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Father`s name"
+                placeholderTextColor="#000"
+                onChangeText={Father_name => this.setState({ Father_name })}
+                value={this.state.Father_name}
               />
             </View>
             <View style={styles.entrybox}>
@@ -102,8 +216,8 @@ export default class LostFIR extends Component {
                 style={styles.input}
                 placeholder="Address"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Address => this.setState({ Address })}
+                value={this.state.Address}
               />
             </View>
             <View style={styles.entrybox}>
@@ -113,18 +227,19 @@ export default class LostFIR extends Component {
                 style={styles.input}
                 placeholder="Mobile Number"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Mobile => this.setState({ Mobile })}
+                value={this.state.Mobile}
               />
             </View>
+
             <View style={styles.entrybox}>
               <Text style={styles.text}>Email</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Email"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Email => this.setState({ Email })}
+                value={this.state.Email}
               />
             </View>
             <View style={styles.entrybox}>
@@ -133,8 +248,8 @@ export default class LostFIR extends Component {
                 style={styles.input}
                 placeholder="Lost Item"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Item => this.setState({ Item })}
+                value={this.state.Item}
               />
             </View>
             <View style={styles.entrybox}>
@@ -143,39 +258,43 @@ export default class LostFIR extends Component {
                 style={styles.input}
                 placeholder="Place of lost"
                 placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
+                onChangeText={Place => this.setState({ Place })}
+                value={this.state.Place}
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Date of Lost </Text>
-              <View style={styles.split}>
-                <View style={{ flex: 1, marginRight: 7 }}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Day"
-                    placeholderTextColor="#000"
-                    onChangeText={this.handleChange}
-                    value={this.state.value}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 7 }}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Month"
-                    placeholderTextColor="#000"
-                    onChangeText={this.handleChange}
-                    value={this.state.value}
-                  />
-                </View>
-              </View>
+              <Text style={styles.text}>Date Of Lost</Text>
+              <DatePicker
+                style={{ width: 200, backgroundColor: "#1C8ADB" }}
+                date={this.state.Date}
+                mode="date"
+                placeholder="Select Date"
+                placeholderTextColor="black"
+                format="YYYY-MM-DD"
+                minDate="2016-05-01"
+                maxDate="2019-06-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                }}
+                onDateChange={Date => {
+                  this.setState({ Date });
+                }}
+              />
             </View>
 
             <View style={{ paddingBottom: 100 }}>
               <TouchableOpacity
                 style={styles.button}
-                title="Submit Form"
-                value="Submit"
                 onPress={this.handleSubmit}
               >
                 <Text
@@ -223,7 +342,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     height: 40,
     fontSize: 20,
-    color: "black",
+    color: "black"
   },
 
   entrybox: {
