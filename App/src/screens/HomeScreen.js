@@ -7,7 +7,8 @@ import {
   Button,
   SafeAreaView,
   ImageBackground,
-  ScrollView
+  ScrollView,
+  YellowBox
 } from "react-native";
 import "@expo/vector-icons";
 import {
@@ -108,7 +109,9 @@ export default class HomeScreen extends Component {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Recent")}
+            >
               <View style={styles.tab}>
                 <Text style={styles.item}>Recent Activities</Text>
                 <Image
@@ -119,12 +122,22 @@ export default class HomeScreen extends Component {
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.sos}>
-            <AwesomeButton backgroundColor="white" backgroundDarker="red">
+            <View style={styles.sos}>
+            <AwesomeButton backgroundColor="white" style={{}} backgroundDarker="red">
               <Image
                 style={{ height: 50, width: 50, padding: 10 }}
                 source={require("../../assets/SOS.png")}
               />
             </AwesomeButton>
+            </View>
+            <View style={styles.sos}>
+            <AwesomeButton backgroundColor="white" backgroundDarker="red">
+              <Image
+                style={{ height: 50, width: 50, padding: 10 }}
+                source={require("../../assets/Chatbot.png")}
+              />
+            </AwesomeButton>
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -140,8 +153,9 @@ const styles = StyleSheet.create({
   },
   sos: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection:"row",
+    alignItems:'center',
+    justifyContent:'center',
     margin: 10
   },
   img: {

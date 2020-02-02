@@ -32,7 +32,7 @@ import Complaint from "./src/screens/Complaint";
 import Tenant from "./src/screens/Tenant";
 import FeedBack from "./src/screens/FeedBack";
 import Tips from "./src/screens/Tips";
-
+import Activities from './src/screens/Activities';
 // import MapScreen from './ScannerScreen';
 import MapScreen from "./src/screens/ScannerScreen";
 import * as firebase from "firebase";
@@ -83,6 +83,7 @@ const Drawer = createDrawerNavigator(
     FIR: FIR,
     NOC: Noc,
     Map: MapScreen,
+    Recent:Activities,
     Feedback: FeedBack,
     Tips: Tips,
     About: AboutScreen
@@ -106,6 +107,7 @@ const AppStack = createStackNavigator(
     Lost: LostFIR,
     Complaint: Complaint,
     Noc: Noc,
+    Recent:Activities,
     About: AboutScreen
   },
   {
