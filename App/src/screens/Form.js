@@ -70,14 +70,18 @@ export default class Form extends Component {
                 <Text style={styles.item}>Tenant Verification</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity 
+            onPress={() => this.props.navigation.navigate("Character")}
+            >
               <View style={styles.tab}>
-                <Text style={styles.item}>Online FIR</Text>
+                <Text style={styles.item}>Character Certificate</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("PostMortem")}
+            >
               <View style={styles.tab}>
-                <Text style={styles.item}>NOC Request</Text>
+                <Text style={styles.item}>Post Mortem Request</Text>
               </View>
             </TouchableOpacity>
           </ScrollView>

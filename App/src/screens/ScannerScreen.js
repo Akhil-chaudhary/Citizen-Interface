@@ -195,8 +195,8 @@ export default class MapScreen extends Component {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           region={{
-            latitude:this.state.lati,
-            longitude: this.state.longi,
+            latitude:28.677479,
+            longitude: 77.43689,
             latitudeDelta: 0.4,
             longitudeDelta: 0.4
           }}
@@ -218,7 +218,6 @@ export default class MapScreen extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 10,
     backgroundColor: "#F5FCFF"
   },
   map: {

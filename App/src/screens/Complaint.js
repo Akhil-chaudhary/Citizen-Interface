@@ -1,5 +1,6 @@
-import React, { useEffect, Component, useState } from "react";
+import React, { Component } from "react";
 import {
+  Button,
   View,
   StyleSheet,
   Text,
@@ -8,53 +9,40 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   ImageBackground,
-  ImageBackgroundComponent,
-  Platform,
-  PermissionsAndroid,
   Alert
 } from "react-native";
 import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Dropdown } from "react-native-material-dropdown";
 import DatePicker from "react-native-datepicker";
-import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
 import * as firebase from "firebase";
 let States = [];
 let District = [];
 let station = [];
-let User = [];
-export default class Clearance extends Component {
+export default class Complaint extends Component {
   state = {
     Name: "",
     Father_name: "",
     Address: "",
     Mobile: "",
     Email: "",
-    Residing_from: "",
-    Residing_till: "",
+    Nature: "",
     Station: "",
     State: "",
-    Aadhar: "",
     District: "",
-    Gender: "",
-    longitude: "",
-    latitude: "",
-    //User
-    // User_Name: "",
-    // User_Aadhar: "",
-    // User_Email: "",
-    // User_Number: "",
-    // User_Token: "",
-    errorMessage: null
+    DOB: "",
+    Date_incident:'',
+    Complaint_against: "",
+    Complaint_Address: "",
+    Description: ""
   };
 
   handleSubmit = () => {
     firebase
       .database()
-      .ref("/Clearance")
+      .ref("/Lost E-FIR")
       .push(this.state)
-      .then(this.props.navigation.navigate("Form"));
+      .then(this.props.navigation.navigate("FIR"));
   };
   // fetchDataUser = async () =>{
   //   var fireBaseResponse = firebase
@@ -143,16 +131,75 @@ export default class Clearance extends Component {
 
     let data = [
       {
-        value: "Female"
+        value: "Against the organization"
       },
       {
-        value: "Male"
+        value: "Anti people"
       },
       {
-        value: "Other"
+        value: "Against police officer"
+      },
+      {
+        value: "Against public servant (Civil)"
+      },
+      {
+        value: "Wildlife Case"
+      },
+      {
+        value: "Army against paramilitary"
+      },
+      {
+        value: "Against foreigners"
+      },
+      {
+        value: "Against the department"
+      },
+      {
+        value: "Illegal possession dispute"
+      },
+      {
+        value: "Ownership dispute"
+      },
+      {
+        value: "Dispute of route blocking"
+      },
+      {
+        value: "Drain and check dispute"
+      },
+      {
+        value: "House partition dispute"
+      },
+      {
+        value: "Landlord / tenant dispute"
+      },
+      {
+        value: "Marital dispute"
+      },
+      {
+        value: "Other crimes against women"
+      },
+      {
+        value: "Commutation of crime"
+      },
+      {
+        value: "Corruption complaint"
+      },
+      {
+        value: "Deliberation dysfunction"
+      },
+      {
+        value: "Complaint of partisan"
+      },
+      {
+        value: "Commutation of crime"
+      },
+      {
+        value: "Physical crime - beating, abusing"
+      },
+      {
+        value: "Cashier"
       }
     ];
-    console.log(firebase.auth().currentUser.email);
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
@@ -162,10 +209,10 @@ export default class Clearance extends Component {
           leftComponent={{
             icon: "arrow-back",
             color: "#fff",
-            onPress: () => this.props.navigation.navigate("Form")
+            onPress: () => this.props.navigation.navigate("FIR")
           }}
           centerComponent={{
-            text: "Clearance Certificate",
+            text: "Complaint",
             style: {
               color: "#fff",
               fontWeight: "bold",
@@ -231,10 +278,10 @@ export default class Clearance extends Component {
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Father`s/Gaurdian`s name</Text>
+              <Text style={styles.text}>Father's name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Father`s/Gaurdian`s name"
+                placeholder="Father`s name"
                 placeholderTextColor="#000"
                 onChangeText={Father_name => this.setState({ Father_name })}
                 value={this.state.Father_name}
@@ -273,10 +320,10 @@ export default class Clearance extends Component {
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Residing from</Text>
+              <Text style={styles.text}>Date Of Birth</Text>
               <DatePicker
                 style={{ width: 200, backgroundColor: "#1C8ADB" }}
-                date={this.state.Residing_from}
+                date={this.state.DOB}
                 mode="date"
                 placeholder="Select Date"
                 placeholderTextColor="black"
@@ -296,61 +343,87 @@ export default class Clearance extends Component {
                     marginLeft: 36
                   }
                 }}
-                onDateChange={Residing_from => {
-                  this.setState({ Residing_from });
+                onDateChange={DOB => {
+                  this.setState({ DOB });
                 }}
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Residing till</Text>
-              <DatePicker
-                style={{ width: 200, backgroundColor: "#1C8ADB" }}
-                date={this.state.Residing_till}
-                mode="date"
-                placeholder="Select Date"
-                placeholderTextColor="black"
-                format="YYYY-MM-DD"
-                minDate="2016-05-01"
-                maxDate="2019-06-01"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: "absolute",
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0
-                  },
-                  dateInput: {
-                    marginLeft: 36
-                  }
-                }}
-                onDateChange={Residing_till => {
-                  this.setState({ Residing_till });
-                }}
-              />
-            </View>
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>Aadhar Number</Text>
-              <TextInput
-                style={styles.input}
-                numeric
-                placeholder="Number"
-                placeholderTextColor="#000"
-                onChangeText={Aadhar => this.setState({ Aadhar })}
-                value={this.state.Aadhar}
-              />
-            </View>
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>Gender</Text>
+              <Text style={styles.text}>Nature of complaint</Text>
               <Dropdown
                 style={styles.drop}
-                onChangeText={Gender => this.setState({ Gender })}
-                value={this.state.Gender}
+                onChangeText={Nature => this.setState({ Nature })}
+                value={this.state.Nature}
                 baseColor="#1C8ADB"
                 data={data}
               />
             </View>
+            <Text style={styles.text}>Complaint Against</Text>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Name</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Full Name"
+                placeholderTextColor="#000"
+                onChangeText={Complaint_against =>
+                  this.setState({ Complaint_against })
+                }
+                value={this.state.Complaint_against}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Address</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Address"
+                placeholderTextColor="#000"
+                onChangeText={Complaint_Address =>
+                  this.setState({ Complaint_Address })
+                }
+                value={this.state.Complaint_Address}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Date Of Incident</Text>
+              <DatePicker
+                style={{ width: 200, backgroundColor: "#1C8ADB" }}
+                date={this.state.Date_incident}
+                mode="date"
+                placeholder="Select Date"
+                placeholderTextColor="black"
+                format="YYYY-MM-DD"
+                minDate="2016-05-01"
+                maxDate="2019-06-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                }}
+                onDateChange={Date_incident => {
+                  this.setState({ Date_incident });
+                }}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Description</Text>
+              <TextInput
+                style={styles.input}
+                multiline
+                placeholder="Description"
+                placeholderTextColor="#000"
+                onChangeText={Description => this.setState({ Description })}
+                value={this.state.Description}
+              />
+            </View>
+
             <View style={{ paddingBottom: 100 }}>
               <TouchableOpacity
                 style={styles.button}
@@ -386,11 +459,6 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 12
   },
-  // map: {
-  //   padding: 100,
-  //   justifyContent: "flex-end",
-  //   alignItems: "center"
-  // },
   text: {
     color: "#1C8ADB",
     fontWeight: "bold",
@@ -408,9 +476,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "black"
   },
-  drop: {
-    fontSize: 20
-  },
+
   entrybox: {
     flex: 1,
     marginHorizontal: 10,

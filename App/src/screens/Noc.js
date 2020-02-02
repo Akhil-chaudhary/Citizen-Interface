@@ -267,10 +267,10 @@ export default class Noc extends Component {
             </View>
 
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Father's name</Text>
+              <Text style={styles.text}>Father`s/Gaurdian`s name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Father`s name"
+                placeholder="Father`s/Gaurdian`s name"
                 placeholderTextColor="#000"
                 onChangeText={Father_name => this.setState({ Father_name })}
                 value={this.state.Father_name}

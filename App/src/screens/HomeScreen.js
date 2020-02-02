@@ -119,9 +119,9 @@ export default class HomeScreen extends Component {
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.sos}>
-          <AwesomeButton backgroundColor='red' backgroundDarker='#ac0000'>
+          <AwesomeButton backgroundColor='white' backgroundDarker='red'>
           <Image
-            style={{height: 60,width: 60,padding:10}}
+            style={{height: 50,width: 50,padding:10}}
                   source={require("../../assets/SOS.png")}
                 />
           </AwesomeButton>

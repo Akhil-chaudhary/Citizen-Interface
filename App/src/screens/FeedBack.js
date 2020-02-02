@@ -24,22 +24,17 @@ let States = [];
 let District = [];
 let station = [];
 let User = [];
-export default class Clearance extends Component {
+export default class Feedback extends Component {
   state = {
     Name: "",
-    Father_name: "",
     Address: "",
     Mobile: "",
     Email: "",
-    Residing_from: "",
-    Residing_till: "",
     Station: "",
     State: "",
-    Aadhar: "",
     District: "",
     Gender: "",
-    longitude: "",
-    latitude: "",
+    Description:'',
     //User
     // User_Name: "",
     // User_Aadhar: "",
@@ -52,9 +47,9 @@ export default class Clearance extends Component {
   handleSubmit = () => {
     firebase
       .database()
-      .ref("/Clearance")
+      .ref("/Feedback")
       .push(this.state)
-      .then(this.props.navigation.navigate("Form"));
+      .then(this.props.navigation.navigate("Home"));
   };
   // fetchDataUser = async () =>{
   //   var fireBaseResponse = firebase
@@ -165,7 +160,7 @@ export default class Clearance extends Component {
             onPress: () => this.props.navigation.navigate("Form")
           }}
           centerComponent={{
-            text: "Clearance Certificate",
+            text: "Feedback",
             style: {
               color: "#fff",
               fontWeight: "bold",
@@ -231,16 +226,6 @@ export default class Clearance extends Component {
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Father`s/Gaurdian`s name</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Father`s/Gaurdian`s name"
-                placeholderTextColor="#000"
-                onChangeText={Father_name => this.setState({ Father_name })}
-                value={this.state.Father_name}
-              />
-            </View>
-            <View style={styles.entrybox}>
               <Text style={styles.text}>Address</Text>
               <TextInput
                 style={styles.input}
@@ -273,75 +258,6 @@ export default class Clearance extends Component {
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Residing from</Text>
-              <DatePicker
-                style={{ width: 200, backgroundColor: "#1C8ADB" }}
-                date={this.state.Residing_from}
-                mode="date"
-                placeholder="Select Date"
-                placeholderTextColor="black"
-                format="YYYY-MM-DD"
-                minDate="2016-05-01"
-                maxDate="2019-06-01"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: "absolute",
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0
-                  },
-                  dateInput: {
-                    marginLeft: 36
-                  }
-                }}
-                onDateChange={Residing_from => {
-                  this.setState({ Residing_from });
-                }}
-              />
-            </View>
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>Residing till</Text>
-              <DatePicker
-                style={{ width: 200, backgroundColor: "#1C8ADB" }}
-                date={this.state.Residing_till}
-                mode="date"
-                placeholder="Select Date"
-                placeholderTextColor="black"
-                format="YYYY-MM-DD"
-                minDate="2016-05-01"
-                maxDate="2019-06-01"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: "absolute",
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0
-                  },
-                  dateInput: {
-                    marginLeft: 36
-                  }
-                }}
-                onDateChange={Residing_till => {
-                  this.setState({ Residing_till });
-                }}
-              />
-            </View>
-            <View style={styles.entrybox}>
-              <Text style={styles.text}>Aadhar Number</Text>
-              <TextInput
-                style={styles.input}
-                numeric
-                placeholder="Number"
-                placeholderTextColor="#000"
-                onChangeText={Aadhar => this.setState({ Aadhar })}
-                value={this.state.Aadhar}
-              />
-            </View>
-            <View style={styles.entrybox}>
               <Text style={styles.text}>Gender</Text>
               <Dropdown
                 style={styles.drop}
@@ -349,6 +265,17 @@ export default class Clearance extends Component {
                 value={this.state.Gender}
                 baseColor="#1C8ADB"
                 data={data}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Description</Text>
+              <TextInput
+                style={styles.input}
+                multiline
+                placeholder="Description"
+                placeholderTextColor="#000"
+                onChangeText={Description => this.setState({ Description })}
+                value={this.state.Description}
               />
             </View>
             <View style={{ paddingBottom: 100 }}>

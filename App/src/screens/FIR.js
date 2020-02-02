@@ -62,9 +62,11 @@ export default class FIR extends Component {
                 <Text style={styles.item}>Theft E-FIR</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Complaint")}
+            >
               <View style={styles.tab}>
-                <Text style={styles.item}>Applications</Text>
+                <Text style={styles.item}>Complaint</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity>

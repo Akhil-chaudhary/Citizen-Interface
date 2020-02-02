@@ -26,7 +26,7 @@ let District = [];
 let station = [];
 export default class Tenant extends Component {
   state = {
-    imgtype: "",
+    // imgtype: "",
     Name: "",
     Address: "",
     Mobile: "",

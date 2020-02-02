@@ -24,22 +24,25 @@ let States = [];
 let District = [];
 let station = [];
 let User = [];
-export default class Clearance extends Component {
+var photo;
+export default class CharacterCertificate extends Component {
   state = {
     Name: "",
     Father_name: "",
     Address: "",
     Mobile: "",
     Email: "",
-    Residing_from: "",
-    Residing_till: "",
+    DOB: "",
     Station: "",
     State: "",
-    Aadhar: "",
     District: "",
     Gender: "",
-    longitude: "",
-    latitude: "",
+    Request_type: "",
+    Purpose: "",
+    ID_type: "",
+    ID: "",
+    Receiving: "",
+    TAN:'',
     //User
     // User_Name: "",
     // User_Aadhar: "",
@@ -52,7 +55,7 @@ export default class Clearance extends Component {
   handleSubmit = () => {
     firebase
       .database()
-      .ref("/Clearance")
+      .ref("/Character")
       .push(this.state)
       .then(this.props.navigation.navigate("Form"));
   };
@@ -134,13 +137,50 @@ export default class Clearance extends Component {
     });
   };
 
+  chooseImage = async () => {
+    //let result=await ImagePicker.launchCameraAsync();
+    let result = await ImagePicker.launchImageLibraryAsync();
+
+    // this.setState({ image:blob.data.name })
+    if (!result.cancelled) {
+      this.uploadImage(result.uri, this.state.PAN + "/")
+        .then(() => {
+          Alert.alert("Success");
+        })
+        .catch(error => {
+          Alert.alert(error);
+        });
+    }
+  };
+  uploadImage = async (uri, imageName) => {
+    const response = await fetch(uri);
+    blob = await response.blob();
+    var ref = firebase
+      .storage()
+      .ref("Character/")
+      .child(imageName);
+    // firebase
+    // .database()
+    // .ref("Tenant/")
+    // .push({image:blob.data.name});
+    photo = blob.data.name;
+    return ref.put(blob);
+  };
+
   render() {
     // this.fetchDataUser();
 
     this.fetchDataDistrict();
     this.fetchDataStation();
     // this._getLocationAsync();
-
+    let req = [
+      {
+        value: "Normal"
+      },
+      {
+        value: "Contractor"
+      }
+    ];
     let data = [
       {
         value: "Female"
@@ -150,6 +190,40 @@ export default class Clearance extends Component {
       },
       {
         value: "Other"
+      }
+    ];
+    let id = [
+      {
+        value: "Aadhar card(IMU)"
+      },
+      {
+        value: "PAN card"
+      },
+      {
+        value: "Driver`s license"
+      },
+      {
+        value: "Passport"
+      },
+      {
+        value: "Voter`s card"
+      },
+      {
+        value: "Ration card"
+      },
+      {
+        value: "Arms license"
+      }
+    ];
+    let data2 = [
+      {
+        value: "Through post"
+      },
+      {
+        value: "By person"
+      },
+      {
+        value: "Wireless"
       }
     ];
     console.log(firebase.auth().currentUser.email);
@@ -165,7 +239,7 @@ export default class Clearance extends Component {
             onPress: () => this.props.navigation.navigate("Form")
           }}
           centerComponent={{
-            text: "Clearance Certificate",
+            text: "Character Certificate",
             style: {
               color: "#fff",
               fontWeight: "bold",
@@ -190,6 +264,16 @@ export default class Clearance extends Component {
           enabled
         >
           <ScrollView>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Request type</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Request_type => this.setState({ Request_type })}
+                value={this.state.Request_type}
+                baseColor="#1C8ADB"
+                data={req}
+              />
+            </View>
             <View style={styles.entrybox}>
               <Text style={styles.text}>State</Text>
               <Dropdown
@@ -273,10 +357,10 @@ export default class Clearance extends Component {
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Residing from</Text>
+              <Text style={styles.text}>Date Of Birth</Text>
               <DatePicker
                 style={{ width: 200, backgroundColor: "#1C8ADB" }}
-                date={this.state.Residing_from}
+                date={this.state.DOB}
                 mode="date"
                 placeholder="Select Date"
                 placeholderTextColor="black"
@@ -296,49 +380,40 @@ export default class Clearance extends Component {
                     marginLeft: 36
                   }
                 }}
-                onDateChange={Residing_from => {
-                  this.setState({ Residing_from });
+                onDateChange={DOB => {
+                  this.setState({ DOB });
                 }}
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Residing till</Text>
-              <DatePicker
-                style={{ width: 200, backgroundColor: "#1C8ADB" }}
-                date={this.state.Residing_till}
-                mode="date"
-                placeholder="Select Date"
-                placeholderTextColor="black"
-                format="YYYY-MM-DD"
-                minDate="2016-05-01"
-                maxDate="2019-06-01"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: "absolute",
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0
-                  },
-                  dateInput: {
-                    marginLeft: 36
-                  }
-                }}
-                onDateChange={Residing_till => {
-                  this.setState({ Residing_till });
-                }}
+              <Text style={styles.text}>ID Type</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={ID_type => this.setState({ ID_type })}
+                value={this.state.ID_type}
+                baseColor="#1C8ADB"
+                data={id}
               />
             </View>
             <View style={styles.entrybox}>
-              <Text style={styles.text}>Aadhar Number</Text>
+              <Text style={styles.text}>ID Number</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Address"
+                placeholderTextColor="#000"
+                onChangeText={ID => this.setState({ ID })}
+                value={this.state.ID}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Purpose</Text>
               <TextInput
                 style={styles.input}
                 numeric
                 placeholder="Number"
                 placeholderTextColor="#000"
-                onChangeText={Aadhar => this.setState({ Aadhar })}
-                value={this.state.Aadhar}
+                onChangeText={Purpose => this.setState({ Purpose })}
+                value={this.state.Purpose}
               />
             </View>
             <View style={styles.entrybox}>
@@ -351,6 +426,46 @@ export default class Clearance extends Component {
                 data={data}
               />
             </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Receiving Type</Text>
+              <Dropdown
+                style={styles.drop}
+                onChangeText={Receiving => this.setState({ Receiving })}
+                value={this.state.Receiving}
+                baseColor="#1C8ADB"
+                data={data2}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>TAN Number</Text>
+              <TextInput
+                style={styles.input}
+                numeric
+                placeholder="Number"
+                placeholderTextColor="#000"
+                onChangeText={TAN=> this.setState({ TAN })}
+                value={this.state.TAN}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Requester Photo</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this.chooseImage}
+              >
+                <Text
+                  style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
+                >
+                  Upload
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.text}>Note:</Text>
+            <View style={{paddingBottom:20}}>
+              <Text>File Should of 5mb.</Text>
+              <Text>File should be in .jpg or .png format.</Text>
+            </View>
+
             <View style={{ paddingBottom: 100 }}>
               <TouchableOpacity
                 style={styles.button}
