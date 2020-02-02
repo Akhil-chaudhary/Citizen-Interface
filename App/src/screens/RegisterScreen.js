@@ -39,7 +39,7 @@ export default class RegisterScreen extends Component {
 
       //TO SAVE THE DATA OF THE USERS INTO THE DATABASE/------------
 
-      firebase.database().ref('/Citizen Users/').child(this.state.aadhar).set({name: this.state.name,email: this.state.email, aadhar: this.state.aadhar, number: this.state.number, push_token: this.state.token})
+      firebase.database().ref('/Citizen Users/').child(this.state.email.replace(".", "@")).set({name: this.state.name,email: this.state.email, aadhar: this.state.aadhar, number: this.state.number, push_token: this.state.token})
   };
 
 

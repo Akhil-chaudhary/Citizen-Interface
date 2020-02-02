@@ -41,11 +41,7 @@ export default class Clearance extends Component {
     longitude: "",
     latitude: "",
     //User
-    // User_Name: "",
-    // User_Aadhar: "",
-    // User_Email: "",
-    // User_Number: "",
-    // User_Token: "",
+    User_Token: "",
     errorMessage: null
   };
 
@@ -56,21 +52,20 @@ export default class Clearance extends Component {
       .push(this.state)
       .then(this.props.navigation.navigate("Form"));
   };
-  // fetchDataUser = async () =>{
-  //   var fireBaseResponse = firebase
-  //     .database()
-  //     .ref("Citizen Users/")
-  //     .child();
-  //   fireBaseResponse.once("value").then(snapshot =>{
-  //     snapshot.forEach(child =>{
-  //       var temp = child.val();
-  //       var title= child.key();
-  //       User.push({title: temp });
-  //       return false;
-  //     });
-  //     console.log(User);
-  //   });
-  // };
+  fetchDataUser = async () =>{
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Citizen Users/")
+      .child(firebase.auth().currentUser.email.replace(".", "@"));
+    fireBaseResponse.once("value").then(snapshot =>{
+      snapshot.forEach(child =>{
+        var temp = child.val();
+        this.state.User_Token=temp;
+        return false;
+      });
+      console.log(this.state.User_Token);
+    });
+  };
   ///-----------------------Location Fetch-----------------------
 
   _getLocationAsync = async () => {
@@ -135,7 +130,7 @@ export default class Clearance extends Component {
   };
 
   render() {
-    // this.fetchDataUser();
+    this.fetchDataUser();
 
     this.fetchDataDistrict();
     this.fetchDataStation();
@@ -152,7 +147,6 @@ export default class Clearance extends Component {
         value: "Other"
       }
     ];
-    console.log(firebase.auth().currentUser.email);
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
