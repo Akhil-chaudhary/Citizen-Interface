@@ -19,6 +19,7 @@ import * as firebase from "firebase";
 let States = [];
 let District = [];
 let station = [];
+let User = [];
 export default class Complaint extends Component {
   state = {
     Name: "",
@@ -31,34 +32,46 @@ export default class Complaint extends Component {
     State: "",
     District: "",
     DOB: "",
-    Date_incident:'',
+    Date_incident: "",
     Complaint_against: "",
     Complaint_Address: "",
-    Description: ""
+    Description: "",
+    // longitude: "",
+    // latitude: "",
+    //User
+    User_Name: "",
+    User_Aadhar: "",
+    User_Email: "",
+    User_Number: "",
+    User_Token: "",
+    errorMessage: null
   };
 
   handleSubmit = () => {
     firebase
       .database()
-      .ref("/Lost E-FIR")
+      .ref("/Complaints")
       .push(this.state)
       .then(this.props.navigation.navigate("FIR"));
   };
-  // fetchDataUser = async () =>{
-  //   var fireBaseResponse = firebase
-  //     .database()
-  //     .ref("Citizen Users/")
-  //     .child();
-  //   fireBaseResponse.once("value").then(snapshot =>{
-  //     snapshot.forEach(child =>{
-  //       var temp = child.val();
-  //       var title= child.key();
-  //       User.push({title: temp });
-  //       return false;
-  //     });
-  //     console.log(User);
-  //   });
-  // };
+  fetchDataUser = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Citizen Users/")
+      .child(firebase.auth().currentUser.email.replace(".", "@"));
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.val();
+        User.push(temp);
+        return false;
+      });
+      (this.state.User_Name = User[2]),
+        (this.state.User_Aadhar = User[0]),
+        (this.state.User_Email = User[1]),
+        (this.state.User_Number = User[3]),
+        (this.state.User_Token = User[4]);
+    });
+  };
   ///-----------------------Location Fetch-----------------------
 
   _getLocationAsync = async () => {
@@ -123,8 +136,7 @@ export default class Complaint extends Component {
   };
 
   render() {
-    // this.fetchDataUser();
-
+    this.fetchDataUser();
     this.fetchDataDistrict();
     this.fetchDataStation();
     // this._getLocationAsync();

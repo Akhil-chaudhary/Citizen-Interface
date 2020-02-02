@@ -21,6 +21,7 @@ import * as firebase from "firebase";
 var photo;
 // var type='Owner';
 
+let User = [];
 let States = [];
 let District = [];
 let station = [];
@@ -46,6 +47,14 @@ export default class Tenant extends Component {
     Station: "",
     State: "",
     District: "",
+    // longitude: "",
+    // latitude: "",
+    //User
+    User_Name: "",
+    User_Aadhar: "",
+    User_Email: "",
+    User_Number: "",
+    User_Token: "",
     errorMessage: null
   };
 
@@ -57,21 +66,24 @@ export default class Tenant extends Component {
       .push(this.state)
       .then(this.props.navigation.navigate("Form"));
   };
-  // fetchDataUser = async () =>{
-  //   var fireBaseResponse = firebase
-  //     .database()
-  //     .ref("Citizen Users/")
-  //     .child();
-  //   fireBaseResponse.once("value").then(snapshot =>{
-  //     snapshot.forEach(child =>{
-  //       var temp = child.val();
-  //       var title= child.key();
-  //       User.push({title: temp });
-  //       return false;
-  //     });
-  //     console.log(User);
-  //   });
-  // };
+  fetchDataUser = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Citizen Users/")
+      .child(firebase.auth().currentUser.email.replace(".", "@"));
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.val();
+        User.push(temp);
+        return false;
+      });
+      (this.state.User_Name = User[2]),
+        (this.state.User_Aadhar = User[0]),
+        (this.state.User_Email = User[1]),
+        (this.state.User_Number = User[3]),
+        (this.state.User_Token = User[4]);
+    });
+  };
   ///-----------------------Location Fetch-----------------------
   // componentDidMount() {
   //   this._getLocationAsync();
@@ -156,7 +168,10 @@ export default class Tenant extends Component {
 
     // this.setState({ image:blob.data.name })
     if (!result.cancelled) {
-      this.uploadImage(result.uri, this.state.PAN + "/")
+      this.uploadImage(
+        result.uri,
+        this.state.User_Email.replace(".", "@") + "/"
+      )
         .then(() => {
           Alert.alert("Success");
         })
@@ -181,7 +196,7 @@ export default class Tenant extends Component {
   };
 
   render() {
-    // this.fetchDataUser();
+    this.fetchDataUser();
     // this._getLocationAsync();
     this.fetchDataStation();
     this.fetchDataDistrict();

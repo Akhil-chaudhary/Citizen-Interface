@@ -38,9 +38,13 @@ export default class Clearance extends Component {
     Aadhar: "",
     District: "",
     Gender: "",
-    longitude: "",
-    latitude: "",
+    // longitude: "",
+    // latitude: "",
     //User
+    User_Name: "",
+    User_Aadhar: "",
+    User_Email: "",
+    User_Number: "",
     User_Token: "",
     errorMessage: null
   };
@@ -52,18 +56,22 @@ export default class Clearance extends Component {
       .push(this.state)
       .then(this.props.navigation.navigate("Form"));
   };
-  fetchDataUser = async () =>{
+  fetchDataUser = async () => {
     var fireBaseResponse = firebase
       .database()
       .ref("Citizen Users/")
       .child(firebase.auth().currentUser.email.replace(".", "@"));
-    fireBaseResponse.once("value").then(snapshot =>{
-      snapshot.forEach(child =>{
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
         var temp = child.val();
-        this.state.User_Token=temp;
+        User.push(temp);
         return false;
       });
-      console.log(this.state.User_Token);
+      (this.state.User_Name = User[2]),
+        (this.state.User_Aadhar = User[0]),
+        (this.state.User_Email = User[1]),
+        (this.state.User_Number = User[3]),
+        (this.state.User_Token = User[4]);
     });
   };
   ///-----------------------Location Fetch-----------------------
@@ -131,7 +139,6 @@ export default class Clearance extends Component {
 
   render() {
     this.fetchDataUser();
-
     this.fetchDataDistrict();
     this.fetchDataStation();
     // this._getLocationAsync();

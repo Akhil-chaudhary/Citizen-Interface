@@ -34,13 +34,15 @@ export default class Feedback extends Component {
     State: "",
     District: "",
     Gender: "",
-    Description:'',
+    Description: "",
+    // longitude: "",
+    // latitude: "",
     //User
-    // User_Name: "",
-    // User_Aadhar: "",
-    // User_Email: "",
-    // User_Number: "",
-    // User_Token: "",
+    User_Name: "",
+    User_Aadhar: "",
+    User_Email: "",
+    User_Number: "",
+    User_Token: "",
     errorMessage: null
   };
 
@@ -51,21 +53,24 @@ export default class Feedback extends Component {
       .push(this.state)
       .then(this.props.navigation.navigate("Home"));
   };
-  // fetchDataUser = async () =>{
-  //   var fireBaseResponse = firebase
-  //     .database()
-  //     .ref("Citizen Users/")
-  //     .child();
-  //   fireBaseResponse.once("value").then(snapshot =>{
-  //     snapshot.forEach(child =>{
-  //       var temp = child.val();
-  //       var title= child.key();
-  //       User.push({title: temp });
-  //       return false;
-  //     });
-  //     console.log(User);
-  //   });
-  // };
+  fetchDataUser = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Citizen Users/")
+      .child(firebase.auth().currentUser.email.replace(".", "@"));
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.val();
+        User.push(temp);
+        return false;
+      });
+      (this.state.User_Name = User[2]),
+        (this.state.User_Aadhar = User[0]),
+        (this.state.User_Email = User[1]),
+        (this.state.User_Number = User[3]),
+        (this.state.User_Token = User[4]);
+    });
+  };
   ///-----------------------Location Fetch-----------------------
 
   _getLocationAsync = async () => {
@@ -130,8 +135,7 @@ export default class Feedback extends Component {
   };
 
   render() {
-    // this.fetchDataUser();
-
+    this.fetchDataUser();
     this.fetchDataDistrict();
     this.fetchDataStation();
     // this._getLocationAsync();

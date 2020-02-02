@@ -33,7 +33,7 @@ export default class Form extends Component {
           leftComponent={{
             icon: "menu",
             color: "#1C8ADB",
-            onPress:()=>this.props.navigation.openDrawer()
+            onPress: () => this.props.navigation.openDrawer()
           }}
           centerComponent={{
             text: "FORMS",
@@ -70,15 +70,15 @@ export default class Form extends Component {
                 <Text style={styles.item}>Tenant Verification</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity 
-            onPress={() => this.props.navigation.navigate("Character")}
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Character")}
             >
               <View style={styles.tab}>
                 <Text style={styles.item}>Character Certificate</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("PostMortem")}
+              onPress={() => this.props.navigation.navigate("PostMortem")}
             >
               <View style={styles.tab}>
                 <Text style={styles.item}>Post Mortem Request</Text>

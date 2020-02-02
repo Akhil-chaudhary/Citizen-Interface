@@ -34,7 +34,7 @@ export default class FIR extends Component {
           leftComponent={{
             icon: "menu",
             color: "#1C8ADB",
-            onPress:()=>this.props.navigation.openDrawer()
+            onPress: () => this.props.navigation.openDrawer()
           }}
           centerComponent={{
             text: "E-FIR",
@@ -63,7 +63,7 @@ export default class FIR extends Component {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Complaint")}
+              onPress={() => this.props.navigation.navigate("Complaint")}
             >
               <View style={styles.tab}>
                 <Text style={styles.item}>Complaint</Text>

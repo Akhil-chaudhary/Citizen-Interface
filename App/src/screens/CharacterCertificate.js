@@ -17,6 +17,7 @@ import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Dropdown } from "react-native-material-dropdown";
 import DatePicker from "react-native-datepicker";
+import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import * as firebase from "firebase";
@@ -42,13 +43,15 @@ export default class CharacterCertificate extends Component {
     ID_type: "",
     ID: "",
     Receiving: "",
-    TAN:'',
+    TAN: "",
+    // longitude: "",
+    // latitude: "",
     //User
-    // User_Name: "",
-    // User_Aadhar: "",
-    // User_Email: "",
-    // User_Number: "",
-    // User_Token: "",
+    User_Name: "",
+    User_Aadhar: "",
+    User_Email: "",
+    User_Number: "",
+    User_Token: "",
     errorMessage: null
   };
 
@@ -59,21 +62,24 @@ export default class CharacterCertificate extends Component {
       .push(this.state)
       .then(this.props.navigation.navigate("Form"));
   };
-  // fetchDataUser = async () =>{
-  //   var fireBaseResponse = firebase
-  //     .database()
-  //     .ref("Citizen Users/")
-  //     .child();
-  //   fireBaseResponse.once("value").then(snapshot =>{
-  //     snapshot.forEach(child =>{
-  //       var temp = child.val();
-  //       var title= child.key();
-  //       User.push({title: temp });
-  //       return false;
-  //     });
-  //     console.log(User);
-  //   });
-  // };
+  fetchDataUser = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Citizen Users/")
+      .child(firebase.auth().currentUser.email.replace(".", "@"));
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.val();
+        User.push(temp);
+        return false;
+      });
+      (this.state.User_Name = User[2]),
+        (this.state.User_Aadhar = User[0]),
+        (this.state.User_Email = User[1]),
+        (this.state.User_Number = User[3]),
+        (this.state.User_Token = User[4]);
+    });
+  };
   ///-----------------------Location Fetch-----------------------
 
   _getLocationAsync = async () => {
@@ -168,8 +174,7 @@ export default class CharacterCertificate extends Component {
   };
 
   render() {
-    // this.fetchDataUser();
-
+    this.fetchDataUser();
     this.fetchDataDistrict();
     this.fetchDataStation();
     // this._getLocationAsync();
@@ -410,7 +415,7 @@ export default class CharacterCertificate extends Component {
               <TextInput
                 style={styles.input}
                 numeric
-                placeholder="Number"
+                placeholder="Purpose"
                 placeholderTextColor="#000"
                 onChangeText={Purpose => this.setState({ Purpose })}
                 value={this.state.Purpose}
@@ -443,7 +448,7 @@ export default class CharacterCertificate extends Component {
                 numeric
                 placeholder="Number"
                 placeholderTextColor="#000"
-                onChangeText={TAN=> this.setState({ TAN })}
+                onChangeText={TAN => this.setState({ TAN })}
                 value={this.state.TAN}
               />
             </View>
@@ -461,7 +466,7 @@ export default class CharacterCertificate extends Component {
               </TouchableOpacity>
             </View>
             <Text style={styles.text}>Note:</Text>
-            <View style={{paddingBottom:20}}>
+            <View style={{ paddingBottom: 20 }}>
               <Text>File Should of 5mb.</Text>
               <Text>File should be in .jpg or .png format.</Text>
             </View>

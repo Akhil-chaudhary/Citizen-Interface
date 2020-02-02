@@ -33,18 +33,20 @@ export default class PostMortem extends Component {
     Station: "",
     State: "",
     District: "",
-    DOD:'',
-    DName:'',
+    DOD: "",
+    DName: "",
     Gender: "",
-    Relation:'',
-    ID:'',
-    ID_type:'',
+    Relation: "",
+    ID: "",
+    ID_type: "",
+    // longitude: "",
+    // latitude: "",
     //User
-    // User_Name: "",
-    // User_Aadhar: "",
-    // User_Email: "",
-    // User_Number: "",
-    // User_Token: "",
+    User_Name: "",
+    User_Aadhar: "",
+    User_Email: "",
+    User_Number: "",
+    User_Token: "",
     errorMessage: null
   };
 
@@ -55,21 +57,24 @@ export default class PostMortem extends Component {
       .push(this.state)
       .then(this.props.navigation.navigate("Form"));
   };
-  // fetchDataUser = async () =>{
-  //   var fireBaseResponse = firebase
-  //     .database()
-  //     .ref("Citizen Users/")
-  //     .child();
-  //   fireBaseResponse.once("value").then(snapshot =>{
-  //     snapshot.forEach(child =>{
-  //       var temp = child.val();
-  //       var title= child.key();
-  //       User.push({title: temp });
-  //       return false;
-  //     });
-  //     console.log(User);
-  //   });
-  // };
+  fetchDataUser = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Citizen Users/")
+      .child(firebase.auth().currentUser.email.replace(".", "@"));
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.val();
+        User.push(temp);
+        return false;
+      });
+      (this.state.User_Name = User[2]),
+        (this.state.User_Aadhar = User[0]),
+        (this.state.User_Email = User[1]),
+        (this.state.User_Number = User[3]),
+        (this.state.User_Token = User[4]);
+    });
+  };
   ///-----------------------Location Fetch-----------------------
 
   _getLocationAsync = async () => {
@@ -134,31 +139,30 @@ export default class PostMortem extends Component {
   };
 
   render() {
-    // this.fetchDataUser();
-
+    this.fetchDataUser();
     this.fetchDataDistrict();
     this.fetchDataStation();
     // this._getLocationAsync();
     let rel = [
-        {
-          value: "Father"
-        },
-        {
-          value: "Mother"
-        },
-        {
-          value: "Gaurdian"
-        },
-        {
-          value: "Wife"
-        },
-        {
-          value: "Husband"
-        },
-        {
-            value:"other"
-        }
-      ];
+      {
+        value: "Father"
+      },
+      {
+        value: "Mother"
+      },
+      {
+        value: "Gaurdian"
+      },
+      {
+        value: "Wife"
+      },
+      {
+        value: "Husband"
+      },
+      {
+        value: "other"
+      }
+    ];
     let data = [
       {
         value: "Female"
@@ -170,30 +174,30 @@ export default class PostMortem extends Component {
         value: "Other"
       }
     ];
-    
+
     let id = [
-        {
-          value: "Aadhar card(IMU)"
-        },
-        {
-          value: "PAN card"
-        },
-        {
-          value: "Driver`s license"
-        },
-        {
-          value: "Passport"
-        },
-        {
-          value: "Voter`s card"
-        },
-        {
-          value: "Ration card"
-        },
-        {
-          value: "Arms license"
-        }
-      ];
+      {
+        value: "Aadhar card(IMU)"
+      },
+      {
+        value: "PAN card"
+      },
+      {
+        value: "Driver`s license"
+      },
+      {
+        value: "Passport"
+      },
+      {
+        value: "Voter`s card"
+      },
+      {
+        value: "Ration card"
+      },
+      {
+        value: "Arms license"
+      }
+    ];
     // console.log(firebase.auth().currentUser.email);
     return (
       <ImageBackground

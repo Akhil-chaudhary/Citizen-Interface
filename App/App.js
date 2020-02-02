@@ -22,16 +22,16 @@ import RegisterScreen from "./src/screens/RegisterScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import Form from "./src/screens/Form";
 import Clearance from "./src/screens/Clearance";
-import CharacterCertificate from './src/screens/CharacterCertificate';
-import PostMortem from './src/screens/PostMortem';
+import CharacterCertificate from "./src/screens/CharacterCertificate";
+import PostMortem from "./src/screens/PostMortem";
 import AboutScreen from "./src/screens/AboutScreen";
 import FIR from "./src/screens/FIR";
 import LostFIR from "./src/screens/LostFIR";
 import Noc from "./src/screens/Noc";
-import Complaint from './src/screens/Complaint'
+import Complaint from "./src/screens/Complaint";
 import Tenant from "./src/screens/Tenant";
 import FeedBack from "./src/screens/FeedBack";
-import Tips from './src/screens/Tips'
+import Tips from "./src/screens/Tips";
 
 // import MapScreen from './ScannerScreen';
 import MapScreen from "./src/screens/ScannerScreen";
@@ -83,8 +83,8 @@ const Drawer = createDrawerNavigator(
     FIR: FIR,
     NOC: Noc,
     Map: MapScreen,
-    Feedback:FeedBack,
-    Tips:Tips,
+    Feedback: FeedBack,
+    Tips: Tips,
     About: AboutScreen
   },
   {
@@ -100,11 +100,11 @@ const AppStack = createStackNavigator(
     Form: Form,
     Clearance: Clearance,
     Tenant: Tenant,
-    Character:CharacterCertificate,
-    PostMortem:PostMortem,
+    Character: CharacterCertificate,
+    PostMortem: PostMortem,
     FIR: FIR,
     Lost: LostFIR,
-    Complaint:Complaint,
+    Complaint: Complaint,
     Noc: Noc,
     About: AboutScreen
   },

@@ -18,7 +18,7 @@ export default class LoginScreen extends Component {
   };
 
   handleLogin = () => {
-    this.state.email=this.state.email.trim();
+    this.state.email = this.state.email.trim();
     const { email, password } = this.state;
     firebase
       .auth()

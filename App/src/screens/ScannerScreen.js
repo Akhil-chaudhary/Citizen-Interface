@@ -10,8 +10,8 @@ export default class MapScreen extends Component {
     super(props);
 
     this.state = {
-      lati:null,
-      longi:null,
+      lati: null,
+      longi: null,
       markers: [
         {
           coordinates: {
@@ -143,7 +143,7 @@ export default class MapScreen extends Component {
   }
 
   // ///-----------------------Location Fetch-----------------------
-  
+
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== "granted") {
@@ -154,19 +154,17 @@ export default class MapScreen extends Component {
 
     let location = await Location.getCurrentPositionAsync({});
     this.setState({
-    lati : location.coords.latitude,
-    longi :location.coords.longitude
-    })
+      lati: location.coords.latitude,
+      longi: location.coords.longitude
+    });
     // lati = location.coords.latitude;
     // longi = location.coords.longitude;
     console.log(this.state.longi, this.state.lati);
   };
   //-------------------------------Location taken--------------------------
-  
+
   render() {
-    
     return (
-      
       <View style={styles.container}>
         <SafeAreaView
           style={{
@@ -195,7 +193,7 @@ export default class MapScreen extends Component {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           region={{
-            latitude:28.677479,
+            latitude: 28.677479,
             longitude: 77.43689,
             latitudeDelta: 0.4,
             longitudeDelta: 0.4

@@ -15,10 +15,13 @@ import {
 import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Dropdown } from "react-native-material-dropdown";
+import * as firebase from "firebase";
 
 let States = [];
 let District = [];
 let station = [];
+let User = [];
+// var photo;
 export default class Noc extends Component {
   state = {
     Name: "",
@@ -33,32 +36,44 @@ export default class Noc extends Component {
     Gender: "",
     Owned1: "",
     Owned: "",
-    Other: ""
+    Other: "",
+    // longitude: "",
+    // latitude: "",
+    //User
+    User_Name: "",
+    User_Aadhar: "",
+    User_Email: "",
+    User_Number: "",
+    User_Token: "",
+    errorMessage: null
   };
 
   handleSubmit = () => {
-    this.state.image = photo;
+    // this.state.image = photo;
     firebase
       .database()
-      .ref("/Tenant")
+      .ref("/NOC")
       .push(this.state)
-      .then(this.props.navigation.navigate("Form"));
+      .then(this.props.navigation.navigate("Home"));
   };
-  // fetchDataUser = async () =>{
-  //   var fireBaseResponse = firebase
-  //     .database()
-  //     .ref("Citizen Users/")
-  //     .child();
-  //   fireBaseResponse.once("value").then(snapshot =>{
-  //     snapshot.forEach(child =>{
-  //       var temp = child.val();
-  //       var title= child.key();
-  //       User.push({title: temp });
-  //       return false;
-  //     });
-  //     console.log(User);
-  //   });
-  // };
+  fetchDataUser = async () => {
+    var fireBaseResponse = firebase
+      .database()
+      .ref("Citizen Users/")
+      .child(firebase.auth().currentUser.email.replace(".", "@"));
+    fireBaseResponse.once("value").then(snapshot => {
+      snapshot.forEach(child => {
+        var temp = child.val();
+        User.push(temp);
+        return false;
+      });
+      (this.state.User_Name = User[2]),
+        (this.state.User_Aadhar = User[0]),
+        (this.state.User_Email = User[1]),
+        (this.state.User_Number = User[3]),
+        (this.state.User_Token = User[4]);
+    });
+  };
   ///-----------------------Location Fetch-----------------------
   // componentDidMount() {
   //   this._getLocationAsync();
@@ -122,22 +137,12 @@ export default class Noc extends Component {
       // console.log(station);
     });
   };
-  // _getLocationAsync = async () =>{
-  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
-  //   if (status !== "granted") {
-  //     this.setState({
-  //       locationResult: "Permission to access location was denied"
-  //     });
-  //   }
-
-  //   let location = await Location.getCurrentPositionAsync({});
-  //   this.setState({
-  //     latitude: location.coords.latitude,
-  //     longitude: location.coords.longitude
-  //   });
-  // };
 
   render() {
+    this.fetchDataUser();
+    this.fetchDataDistrict();
+    this.fetchDataStation();
+    // this._getLocationAsync();
     let data = [
       {
         value: "Female"
@@ -306,6 +311,16 @@ export default class Noc extends Component {
                 placeholderTextColor="#000"
                 onChangeText={Email => this.setState({ Email })}
                 value={this.state.Email}
+              />
+            </View>
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Aadhar</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Aadhar"
+                placeholderTextColor="#000"
+                onChangeText={Aadhar => this.setState({ Aadhar })}
+                value={this.state.Aadhar}
               />
             </View>
 

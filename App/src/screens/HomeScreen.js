@@ -119,12 +119,12 @@ export default class HomeScreen extends Component {
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.sos}>
-          <AwesomeButton backgroundColor='white' backgroundDarker='red'>
-          <Image
-            style={{height: 50,width: 50,padding:10}}
-                  source={require("../../assets/SOS.png")}
-                />
-          </AwesomeButton>
+            <AwesomeButton backgroundColor="white" backgroundDarker="red">
+              <Image
+                style={{ height: 50, width: 50, padding: 10 }}
+                source={require("../../assets/SOS.png")}
+              />
+            </AwesomeButton>
           </View>
         </View>
       </ImageBackground>
@@ -138,11 +138,11 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingHorizontal: 10
   },
-  sos:{
-    flex:1,
-    justifyContent:'center',
+  sos: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    margin:10
+    margin: 10
   },
   img: {
     position: "absolute",

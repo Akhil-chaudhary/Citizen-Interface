@@ -10,8 +10,8 @@ import {
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 
-import {Notifications} from 'expo';
-import * as Permissions from 'expo-permissions';
+import { Notifications } from "expo";
+import * as Permissions from "expo-permissions";
 
 export default class RegisterScreen extends Component {
   state = {
@@ -19,11 +19,11 @@ export default class RegisterScreen extends Component {
     email: "",
     aadhar: "",
     number: "",
-    password:"",
+    password: "",
     token: "",
     errorMessage: null
   };
-  
+
   /////----------------------------SIGNUP FUNCTION============================///
   handleSignUp = () => {
     this.state.email = this.state.email.trim();
@@ -37,16 +37,24 @@ export default class RegisterScreen extends Component {
       })
       .catch(error => this.setState({ errorMessage: error.message }));
 
-      //TO SAVE THE DATA OF THE USERS INTO THE DATABASE/------------
+    //TO SAVE THE DATA OF THE USERS INTO THE DATABASE/------------
 
-      firebase.database().ref('/Citizen Users/').child(this.state.email.replace(".", "@")).set({name: this.state.name,email: this.state.email, aadhar: this.state.aadhar, number: this.state.number, push_token: this.state.token})
+    firebase
+      .database()
+      .ref("/Citizen Users/")
+      .child(this.state.email.replace(".", "@"))
+      .set({
+        name: this.state.name,
+        email: this.state.email,
+        aadhar: this.state.aadhar,
+        number: this.state.number,
+        push_token: this.state.token
+      });
   };
-
 
   ////---------------------------PUSH NOTIFICATION FUNCTION...........................\\\\
 
   registerForPushNotificationAsync = async () => {
-
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     // only asks if permissions have not already been determined, because
     // iOS won't necessarily prompt the user a second time.
@@ -54,30 +62,24 @@ export default class RegisterScreen extends Component {
     // askAsync will never prompt the user
 
     // Stop here if the user did not grant permissions
-    if (status !== 'granted') {
-      alert('No notification permissions!');
+    if (status !== "granted") {
+      alert("No notification permissions!");
       return;
     }
 
-    try{
-    // Get the token that identifies this device
-    this.state.token = await Notifications.getExpoPushTokenAsync();
-
-
-    }
-    catch(error){
-        console.log(error)
+    try {
+      // Get the token that identifies this device
+      this.state.token = await Notifications.getExpoPushTokenAsync();
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  async componentDidMount(){
-    this.currentUser = await firebase.auth().currentUser
+  async componentDidMount() {
+    this.currentUser = await firebase.auth().currentUser;
 
     await this.registerForPushNotificationAsync();
   }
-
-
-
 
   render() {
     return (
@@ -125,22 +127,24 @@ export default class RegisterScreen extends Component {
               ></TextInput>
             </View>
 
-            <View style={{ marginTop: 4 }} >
-                  <TextInput
-                  placeholder='Aadhar Card Number' 
-                  style={styles.input}
-                  autoCapitalize="none" 
-                  onChangeText={aadhar => this.setState({aadhar})}
-                  value={this.state.aadhar}></TextInput>
-              </View>
-              <View  style={{ marginTop: 4 }}>
-                  <TextInput
-                  placeholder='Mobile Number' 
-                  style={styles.input}
-                  autoCapitalize="none" 
-                  onChangeText={number => this.setState({number})}
-                  value={this.state.number}></TextInput>
-              </View>
+            <View style={{ marginTop: 4 }}>
+              <TextInput
+                placeholder="Aadhar Card Number"
+                style={styles.input}
+                autoCapitalize="none"
+                onChangeText={aadhar => this.setState({ aadhar })}
+                value={this.state.aadhar}
+              ></TextInput>
+            </View>
+            <View style={{ marginTop: 4 }}>
+              <TextInput
+                placeholder="Mobile Number"
+                style={styles.input}
+                autoCapitalize="none"
+                onChangeText={number => this.setState({ number })}
+                value={this.state.number}
+              ></TextInput>
+            </View>
 
             <View style={{ marginTop: 4 }}>
               <TextInput
