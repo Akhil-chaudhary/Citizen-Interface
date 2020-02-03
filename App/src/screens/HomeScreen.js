@@ -7,6 +7,7 @@ import {
   Button,
   SafeAreaView,
   ImageBackground,
+  Linking,
   ScrollView,
   YellowBox
 } from "react-native";
@@ -20,6 +21,7 @@ import {
 import AwesomeButton from "react-native-really-awesome-button";
 import * as firebase from "firebase";
 import { Header } from "react-native-elements";
+import call from 'react-native-phone-call';
 export default class HomeScreen extends Component {
   state = {
     email: "",
@@ -38,6 +40,16 @@ export default class HomeScreen extends Component {
           this.props.navigation.navigate(user ? "App" : "Auth");
         });
       });
+  };
+  call = () => {
+    console.log("call")
+    //handler to make a call
+    const args = {
+      number: '8171940441',
+      prompt: false,
+    };
+   
+    call(args).catch(console.error);
   };
   render() {
     return (
@@ -123,7 +135,7 @@ export default class HomeScreen extends Component {
           </ScrollView>
           <View style={styles.sos}>
             <View style={styles.sos}>
-            <AwesomeButton backgroundColor="white" style={{}} backgroundDarker="red">
+            <AwesomeButton onPress={() => this.call()} backgroundColor="white" style={{}} backgroundDarker="red">
               <Image
                 style={{ height: 50, width: 50, padding: 10 }}
                 source={require("../../assets/SOS.png")}
@@ -131,7 +143,7 @@ export default class HomeScreen extends Component {
             </AwesomeButton>
             </View>
             <View style={styles.sos}>
-            <AwesomeButton backgroundColor="white" backgroundDarker="red">
+            <AwesomeButton onPress={() => this.props.navigation.navigate("Chat")} backgroundColor="white" backgroundDarker="red">
               <Image
                 style={{ height: 50, width: 50, padding: 10 }}
                 source={require("../../assets/Chatbot.png")}

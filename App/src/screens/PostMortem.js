@@ -99,7 +99,7 @@ export default class PostMortem extends Component {
     var fireBaseResponse = firebase
       .database()
       .ref()
-      .child("Stations/");
+      .child("Stations");
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
         var temp = child.key;
@@ -112,7 +112,7 @@ export default class PostMortem extends Component {
   fetchDataDistrict = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/")
+      .ref("Stations")
       .child(this.state.State);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
@@ -126,7 +126,7 @@ export default class PostMortem extends Component {
   fetchDataStation = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/" + this.state.State + "/")
+      .ref("Stations/" + this.state.State)
       .child(this.state.District);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(item => {
@@ -271,6 +271,7 @@ export default class PostMortem extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Full name"
+                autoCapitalize="words"
                 placeholderTextColor="#000"
                 onChangeText={Name => this.setState({ Name })}
                 value={this.state.Name}
@@ -281,6 +282,7 @@ export default class PostMortem extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Address"
+                multiline
                 placeholderTextColor="#000"
                 onChangeText={Address => this.setState({ Address })}
                 value={this.state.Address}
@@ -291,6 +293,7 @@ export default class PostMortem extends Component {
               <TextInput
                 numeric
                 style={styles.input}
+                keyboardType="phone-pad"
                 placeholder="Mobile Number"
                 placeholderTextColor="#000"
                 onChangeText={Mobile => this.setState({ Mobile })}
@@ -303,6 +306,7 @@ export default class PostMortem extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Email"
+                autoCompleteType="email"
                 placeholderTextColor="#000"
                 onChangeText={Email => this.setState({ Email })}
                 value={this.state.Email}
@@ -343,6 +347,8 @@ export default class PostMortem extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Full name"
+                autoCompleteType="name"
+                autoCapitalize="words"
                 placeholderTextColor="#000"
                 onChangeText={DName => this.setState({ DName })}
                 value={this.state.DName}
@@ -382,7 +388,7 @@ export default class PostMortem extends Component {
               <Text style={styles.text}>ID Number</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Address"
+                placeholder="ID Number"
                 placeholderTextColor="#000"
                 onChangeText={ID => this.setState({ ID })}
                 value={this.state.ID}

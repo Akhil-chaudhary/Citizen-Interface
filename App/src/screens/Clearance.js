@@ -98,7 +98,7 @@ export default class Clearance extends Component {
     var fireBaseResponse = firebase
       .database()
       .ref()
-      .child("Stations/");
+      .child("Stations");
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
         var temp = child.key;
@@ -111,7 +111,7 @@ export default class Clearance extends Component {
   fetchDataDistrict = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/")
+      .ref("Stations")
       .child(this.state.State);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
@@ -125,7 +125,7 @@ export default class Clearance extends Component {
   fetchDataStation = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/" + this.state.State + "/")
+      .ref("Stations/" + this.state.State)
       .child(this.state.District);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(item => {
@@ -180,7 +180,7 @@ export default class Clearance extends Component {
             onPress: () =>
               Alert.alert(
                 "INFO",
-                "Now you don`t have to run from office to office to get your Police Clearance Certificate (PCC) for various purposes like job, Passport, VISA, etc. This has gifted the residents and visitors with Online Police Clearance Certificate.\nYou can apply on this application for a Police Clearance Certificate. Once you have filled the Online Application and Online Fees, you will get your printable Police Verification Certificate on your mobile phone"
+                "Now you don`t have to run from office to office to get your Police Clearance Certificate (PCC) for various purposes like job, Passport, VISA, etc. This has gifted the residents and visitors with Online Police Clearance Certificate.\nYou can apply on this application for a Police Clearance Certificate. Once you have filled the Online Application and Online Fees, you will get your printable Police Verification Certificate on your mobile phone\n"
               )
           }}
           backgroundColor="#1C8ADB"
@@ -225,6 +225,8 @@ export default class Clearance extends Component {
               <Text style={styles.text}>Full name</Text>
               <TextInput
                 style={styles.input}
+                autoCompleteType="name"
+                autoCapitalize="words"
                 placeholder="Full name"
                 placeholderTextColor="#000"
                 onChangeText={Name => this.setState({ Name })}
@@ -235,6 +237,8 @@ export default class Clearance extends Component {
               <Text style={styles.text}>Father`s/Gaurdian`s name</Text>
               <TextInput
                 style={styles.input}
+                autoCompleteType="name"
+                autoCapitalize="words"
                 placeholder="Father`s/Gaurdian`s name"
                 placeholderTextColor="#000"
                 onChangeText={Father_name => this.setState({ Father_name })}
@@ -246,6 +250,7 @@ export default class Clearance extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Address"
+                multiline
                 placeholderTextColor="#000"
                 onChangeText={Address => this.setState({ Address })}
                 value={this.state.Address}
@@ -256,6 +261,7 @@ export default class Clearance extends Component {
               <TextInput
                 numeric
                 style={styles.input}
+                keyboardType="phone-pad"
                 placeholder="Mobile Number"
                 placeholderTextColor="#000"
                 onChangeText={Mobile => this.setState({ Mobile })}
@@ -268,6 +274,7 @@ export default class Clearance extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Email"
+                autoCompleteType="email"
                 placeholderTextColor="#000"
                 onChangeText={Email => this.setState({ Email })}
                 value={this.state.Email}
@@ -335,7 +342,7 @@ export default class Clearance extends Component {
               <Text style={styles.text}>Aadhar Number</Text>
               <TextInput
                 style={styles.input}
-                numeric
+                keyboardType="phone-pad"
                 placeholder="Number"
                 placeholderTextColor="#000"
                 onChangeText={Aadhar => this.setState({ Aadhar })}

@@ -69,7 +69,7 @@ export default class Tenant extends Component {
   fetchDataUser = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Citizen Users/")
+      .ref("Citizen Users")
       .child(firebase.auth().currentUser.email.replace(".", "@"));
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
@@ -109,7 +109,7 @@ export default class Tenant extends Component {
     var fireBaseResponse = firebase
       .database()
       .ref()
-      .child("Stations/");
+      .child("Stations");
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
         var temp = child.key;
@@ -122,7 +122,7 @@ export default class Tenant extends Component {
   fetchDataDistrict = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/")
+      .ref("Stations")
       .child(this.state.State);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
@@ -136,7 +136,7 @@ export default class Tenant extends Component {
   fetchDataStation = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/" + this.state.State + "/")
+      .ref("Stations/" + this.state.State)
       .child(this.state.District);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(item => {
@@ -280,6 +280,8 @@ export default class Tenant extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Full name"
+                autoCapitalize="words"
+                autoCompleteType="name"
                 placeholderTextColor="#000"
                 onChangeText={Name => this.setState({ Name })}
                 value={this.state.Name}
@@ -290,6 +292,7 @@ export default class Tenant extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Address"
+                multiline
                 placeholderTextColor="#000"
                 onChangeText={Address => this.setState({ Address })}
                 value={this.state.Address}
@@ -300,7 +303,7 @@ export default class Tenant extends Component {
               <Text style={styles.text}>Current Number</Text>
               <TextInput
                 style={styles.input}
-                numeric
+                keyboardType="phone-pad"
                 placeholder="Mobile"
                 placeholderTextColor="#000"
                 onChangeText={Mobile => this.setState({ Mobile })}
@@ -312,6 +315,7 @@ export default class Tenant extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Address"
+                multiline
                 placeholderTextColor="#000"
                 onChangeText={Rental => this.setState({ Rental })}
                 value={this.state.Rental}
@@ -337,6 +341,8 @@ export default class Tenant extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Full name"
+                autoCompleteType="name"
+                autoCapitalize="words"
                 placeholderTextColor="#000"
                 onChangeText={Tenant_name => this.setState({ Tenant_name })}
                 value={this.state.Tenant_name}
@@ -375,7 +381,7 @@ export default class Tenant extends Component {
               <Text style={styles.text}>Contact number</Text>
               <TextInput
                 style={styles.input}
-                numeric
+                keyboardType="phone-pad"
                 placeholder="Mobile"
                 placeholderTextColor="#000"
                 onChangeText={Tenant_mob => this.setState({ Tenant_mob })}
@@ -388,6 +394,8 @@ export default class Tenant extends Component {
               </Text>
               <TextInput
                 style={styles.input}
+                multiline
+                placeholder="Address"
                 placeholderTextColor="#000"
                 onChangeText={Tenant => this.setState({ Tenant })}
                 value={this.state.Tenant}
@@ -399,6 +407,7 @@ export default class Tenant extends Component {
                 style={styles.input}
                 placeholder="Address"
                 placeholderTextColor="#000"
+                multiline
                 onChangeText={Tenant_permanant_add =>
                   this.setState({ Tenant_permanant_add })
                 }
@@ -410,6 +419,8 @@ export default class Tenant extends Component {
               <Text style={styles.text}>Name</Text>
               <TextInput
                 style={styles.input}
+                autoCapitalize="words"
+                autoCompleteType="name"
                 placeholder="Full name"
                 placeholderTextColor="#000"
                 onChangeText={Reference1 => this.setState({ Reference1 })}
@@ -420,7 +431,7 @@ export default class Tenant extends Component {
               <Text style={styles.text}>Contact Number </Text>
               <TextInput
                 style={styles.input}
-                numeric
+                keyboardType="phone-pad"
                 placeholder="Mobile"
                 placeholderTextColor="#000"
                 onChangeText={Mobile1 => this.setState({ Mobile1 })}
@@ -434,6 +445,8 @@ export default class Tenant extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Full name"
+                autoCompleteType="name"
+                autoCapitalize="words"
                 placeholderTextColor="#000"
                 onChangeText={Reference2 => this.setState({ Reference2 })}
                 value={this.state.Reference2}
@@ -443,7 +456,7 @@ export default class Tenant extends Component {
               <Text style={styles.text}>Contact Number </Text>
               <TextInput
                 style={styles.input}
-                numeric
+                keyboardType="phone-pad"
                 placeholder="Mobile"
                 placeholderTextColor="#000"
                 onChangeText={Mobile2 => this.setState({ Mobile2 })}

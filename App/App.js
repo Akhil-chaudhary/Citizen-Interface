@@ -33,8 +33,8 @@ import Tenant from "./src/screens/Tenant";
 import FeedBack from "./src/screens/FeedBack";
 import Tips from "./src/screens/Tips";
 import Activities from './src/screens/Activities';
-// import MapScreen from './ScannerScreen';
-import MapScreen from "./src/screens/ScannerScreen";
+import Chatbot from './src/screens/ChatBot';
+import MapScreen from "./src/screens/MapScreen";
 import * as firebase from "firebase";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 const width = Dimensions.get("window").width;
@@ -108,6 +108,7 @@ const AppStack = createStackNavigator(
     Complaint: Complaint,
     Noc: Noc,
     Recent:Activities,
+    Chat:Chatbot,
     About: AboutScreen
   },
   {

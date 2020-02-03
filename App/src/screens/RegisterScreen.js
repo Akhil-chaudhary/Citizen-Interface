@@ -27,6 +27,9 @@ export default class RegisterScreen extends Component {
   /////----------------------------SIGNUP FUNCTION============================///
   handleSignUp = () => {
     this.state.email = this.state.email.trim();
+    this.state.name = this.state.name.trim();
+    this.state.aadhar = this.state.aadhar.trim();
+    this.state.number = this.state.number.trim();
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
@@ -34,14 +37,14 @@ export default class RegisterScreen extends Component {
         return userCredentials.user.updateProfile({
           displayName: this.state.name
         });
-      })
-      .catch(error => this.setState({ errorMessage: error.message }));
+      }).catch(error => this.setState({ errorMessage: error.message }));
+      
 
     //TO SAVE THE DATA OF THE USERS INTO THE DATABASE/------------
 
     firebase
       .database()
-      .ref("/Citizen Users/")
+      .ref("Citizen Users/")
       .child(this.state.email.replace(".", "@"))
       .set({
         name: this.state.name,
@@ -49,7 +52,7 @@ export default class RegisterScreen extends Component {
         aadhar: this.state.aadhar,
         number: this.state.number,
         push_token: this.state.token
-      });
+      })
   };
 
   ////---------------------------PUSH NOTIFICATION FUNCTION...........................\\\\
@@ -109,7 +112,7 @@ export default class RegisterScreen extends Component {
                 placeholder="Full Name"
                 placeholderTextColor="#000"
                 style={styles.input}
-                autoCapitalize="none"
+                autoCapitalize="words"
                 onChangeText={name => this.setState({ name })}
                 value={this.state.name}
               ></TextInput>
@@ -131,6 +134,8 @@ export default class RegisterScreen extends Component {
               <TextInput
                 placeholder="Aadhar Card Number"
                 style={styles.input}
+                keyboardType='number-pad'
+                placeholderTextColor="#000"
                 autoCapitalize="none"
                 onChangeText={aadhar => this.setState({ aadhar })}
                 value={this.state.aadhar}
@@ -140,6 +145,8 @@ export default class RegisterScreen extends Component {
               <TextInput
                 placeholder="Mobile Number"
                 style={styles.input}
+                keyboardType='phone-pad'
+                placeholderTextColor="#000"
                 autoCapitalize="none"
                 onChangeText={number => this.setState({ number })}
                 value={this.state.number}

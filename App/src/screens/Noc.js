@@ -99,7 +99,7 @@ export default class Noc extends Component {
     var fireBaseResponse = firebase
       .database()
       .ref()
-      .child("Stations/");
+      .child("Stations");
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
         var temp = child.key;
@@ -112,7 +112,7 @@ export default class Noc extends Component {
   fetchDataDistrict = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/")
+      .ref("Stations")
       .child(this.state.State);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
@@ -126,7 +126,7 @@ export default class Noc extends Component {
   fetchDataStation = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/" + this.state.State + "/")
+      .ref("Stations/" + this.state.State)
       .child(this.state.District);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(item => {
@@ -265,6 +265,8 @@ export default class Noc extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Full name"
+                autoCompleteType="name"
+                autoCapitalize="words"
                 placeholderTextColor="#000"
                 onChangeText={Name => this.setState({ Name })}
                 value={this.state.Name}
@@ -276,6 +278,8 @@ export default class Noc extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Father`s/Gaurdian`s name"
+                autoCapitalize="words"
+                autoCompleteType="name"
                 placeholderTextColor="#000"
                 onChangeText={Father_name => this.setState({ Father_name })}
                 value={this.state.Father_name}
@@ -286,6 +290,7 @@ export default class Noc extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Address"
+                multiline
                 placeholderTextColor="#000"
                 onChangeText={Address => this.setState({ Address })}
                 value={this.state.Address}
@@ -297,6 +302,7 @@ export default class Noc extends Component {
                 numeric
                 style={styles.input}
                 placeholder="Mobile Number"
+                keyboardType="phone-pad"
                 placeholderTextColor="#000"
                 onChangeText={Mobile => this.setState({ Mobile })}
                 value={this.state.Mobile}
@@ -308,6 +314,7 @@ export default class Noc extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Email"
+                autoCompleteType="email"
                 placeholderTextColor="#000"
                 onChangeText={Email => this.setState({ Email })}
                 value={this.state.Email}
@@ -318,6 +325,7 @@ export default class Noc extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Aadhar"
+                keyboardType="phone-pad"
                 placeholderTextColor="#000"
                 onChangeText={Aadhar => this.setState({ Aadhar })}
                 value={this.state.Aadhar}

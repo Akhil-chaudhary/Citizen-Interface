@@ -69,7 +69,7 @@ export default class FIR extends Component {
                 <Text style={styles.item}>Complaint</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <View style={styles.tab}>
                 <Text style={styles.item}>Online FIR</Text>
               </View>
@@ -78,7 +78,7 @@ export default class FIR extends Component {
               <View style={styles.tab}>
                 <Text style={styles.item}>NOC Request</Text>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </ScrollView>
         </View>
       </ImageBackground>

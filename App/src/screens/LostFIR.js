@@ -90,7 +90,7 @@ export default class LostFIR extends Component {
     var fireBaseResponse = firebase
       .database()
       .ref()
-      .child("Stations/");
+      .child("Stations");
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
         var temp = child.key;
@@ -103,7 +103,7 @@ export default class LostFIR extends Component {
   fetchDataDistrict = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/")
+      .ref("Stations")
       .child(this.state.State);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(child => {
@@ -117,7 +117,7 @@ export default class LostFIR extends Component {
   fetchDataStation = async () => {
     var fireBaseResponse = firebase
       .database()
-      .ref("Stations/" + this.state.State + "/")
+      .ref("Stations/" + this.state.State)
       .child(this.state.District);
     fireBaseResponse.once("value").then(snapshot => {
       snapshot.forEach(item => {
@@ -128,7 +128,6 @@ export default class LostFIR extends Component {
       // console.log(station);
     });
   };
-
   render() {
     this.fetchDataUser();
     this.fetchDataDistrict();
@@ -206,6 +205,8 @@ export default class LostFIR extends Component {
               <Text style={styles.text}>Full name</Text>
               <TextInput
                 style={styles.input}
+                autoCapitalize="words"
+                autoCompleteType="name"
                 placeholder="Full name"
                 placeholderTextColor="#000"
                 onChangeText={Name => this.setState({ Name })}
@@ -216,6 +217,8 @@ export default class LostFIR extends Component {
               <Text style={styles.text}>Father's name</Text>
               <TextInput
                 style={styles.input}
+                autoCapitalize="words"
+                autoCompleteType="name"
                 placeholder="Father`s name"
                 placeholderTextColor="#000"
                 onChangeText={Father_name => this.setState({ Father_name })}
@@ -226,6 +229,7 @@ export default class LostFIR extends Component {
               <Text style={styles.text}>Address</Text>
               <TextInput
                 style={styles.input}
+                multiline
                 placeholder="Address"
                 placeholderTextColor="#000"
                 onChangeText={Address => this.setState({ Address })}
@@ -237,6 +241,7 @@ export default class LostFIR extends Component {
               <TextInput
                 numeric
                 style={styles.input}
+                keyboardType="phone-pad"
                 placeholder="Mobile Number"
                 placeholderTextColor="#000"
                 onChangeText={Mobile => this.setState({ Mobile })}
@@ -249,6 +254,7 @@ export default class LostFIR extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="Email"
+                autoCompleteType="email"
                 placeholderTextColor="#000"
                 onChangeText={Email => this.setState({ Email })}
                 value={this.state.Email}
