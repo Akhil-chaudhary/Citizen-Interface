@@ -1,741 +1,328 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, View, Picker } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-
-export default class HeatMapScreen extends Component {
+import * as Permissions from "expo-permissions";
+import * as Location from "expo-location";
+export default class MapScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      latitude:28.6336136,
+      longitude:77.4474485,
       markers: [
         {
           coordinates: {
-            latitude: 3.148561,
-            longitude: 101.652778
-          }
+            latitude:28.677479,
+      longitude:77.43689,
+          },
+          title: "Mahila Thana Police Station (201001)"
         },
 
         {
           coordinates: {
-            latitude: 3.149771,
-            longitude: 101.655449
-          }
+            latitude: 28.670746,
+            longitude: 77.436743
+          },
+          title: "Sihani Gate Police Station (201001)"
         },
 
         {
           coordinates: {
-            latitude: 4.149888,
-            longitude: 121.655449
-          }
+            latitude: 28.67129,
+            longitude: 77.455397
+          },
+          title: "Kavi Nagar Police Station (201002)"
         },
         {
           coordinates: {
-            latitude: 5.14982,
-            longitude: 131.652249
-          }
+            latitude: 28.65823,
+            longitude: 77.429707
+          },
+          title: "Kotwali Police Station (201009) "
 
           // generate database from here
         },
         {
           coordinates: {
-            latitude: 27.109438,
-            longitude: 80.517786
-          }
+            latitude: 28.646459,
+            longitude: 77.422134
+          },
+          title: "Vijay Nagar Police Station (201009)"
         },
         {
           coordinates: {
-            latitude: 25.953424,
-            longitude: 80.625813
-          }
+            latitude: 28.643777,
+            longitude: 77.37187
+          },
+          title: "Indrapuram Police Station (201014)"
         },
         {
           coordinates: {
-            latitude: 26.281308,
-            longitude: 79.756649
-          }
+            latitude: 28.631855,
+            longitude: 77.35493
+          },
+          title: "Khoda Makanpur Police Station (201014)"
         },
         {
           coordinates: {
-            latitude: 27.788245,
-            longitude: 81.316841
-          }
+            latitude: 28.671094,
+            longitude: 77.361261
+          },
+          title: "Link Road Police Station (201010)"
         },
         {
           coordinates: {
-            latitude: 27.655331,
-            longitude: 82.358606
-          }
+            latitude: 28.678673,
+            longitude: 77.371736
+          },
+          title: "Sahibabad Police Station (201007)"
         },
         {
           coordinates: {
-            latitude: 27.782226,
-            longitude: 79.724244
-          }
+            latitude: 28.754116,
+            longitude: 77.28581
+          },
+          title: "Loni Police Station (201102)"
         },
         {
           coordinates: {
-            latitude: 26.069584,
-            longitude: 81.851098
-          }
+            latitude: 28.710399,
+            longitude: 77.291029
+          },
+          title: "Loni Border Police Station (201102)"
         },
         {
           coordinates: {
-            latitude: 27.684129,
-            longitude: 82.572085
-          }
+            latitude: 28.781834,
+            longitude: 77.277501
+          },
+          title: "Tronica city Police Station (201102)"
         },
         {
           coordinates: {
-            latitude: 26.19511,
-            longitude: 79.410159
-          }
+            latitude: 28.76072,
+            longitude: 77.502177
+          },
+          title: "Muradanagar Police Station (201206)"
         },
         {
           coordinates: {
-            latitude: 26.473158,
-            longitude: 80.418802
-          }
+            latitude: 28.829857,
+            longitude: 77.570289
+          },
+          title: "Modinagar Police Station (201204)"
         },
         {
           coordinates: {
-            latitude: 27.527478,
-            longitude: 81.584477
-          }
+            latitude: 28.689695,
+            longitude: 77.554652
+          },
+          title: "Mussoori Police Station (201015)"
         },
         {
           coordinates: {
-            latitude: 26.168752,
-            longitude: 80.132988
-          }
+            latitude: 28.799749,
+            longitude: 77.620721
+          },
+          title: "Bhojpur Police Station (201204)"
         },
         {
           coordinates: {
-            latitude: 26.909236,
-            longitude: 80.073481
-          }
+            latitude: 28.630129,
+            longitude: 77.433772
+          },
+          title: "Crossing Republik Police Station (201009)"
         },
         {
           coordinates: {
-            latitude: 26.907956,
-            longitude: 82.208372
-          }
+            latitude: 28.590937,
+            longitude: 77.028352
+          },
+          title: "Dwarka North Police Station (110078)"
         },
         {
           coordinates: {
-            latitude: 27.415258,
-            longitude: 81.07389
-          }
+            latitude: 28.637777,
+            longitude: 77.270674
+          },
+          title: "Jakarpur Police Station (110092)"
         },
         {
           coordinates: {
-            latitude: 27.191275,
-            longitude: 80.282462
-          }
+            latitude: 28.535608,
+            longitude: 77.151753
+          },
+          title: "Basant Kunj North Police Station(110070)"
         },
         {
           coordinates: {
-            latitude: 25.619372,
-            longitude: 81.846841
-          }
+            latitude: 28.535563,
+            longitude: 77.151779
+          },
+          title: "Basant Kunj South Police Station (110070)"
         },
         {
           coordinates: {
-            latitude: 26.331044,
-            longitude: 81.478985
-          }
+            latitude: 28.558268,
+            longitude: 77.169068
+          },
+          title: "Basant Vihar Police Station (110045)"
         },
         {
           coordinates: {
-            latitude: 25.58157,
-            longitude: 79.84381
-          }
+            latitude: 28.599286,
+            longitude: 77.124048
+          },
+          title: "Delhi Cantt Police Station (110010)"
         },
         {
           coordinates: {
-            latitude: 27.042914,
-            longitude: 80.192645
-          }
+            latitude: 28.529866,
+            longitude: 77.087397
+          },
+          title: "Kapashera Police Station (110037)"
         },
         {
           coordinates: {
-            latitude: 27.567156,
-            longitude: 81.69917
-          }
+            latitude: 28.58831,
+            longitude: 77.083
+          },
+          title: "Palam Village Police Station (110045)"
         },
         {
           coordinates: {
-            latitude: 27.731628,
-            longitude: 80.544238
-          }
+            latitude: 28.571072,
+            longitude: 77.178814
+          },
+          title: "R k Puram Police Station (110022)"
         },
         {
           coordinates: {
-            latitude: 26.950646,
-            longitude: 82.333645
-          }
+            latitude: 28.46594,
+            longitude: 77.15106
+          },
+          title: "Sagar Pur Police Station (110045)"
         },
         {
           coordinates: {
-            latitude: 25.794259,
-            longitude: 81.910312
-          }
+            latitude: 28.570773,
+            longitude: 77.17856
+          },
+          title: "South Campus Police Station (110022)"
         },
         {
           coordinates: {
-            latitude: 27.395401,
-            longitude: 79.615344
-          }
+            latitude: 28.631511,
+            longitude: 77.098405
+          },
+          title: "Hari Nagar Police Station (110058)"
         },
         {
           coordinates: {
-            latitude: 24.984184,
-            longitude: 81.05769
-          }
+            latitude: 28.631076,
+            longitude: 77.145164
+          },
+          title: "Indra Puri Police Station (110012)"
         },
         {
           coordinates: {
-            latitude: 27.343273,
-            longitude: 80.791155
-          }
+            latitude: 28.628608,
+            longitude: 77.081865
+          },
+          title: "Janak Puri Police Station (110058)"
         },
         {
           coordinates: {
-            latitude: 26.231734,
-            longitude: 82.224014
-          }
+            latitude: 28.651794,
+            longitude: 77.09633
+          },
+          title: "Khayala Police Station (110027)"
         },
         {
           coordinates: {
-            latitude: 25.547402,
-            longitude: 80.519684
-          }
+            latitude: 28.640035,
+            longitude: 77.135522
+          },
+          title: "Kirti Nagar Police Station (110015)"
         },
         {
           coordinates: {
-            latitude: 26.134404,
-            longitude: 79.377968
-          }
+            latitude: 28.626723,
+            longitude: 77.12149
+          },
+          title: "Maya Puri Police Station(110064)"
         },
         {
           coordinates: {
-            latitude: 27.565702,
-            longitude: 81.223062
-          }
+            latitude: 28.660349,
+            longitude: 77.146666
+          },
+          title: "Moti Nagar Police Station (110015)"
         },
         {
           coordinates: {
-            latitude: 25.471728,
-            longitude: 81.043431
-          }
+            latitude: 28.632933,
+            longitude: 77.138624
+          },
+          title: "Narayana Police Station (110028)"
         },
         {
           coordinates: {
-            latitude: 26.677712,
-            longitude: 82.513718
-          }
+            latitude: 28.67461,
+            longitude: 77.131204
+          },
+          title: "Punjabi Bagh Police Station (110026)"
         },
         {
           coordinates: {
-            latitude: 25.666999,
-            longitude: 80.896633
-          }
+            latitude: 28.651502,
+            longitude: 77.120034
+          },
+          title: "Rajouri Garden Police Station(110027)"
         },
         {
           coordinates: {
-            latitude: 27.575134,
-            longitude: 82.001931
-          }
+            latitude: 28.638825,
+            longitude: 77.101813
+          },
+          title: "Tilak Nagar Police Station (110027)"
         },
         {
           coordinates: {
-            latitude: 25.538274,
-            longitude: 79.603638
-          }
-        },
-        {
-          coordinates: {
-            latitude: 26.166673,
-            longitude: 79.289927
-          }
-        },
-        {
-          coordinates: {
-            latitude: 26.262742,
-            longitude: 82.381607
-          }
-        },
-        {
-          coordinates: {
-            latitude: 26.519245,
-            longitude: 79.826788
-          }
-        },
-        {
-          coordinates: {
-            latitude: 25.16723,
-            longitude: 80.897601
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.408237,
-            longitude: 79.041753
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.670541,
-            longitude: 79.357
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.745615,
-            longitude: 78.259957
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.554041,
-            longitude: 78.672046
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.311942,
-            longitude: 80.042257
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.911373,
-            longitude: 77.272315
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.073215,
-            longitude: 78.939282
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.769479,
-            longitude: 79.768087
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.681798,
-            longitude: 79.907295
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.929645,
-            longitude: 77.640112
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.445825,
-            longitude: 78.664596
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.369234,
-            longitude: 77.132792
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.723304,
-            longitude: 78.454029
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.755584,
-            longitude: 77.417571
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.066812,
-            longitude: 79.158843
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.498294,
-            longitude: 77.64727
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.882485,
-            longitude: 80.860677
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.539621,
-            longitude: 77.877842
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.41915,
-            longitude: 78.424986
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.047873,
-            longitude: 79.814627
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.934683,
-            longitude: 80.451863
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.419755,
-            longitude: 78.779019
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.724235,
-            longitude: 77.35253
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.600516,
-            longitude: 80.622782
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.646656,
-            longitude: 79.307887
-          }
-        },
-        {
-          coordinates: {
-            latitude: 26.994166,
-            longitude: 77.127489
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.912188,
-            longitude: 77.464707
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.068958,
-            longitude: 77.258905
-          }
-        },
-        {
-          coordinates: {
-            latitude: 26.822879,
-            longitude: 80.894805
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.437982,
-            longitude: 79.684974
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.603972,
-            longitude: 77.742046
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.122584,
-            longitude: 79.30109
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.566583,
-            longitude: 80.157176
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.110959,
-            longitude: 78.218776
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.229451,
-            longitude: 79.642417
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.417874,
-            longitude: 78.702054
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.202405,
-            longitude: 79.61846
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.329838,
-            longitude: 77.115252
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.832487,
-            longitude: 77.713592
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.64566,
-            longitude: 79.939827
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.821404,
-            longitude: 77.189683
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.906318,
-            longitude: 78.021845
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.961939,
-            longitude: 79.420868
-          }
-        },
-        {
-          coordinates: {
-            latitude: 26.999452,
-            longitude: 79.47121
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.131038,
-            longitude: 77.906383
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.008324,
-            longitude: 79.481536
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.94422,
-            longitude: 79.518141
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.199199,
-            longitude: 79.819512
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.913487,
-            longitude: 80.982713
-          }
-        },
-        {
-          coordinates: {
-            latitude: 26.863582,
-            longitude: 77.584157
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.828152,
-            longitude: 78.368871
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.529772,
-            longitude: 78.284027
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.940592,
-            longitude: 79.477451
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.158463,
-            longitude: 80.576733
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.562643,
-            longitude: 79.626705
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.65059,
-            longitude: 78.616935
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.865168,
-            longitude: 78.050973
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.674646,
-            longitude: 80.930899
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.392379,
-            longitude: 80.400184
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.089593,
-            longitude: 79.659059
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.002003,
-            longitude: 77.616981
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.578306,
-            longitude: 78.265335
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.737312,
-            longitude: 79.009501
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.074993,
-            longitude: 78.29051
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.825089,
-            longitude: 77.502711
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.533211,
-            longitude: 79.505846
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.68723,
-            longitude: 77.750316
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.683391,
-            longitude: 77.905568
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.147458,
-            longitude: 79.953425
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.509225,
-            longitude: 80.576782
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.617425,
-            longitude: 80.936497
-          }
-        },
-        {
-          coordinates: {
-            latitude: 26.974224,
-            longitude: 79.23293
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.295668,
-            longitude: 78.900631
-          }
-        },
-        {
-          coordinates: {
-            latitude: 28.023335,
-            longitude: 78.033329
-          }
-        },
-        {
-          coordinates: {
-            latitude: 27.571151,
-            longitude: 79.892513
-          }
+            latitude: 28.630201,
+            longitude: 77.068091
+          },
+          title: "Vikas Puri Police Station(110018)"
 
           // to here
         }
       ]
     };
   }
+  componentWillMount(){
+    
+    this._getLocationAsync();
+  }
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== "granted") {
+      this.setState({
+        locationResult: "Permission to access location was denied"
+      });
+    }
 
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    });
+    console.log(this.state.latitude,this.state.longitude)
+  };
   render() {
     return (
       <View style={styles.container}>
-        <Picker
+        {/* <Picker
           selectedValue={this.state.language}
           style={{
             height: 500,
@@ -750,52 +337,35 @@ export default class HeatMapScreen extends Component {
           }
         >
           <Picker.Item label="Uttar Pradesh" value="Uttar Pradesh" />
-          <Picker.Item label="Andra Pradesh" value="Andra Pradesh" />
-          <Picker.Item label="Arunachal Pradesh" value="Arunachal Pradesh" />
-          <Picker.Item label="Assam" value="Assam" />
-          <Picker.Item label="Bihar" value="Bihar" />
-          <Picker.Item label="Chhattisgarh" value="Chhattisgarh" />
-          <Picker.Item label="Goa" value="Goa" />
-          <Picker.Item label="Gujarat" value="Gujarat" />
-          <Picker.Item label="Haryana" value="Haryana" />
-          <Picker.Item label="Himachal Pradesh" value="Himachal Pradesh" />
-          <Picker.Item label="Jammu and Kashmir" value="Jammu and Kashmir" />
-          <Picker.Item label="Jharkhand" value="Jharkhand" />
-          <Picker.Item label="Karnataka" value="Karnataka" />
-          <Picker.Item label="Kerala" value="Kerala" />
-          <Picker.Item label="Maharashtra" value="Maharashtra" />
-          <Picker.Item label="Manipur" value="Manipur" />
-          <Picker.Item label="Meghalaya" value="Meghalaya" />
-          <Picker.Item label="Mizoram" value="Mizoram" />
-          <Picker.Item label="Nagaland" value="Nagaland" />
-          <Picker.Item label="Orissa" value="Orissa" />
-          <Picker.Item label="Punjab" value="Punjab" />
-          <Picker.Item label="Rajasthan" value="Rajasthan" />
-          <Picker.Item label="Sikkim" value="Sikkim" />
-          <Picker.Item label="Telagana" value="Telagana" />
-          <Picker.Item label="Tripura" value="Tripura" />
-          <Picker.Item label="Uttaranchal" value="Uttaranchal" />
-          <Picker.Item label="Uttar Pradesh" value="Uttar Pradesh" />
-          <Picker.Item label="West Bengal" value="West Bengal" />
-        </Picker>
+        </Picker> */}
+
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           region={{
-            latitude: 26.154512,
-            longitude: 80.685005,
-            latitudeDelta: 5,
-            longitudeDelta: 5
+            latitude:this.state.latitude,
+            longitude:this.state.longitude,
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1
           }}
         >
           {this.state.markers.map(marker => (
             <MapView.Marker
               coordinate={marker.coordinates}
-              title="" //{marker.title}
-              image={require("../../assets/heatmarker.png")}
-              style={{ opacity: 0.5 }}
+              title={marker.title}
+              image={require("../../assets/Police.png")}
+              style={{ opacity: 1 }}
+              
             />
           ))}
+           
+            <MapView.Marker
+              coordinate={{latitude:this.state.latitude,longitude:this.state.longitude}}
+              title='User'
+              image={require("../../assets/gps.png")}
+              style={{ opacity: 1 }}
+              
+            />
         </MapView>
       </View>
     );
@@ -811,7 +381,7 @@ var styles = StyleSheet.create({
   },
   map: {
     position: "absolute",
-    top: 0,
+    top: 25,
     left: 0,
     right: 0,
     bottom: 0,

@@ -13,17 +13,6 @@ import { Header } from "react-native-elements";
 import TreeView from "react-native-final-tree-view";
 import React, { Component } from "react";
 export default class Tips extends Component {
-  
-
-  getIndicator(isExpanded, hasChildrenNodes) {
-    if (!hasChildrenNodes) {
-      return ">";
-    } else if (isExpanded) {
-      return ">";
-    } else {
-      return "+";
-    }
-  }
 
   render() {
     return (
@@ -53,13 +42,14 @@ export default class Tips extends Component {
           }}
           backgroundColor="#1C8ADB"
         />
+        
+        <ScrollView style={{ top: "1%", marginHorizontal: "4%" }}>
         <View style={styles.wrapper}>
           <Image
-            style={{ width: 150, height: 150 }}
-            source={require("../../assets/logo.png")}
+            style={{ width: 250, height: 250 }}
+            source={require("../../assets/source.gif")}
           />
         </View>
-        <ScrollView style={{ top: "10%", marginHorizontal: "4%" }}>
           <Text
             style={{
               color: "#1C8ADB",
@@ -300,8 +290,8 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   wrapper: {
-    top: "7%",
     backgroundColor: "transparent",
-    alignItems: "center"
+    alignItems: "center",
+    right:'7%'
   }
 });

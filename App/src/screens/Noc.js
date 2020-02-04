@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { Header } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import * as ImagePicker from "expo-image-picker";
 import { Dropdown } from "react-native-material-dropdown";
 import * as firebase from "firebase";
 
@@ -21,7 +22,8 @@ let States = [];
 let District = [];
 let station = [];
 let User = [];
-// var photo;
+var photo;
+var count=0;
 export default class Noc extends Component {
   state = {
     Name: "",
@@ -52,7 +54,7 @@ export default class Noc extends Component {
     // this.state.image = photo;
     firebase
       .database()
-      .ref("/NOC")
+      .ref("NOC")
       .push(this.state)
       .then(this.props.navigation.navigate("Home"));
   };
@@ -137,6 +139,39 @@ export default class Noc extends Component {
       // console.log(station);
     });
   };
+  chooseImage = async () => {
+    //let result=await ImagePicker.launchCameraAsync();
+    let result = await ImagePicker.launchImageLibraryAsync();
+
+    // this.setState({ image:blob.data.name })
+    if (!result.cancelled) {
+      this.uploadImage(
+        result.uri,
+        this.state.User_Email.replace(".", "@") + String(count)
+      )
+        .then(() => {
+          count=count+1;
+          Alert.alert("Success");
+        })
+        .catch(error => {
+          Alert.alert(error);
+        });
+    }
+  };
+  uploadImage = async (uri, imageName) => {
+    const response = await fetch(uri);
+    blob = await response.blob();
+    var ref = firebase
+      .storage()
+      .ref("NOC")
+      .child(imageName);
+    // firebase
+    // .database()
+    // .ref("Tenant/")
+    // .push({image:blob.data.name});
+    photo = blob.data.name;
+    return ref.put(blob);
+  };
 
   render() {
     this.fetchDataUser();
@@ -193,6 +228,7 @@ export default class Noc extends Component {
         value: "No"
       }
     ];
+  
     return (
       <ImageBackground
         source={require("../../assets/background.jpg")}
@@ -375,17 +411,20 @@ export default class Noc extends Component {
                 data={data4}
               />
             </View>
-
-            {/* <View style={styles.entrybox}>
-              <Text style={styles.text}>Upload document</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="document"
-                placeholderTextColor="#000"
-                onChangeText={this.handleChange}
-                value={this.state.value}
-              />
-            </View>*/}
+            <View style={styles.entrybox}>
+              <Text style={styles.text}>Upload Documents</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this.chooseImage}
+              >
+                <Text
+                  style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
+                >
+                  Upload
+                </Text>
+              </TouchableOpacity>
+            </View>
+            
 
             <View style={{ paddingBottom: 100 }}>
               <TouchableOpacity

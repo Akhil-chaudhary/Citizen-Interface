@@ -25,6 +25,7 @@ let User = [];
 let States = [];
 let District = [];
 let station = [];
+var count=0;
 export default class Tenant extends Component {
   state = {
     // imgtype: "",
@@ -161,7 +162,6 @@ export default class Tenant extends Component {
   //     longitude: location.coords.longitude
   //   });
   // };
-
   chooseImage = async () => {
     //let result=await ImagePicker.launchCameraAsync();
     let result = await ImagePicker.launchImageLibraryAsync();
@@ -170,9 +170,10 @@ export default class Tenant extends Component {
     if (!result.cancelled) {
       this.uploadImage(
         result.uri,
-        this.state.User_Email.replace(".", "@") + "/"
+        this.state.User_Email.replace(".", "@") + String(count)
       )
         .then(() => {
+          count=count+1;
           Alert.alert("Success");
         })
         .catch(error => {
