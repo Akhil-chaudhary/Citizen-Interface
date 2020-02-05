@@ -27,12 +27,311 @@ import * as firebase from "firebase";
 import { Header } from "react-native-elements";
 import call from "react-native-phone-call";
 import * as SMS from "expo-sms";
+
+const sosH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      color: "white",
+      fontWeight: "600",
+      textAlign: "center"
+    }}
+  >
+    खतरा{" "}
+  </Text>
+);
+const sosE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      color: "white",
+      fontWeight: "600",
+      textAlign: "center"
+    }}
+  >
+    SOS
+  </Text>
+);
+
+const chatbotH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    चैटबॉट{" "}
+  </Text>
+);
+const chatbotE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    CHATBOT
+  </Text>
+);
+
+const applyH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    आवेदन फार्म{" "}
+  </Text>
+);
+const applyE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    APPLY FORMS
+  </Text>
+);
+
+const efirH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    ई-प्राथमिकी.
+  </Text>
+);
+const efirE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    E-FIR
+  </Text>
+);
+
+const nocreqH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    अनापत्ति प्रमाण पत्र अनुरोध
+  </Text>
+);
+const nocreqE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    NOC REQUEST
+  </Text>
+);
+
+const recentH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    हाल की गतिविधियाँ
+  </Text>
+);
+const recentE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    RECENT ACTIVITIES
+  </Text>
+);
+
+const stationH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    पुलिस थाने
+  </Text>
+);
+const stationE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    POLICE STATIONS
+  </Text>
+);
+
+const safetyH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    सुरक्षा टिप्स{" "}
+  </Text>
+);
+const safetyE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    SAFETY TIPS
+  </Text>
+);
+
+const feedbackH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    प्रतिपुष्टि{" "}
+  </Text>
+);
+const feedbackE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    FEEDBACK
+  </Text>
+);
+
+const aboutH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    बारे में
+  </Text>
+);
+const aboutE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    ABOUT
+  </Text>
+);
+
+const langH = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    भाषा बदले
+  </Text>
+);
+const langE = (
+  <Text
+    style={{
+      alignItems: "center",
+      fontSize: 20,
+      paddingTop: 10,
+      fontWeight: "500",
+      textAlign: "center"
+    }}
+  >
+    Change language
+  </Text>
+);
+
 export default class HomeScreen extends Component {
   state = {
     email: "",
     displayname: "",
     latitude: "",
-    longitude: ""
+    longitude: "",
+    language: 1
   };
   componentDidMount() {
     const { email, displayname } = firebase.auth().currentUser;
@@ -48,7 +347,17 @@ export default class HomeScreen extends Component {
         });
       });
   };
-
+  switch = () => {
+    if (this.state.language === 0) {
+      alert("Language changed to English");
+      this.setState({ language: 1 });
+      return false; //HINDI
+    } else if (this.state.language === 1) {
+      alert("Language changed to Hindi");
+      this.setState({ language: 0 });
+      return false; //eNGLISH
+    }
+  };
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== "granted") {
@@ -109,6 +418,20 @@ export default class HomeScreen extends Component {
 
         <View style={styles.container}>
           <ScrollView>
+            <View style={styles.split}>
+              <Ripple
+                rippleColor="white"
+                backgroundColor="#f5ad42"
+                style={styles.tab}
+                onPress={() => this.switch()}
+              >
+                <Image
+                  style={{ alignItems: "center", height: 80, width: 80 }}
+                  source={require("../../assets//lang.png")}
+                />
+                {this.state.language === 0 ? langH : langE}
+              </Ripple>
+            </View>
             <View style={styles.splitupper}>
               <View style={styles.split}>
                 <Ripple
@@ -118,22 +441,10 @@ export default class HomeScreen extends Component {
                   onPress={() => this.call()}
                 >
                   <Image
-                    style={{alignItems: "center",
-                    height: 80,
-                    width: 80}}
+                    style={{ alignItems: "center", height: 80, width: 80 }}
                     source={require("../../assets//SOS.png")}
                   />
-                  <Text
-                    style={{
-                      alignItems: "center",
-                      fontSize: 20,
-                      color: "white",
-                      fontWeight: "600",
-                      textAlign: "center"
-                    }}
-                  >
-                   SOS
-                  </Text>
+                  {this.state.language === 0 ? sosH : sosE}
                 </Ripple>
               </View>
               <View style={styles.split}>
@@ -144,12 +455,10 @@ export default class HomeScreen extends Component {
                   onPress={() => this.props.navigation.navigate("Chat")}
                 >
                   <Image
-                  style={{alignItems: "center",
-                  height: 80,
-                  width: 80}}
+                    style={{ alignItems: "center", height: 80, width: 80 }}
                     source={require("../../assets//Chatbot.png")}
                   />
-                  <Text style={styles.item}>CHATBOT</Text>
+                  {this.state.language === 0 ? chatbotH : chatbotE}
                 </Ripple>
               </View>
             </View>
@@ -165,7 +474,7 @@ export default class HomeScreen extends Component {
                     style={styles.img}
                     source={require("../../assets//2.png")}
                   />
-                  <Text style={styles.item}>APPLY FORMS</Text>
+                  {this.state.language === 0 ? applyH : applyE}
                 </Ripple>
               </View>
               <View style={styles.split}>
@@ -179,7 +488,7 @@ export default class HomeScreen extends Component {
                     style={styles.img}
                     source={require("../../assets//3.png")}
                   />
-                  <Text style={styles.item}>E-FIR</Text>
+                  {this.state.language === 0 ? efirH : efirE}
                 </Ripple>
               </View>
             </View>
@@ -195,7 +504,7 @@ export default class HomeScreen extends Component {
                     style={styles.img}
                     source={require("../../assets//4.png")}
                   />
-                  <Text style={styles.item}>NOC REQUEST</Text>
+                  {this.state.language === 0 ? nocreqH : nocreqE}
                 </Ripple>
               </View>
               <View style={styles.split}>
@@ -209,7 +518,7 @@ export default class HomeScreen extends Component {
                     style={styles.img}
                     source={require("../../assets//5.png")}
                   />
-                  <Text style={styles.item}>RECENT ACTIVITIES</Text>
+                  {this.state.language === 0 ? recentH : recentE}
                 </Ripple>
               </View>
             </View>
@@ -225,7 +534,7 @@ export default class HomeScreen extends Component {
                     style={styles.img}
                     source={require("../../assets//Map.png")}
                   />
-                  <Text style={styles.item}>POLICE STATIONS</Text>
+                  {this.state.language === 0 ? stationH : stationE}
                 </Ripple>
               </View>
               <View style={styles.split}>
@@ -233,13 +542,43 @@ export default class HomeScreen extends Component {
                   rippleColor="#1C8ADB"
                   backgroundColor="white"
                   style={styles.tab}
-                  onPress={() => this.props.navigation.navigate('Tips')}
+                  onPress={() => this.props.navigation.navigate("Tips")}
                 >
                   <Image
                     style={styles.img}
                     source={require("../../assets//Tips.png")}
                   />
-                  <Text style={styles.item}>SAFETY TIPS</Text>
+                  {this.state.language === 0 ? safetyH : safetyE}
+                </Ripple>
+              </View>
+            </View>
+            <View style={styles.splitupper}>
+              <View style={styles.split}>
+                <Ripple
+                  rippleColor="#1C8ADB"
+                  backgroundColor="white"
+                  style={styles.tab}
+                  onPress={() => this.props.navigation.navigate("Feedback")}
+                >
+                  <Image
+                    style={{ alignItems: "center", height: 80, width: 80 }}
+                    source={require("../../assets//feed.png")}
+                  />
+                  {this.state.language === 0 ? feedbackH : feedbackE}
+                </Ripple>
+              </View>
+              <View style={styles.split}>
+                <Ripple
+                  rippleColor="#1C8ADB"
+                  backgroundColor="white"
+                  style={styles.tab}
+                  onPress={() => this.props.navigation.navigate("About")}
+                >
+                  <Image
+                    style={{ alignItems: "center", height: 80, width: 80 }}
+                    source={require("../../assets//about.png")}
+                  />
+                  {this.state.language === 0 ? aboutH : aboutE}
                 </Ripple>
               </View>
             </View>
@@ -253,8 +592,7 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
-    paddingHorizontal: 10
+    padding: 10
   },
   splitupper: {
     flex: 1,
@@ -268,7 +606,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 6,
-    marginHorizontal:6,
+    marginHorizontal: 6
   },
   sos: {
     flex: 1,
@@ -295,7 +633,7 @@ const styles = StyleSheet.create({
   item: {
     alignItems: "center",
     fontSize: 20,
-    paddingTop:10,
+    paddingTop: 10,
     fontWeight: "500",
     textAlign: "center"
   },

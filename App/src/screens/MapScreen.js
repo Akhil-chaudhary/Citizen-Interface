@@ -351,6 +351,7 @@ export default class MapScreen extends Component {
         >
           {this.state.markers.map(marker => (
             <MapView.Marker
+            key={Math.random() * Math.random()}
               coordinate={marker.coordinates}
               title={marker.title}
               image={require("../../assets/Police.png")}
@@ -360,6 +361,7 @@ export default class MapScreen extends Component {
           ))}
            
             <MapView.Marker
+            key={Math.random() * Math.random()}
               coordinate={{latitude:this.state.latitude,longitude:this.state.longitude}}
               title='User'
               image={require("../../assets/gps.png")}
