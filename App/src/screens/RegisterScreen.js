@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   form: {
     marginBottom: 60,
-    marginHorizontal: 30
+    marginHorizontal: 103
   },
   input: {
     borderBottomColor: "#8A8F9E",
