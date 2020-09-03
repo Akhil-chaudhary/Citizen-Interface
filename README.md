@@ -1,3 +1,4 @@
+![Citizen-interface](https://i.ibb.co/jGJzFYh/output-onlinepngtools-16.png)
 # NCRB App
 
 A react native app integrated with firebase for managing FIR, Forms, etc. under to Police Department 
