@@ -84,7 +84,6 @@ class ChatBot extends Component {
             text: "CHATBOT🤖",
             style: {
               color: "#fff",
-              fontWeight: "bold",
               fontSize: 18,
               letterSpacing: 1
             }

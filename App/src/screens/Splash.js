@@ -54,12 +54,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "black",
     fontSize: 35,
-    fontWeight: "500"
-  },
+      },
   subtitle: {
     color: "black",
     fontSize: 18,
-    fontWeight: "200",
+    
     textShadowColor: "grey",
     paddingBottom: 20
   },

@@ -136,7 +136,6 @@ export default class Activities extends Component {
             text: "History",
             style: {
               color: "#fff",
-              fontWeight: "bold",
               fontSize: 18,
               letterSpacing: 1
             }

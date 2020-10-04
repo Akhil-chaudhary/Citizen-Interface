@@ -81,7 +81,6 @@ export const HeaderButtonStyle = StyleSheet.create({
   rightButton: {
     color: AppStyles.color.tint,
     marginRight: 10,
-    fontWeight: "normal",
     fontFamily: AppStyles.fontName.main
   }
 });
@@ -91,7 +90,6 @@ export const ListStyle = StyleSheet.create({
     fontSize: 16,
     color: AppStyles.color.subtitle,
     fontFamily: AppStyles.fontName.bold,
-    fontWeight: "bold"
   },
   subtitleView: {
     minHeight: 55,

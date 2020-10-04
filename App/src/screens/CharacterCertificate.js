@@ -247,7 +247,6 @@ export default class CharacterCertificate extends Component {
             text: "Character Certificate",
             style: {
               color: "#fff",
-              fontWeight: "bold",
               fontSize: 18,
               letterSpacing: 1
             }
@@ -466,7 +465,7 @@ export default class CharacterCertificate extends Component {
                 onPress={this.chooseImage}
               >
                 <Text
-                  style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
+                  style={{ color: "#FFF", fontSize: 22 }}
                 >
                   Upload
                 </Text>
@@ -520,7 +519,6 @@ const styles = StyleSheet.create({
   // },
   text: {
     color: "#1C8ADB",
-    fontWeight: "bold",
     fontSize: 22
   },
   form: {

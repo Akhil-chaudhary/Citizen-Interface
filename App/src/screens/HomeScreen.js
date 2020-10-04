@@ -34,7 +34,7 @@ const sosH = (
       alignItems: "center",
       fontSize: 20,
       color: "white",
-      fontWeight: "600",
+      
       textAlign: "center"
     }}
   >
@@ -47,7 +47,7 @@ const sosE = (
       alignItems: "center",
       fontSize: 20,
       color: "white",
-      fontWeight: "600",
+      
       textAlign: "center"
     }}
   >
@@ -61,7 +61,7 @@ const chatbotH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -74,7 +74,7 @@ const chatbotE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -88,7 +88,7 @@ const applyH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -101,7 +101,7 @@ const applyE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -115,7 +115,7 @@ const efirH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -128,7 +128,7 @@ const efirE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -142,7 +142,7 @@ const nocreqH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -155,7 +155,7 @@ const nocreqE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -169,7 +169,7 @@ const recentH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -182,7 +182,7 @@ const recentE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -196,7 +196,7 @@ const stationH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -209,7 +209,7 @@ const stationE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -223,7 +223,7 @@ const safetyH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -236,7 +236,7 @@ const safetyE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -250,7 +250,7 @@ const feedbackH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -263,7 +263,7 @@ const feedbackE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -277,7 +277,7 @@ const aboutH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -290,7 +290,7 @@ const aboutE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -304,7 +304,7 @@ const langH = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -317,7 +317,7 @@ const langE = (
       alignItems: "center",
       fontSize: 20,
       paddingTop: 10,
-      fontWeight: "500",
+      
       textAlign: "center"
     }}
   >
@@ -403,7 +403,7 @@ export default class HomeScreen extends Component {
             text: "MENU",
             style: {
               color: "#1C8ADB",
-              fontWeight: "bold",
+              ,
               fontSize: 22,
               letterSpacing: 3
             }
@@ -634,7 +634,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontSize: 20,
     paddingTop: 10,
-    fontWeight: "500",
+    
     textAlign: "center"
   },
   titleWrapper: {

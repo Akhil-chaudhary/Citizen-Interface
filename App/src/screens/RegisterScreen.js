@@ -167,7 +167,7 @@ export default class RegisterScreen extends Component {
             </View>
 
             <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-              <Text style={{ color: "#FFF", fontWeight: "500" }}>Sign Up</Text>
+              <Text style={{ color: "#FFF", }}>Sign Up</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -195,8 +195,7 @@ const styles = StyleSheet.create({
   greeting: {
     marginTop: 32,
     fontSize: 28,
-    fontWeight: "bold",
-    fontWeight: "400",
+    
     textAlign: "center"
   },
   errorMessage: {
@@ -225,13 +224,13 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   signup: {
-    fontWeight: "600",
+    
     color: "#1C8ADB"
   },
   error: {
     color: "#ff0000",
     fontSize: 15,
-    fontWeight: "600",
+    
     textAlign: "center"
   }
 });
