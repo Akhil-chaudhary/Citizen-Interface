@@ -30,7 +30,7 @@ export default class Tips extends Component {
             text: "Tips",
             style: {
               color: "#fff",
-              fontWeight: "bold",
+              
               fontSize: 22,
               letterSpacing: 3
             }
@@ -53,7 +53,6 @@ export default class Tips extends Component {
           <Text
             style={{
               color: "#1C8ADB",
-              fontWeight: "bold",
               fontSize: 22
             }}
           >
@@ -286,7 +285,6 @@ export default class Tips extends Component {
 const styles = StyleSheet.create({
   text: {
     color: "#1C8ADB",
-    fontWeight: "bold",
     fontSize: 20
   },
   wrapper: {

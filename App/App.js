@@ -69,7 +69,7 @@ const CustomDrawerComponent = props => (
     <ScrollView>
       <DrawerItems {...props} />
       {/* <TouchableOpacity style={styles.button} onPress={this.signOutUser}>
-        <Text style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}>
+        <Text style={{ color: "#FFF", fontSize: 22 }}>
           LOGOUT
         </Text>
       </TouchableOpacity> */}

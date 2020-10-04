@@ -27,7 +27,7 @@ export default class AboutScreen extends Component {
             text: "ABOUT",
             style: {
               color: "#fff",
-              fontWeight: "bold",
+              
               fontSize: 22,
               letterSpacing: 3
             }
@@ -92,7 +92,6 @@ export default class AboutScreen extends Component {
 const styles = StyleSheet.create({
   text: {
     color: "#1C8ADB",
-    fontWeight: "bold",
     fontSize: 22
   },
   wrapper: {

@@ -226,7 +226,6 @@ export default class Complaint extends Component {
             text: "E-Complaint",
             style: {
               color: "#fff",
-              fontWeight: "bold",
               fontSize: 18,
               letterSpacing: 1
             }
@@ -449,7 +448,7 @@ export default class Complaint extends Component {
                 onPress={this.handleSubmit}
               >
                 <Text
-                  style={{ color: "#FFF", fontWeight: "400", fontSize: 22 }}
+                  style={{ color: "#FFF", fontSize: 22 }}
                 >
                   Submit
                 </Text>
@@ -480,7 +479,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#1C8ADB",
-    fontWeight: "bold",
+    
     fontSize: 22
   },
   form: {
